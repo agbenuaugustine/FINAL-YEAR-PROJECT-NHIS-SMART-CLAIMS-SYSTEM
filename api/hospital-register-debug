@@ -1,0 +1,174 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    echo '{"status":"ok"}';
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo '{"status":"error","message":"Method not allowed"}';
+    exit;
+}
+
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
+
+if (!$data) {
+    echo '{"status":"error","message":"Invalid data - could not parse JSON"}';
+    exit;
+}
+
+// Debug: Log received data
+error_log("Received data: " . print_r($data, true));
+
+$required_fields = [
+    'hospital_name', 'hospital_code', 'hospital_id', 'hospital_type', 'hospital_category',
+    'region', 'district', 'town_city', 'postal_address',
+    'primary_contact_person', 'primary_contact_email', 'primary_contact_phone',
+    'admin_username', 'admin_password', 'admin_full_name'
+];
+
+foreach ($required_fields as $field) {
+    if (empty($data[$field])) {
+        echo '{"status":"error","message":"Field ' . $field . ' is required"}';
+        exit;
+    }
+}
+
+try {
+    require_once __DIR__ . '/config/database.php';
+    
+    $database = new Database();
+    $conn = $database->getConnection();
+    
+    if (!$conn) {
+        echo '{"status":"error","message":"Database connection failed"}';
+        exit;
+    }
+    
+    error_log("Database connection successful");
+    
+    $conn->beginTransaction();
+    
+    // Check duplicates
+    $stmt = $conn->prepare("SELECT id FROM hospitals WHERE hospital_code = ?");
+    $stmt->execute([$data['hospital_code']]);
+    if ($stmt->fetch()) {
+        $conn->rollback();
+        echo '{"status":"error","message":"Hospital code already exists"}';
+        exit;
+    }
+    
+    // Check if hospital_id already exists
+    $stmt = $conn->prepare("SELECT id FROM hospitals WHERE hospital_id = ?");
+    $stmt->execute([$data['hospital_id']]);
+    if ($stmt->fetch()) {
+        $conn->rollback();
+        echo '{"status":"error","message":"Hospital ID already exists"}';
+        exit;
+    }
+    
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt->execute([$data['admin_username']]);
+    if ($stmt->fetch()) {
+        $conn->rollback();
+        echo '{"status":"error","message":"Username already exists"}';
+        exit;
+    }
+    
+    error_log("All duplicate checks passed");
+    
+    // Insert hospital
+    $hospital_sql = "INSERT INTO hospitals (hospital_name, hospital_code, hospital_id, hospital_type, hospital_category, primary_contact_person, primary_contact_email, primary_contact_phone, region, district, town_city, postal_address, nhia_accreditation_number, registration_status, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', 1)";
+    
+    error_log("About to execute hospital insert query");
+    error_log("SQL: " . $hospital_sql);
+    
+    $stmt = $conn->prepare($hospital_sql);
+    $result = $stmt->execute([
+        $data['hospital_name'], 
+        $data['hospital_code'], 
+        $data['hospital_id'], 
+        $data['hospital_type'], 
+        $data['hospital_category'],
+        $data['primary_contact_person'], 
+        $data['primary_contact_email'], 
+        $data['primary_contact_phone'],
+        $data['region'], 
+        $data['district'], 
+        $data['town_city'], 
+        $data['postal_address'],
+        $data['nhia_accreditation_number'] ?? null
+    ]);
+    
+    if (!$result) {
+        error_log("Hospital insert failed: " . print_r($stmt->errorInfo(), true));
+        $conn->rollback();
+        echo '{"status":"error","message":"Failed to insert hospital: ' . $stmt->errorInfo()[2] . '"}';
+        exit;
+    }
+    
+    $hospital_id = $conn->lastInsertId();
+    error_log("Hospital inserted with ID: " . $hospital_id);
+    
+    // Create admin user
+    $admin_sql = "INSERT INTO users (hospital_id, username, password, email, full_name, role, phone, is_active, created_at) VALUES (?, ?, ?, ?, ?, 'hospital_admin', ?, 0, NOW())";
+    $hashed_password = password_hash($data['admin_password'], PASSWORD_DEFAULT);
+    
+    error_log("About to execute user insert query");
+    
+    $stmt = $conn->prepare($admin_sql);
+    $result = $stmt->execute([
+        $hospital_id, 
+        $data['admin_username'], 
+        $hashed_password,
+        $data['primary_contact_email'], 
+        $data['admin_full_name'], 
+        $data['primary_contact_phone']
+    ]);
+    
+    if (!$result) {
+        error_log("User insert failed: " . print_r($stmt->errorInfo(), true));
+        $conn->rollback();
+        echo '{"status":"error","message":"Failed to create admin user: ' . $stmt->errorInfo()[2] . '"}';
+        exit;
+    }
+    
+    error_log("User inserted successfully");
+    
+    $conn->commit();
+    
+    // Try to send simple email notification
+    $emailSent = false;
+    if (function_exists('mail')) {
+        $to = $data['primary_contact_email'];
+        $subject = "Hospital Registration - Smart Claims NHIS";
+        $message = "Dear " . $data['admin_full_name'] . ",\n\n";
+        $message .= "Your hospital registration for " . $data['hospital_name'] . " has been submitted successfully.\n";
+        $message .= "Hospital Code: " . $data['hospital_code'] . "\n";
+        $message .= "Hospital ID: " . $data['hospital_id'] . "\n";
+        $message .= "Your application is pending approval.\n\n";
+        $message .= "Best regards,\nSmart Claims NHIS Team";
+        $headers = "From: noreply@smartclaims.com";
+        
+        $emailSent = @mail($to, $subject, $message, $headers);
+    }
+    
+    echo '{"status":"success","message":"Hospital registration submitted successfully! Your application is pending approval.","hospital":{"id":' . $hospital_id . ',"name":"' . addslashes($data['hospital_name']) . '","code":"' . addslashes($data['hospital_code']) . '","hospital_id":"' . addslashes($data['hospital_id']) . '","status":"Pending"},"email_sent":' . ($emailSent ? 'true' : 'false') . '}';
+    
+} catch (Exception $e) {
+    if (isset($conn) && $conn->inTransaction()) {
+        $conn->rollBack();
+    }
+    error_log("Exception caught: " . $e->getMessage());
+    error_log("Stack trace: " . $e->getTraceAsString());
+    echo '{"status":"error","message":"Registration failed: ' . $e->getMessage() . '"}';
+}
+?>

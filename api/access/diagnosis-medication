@@ -1,0 +1,1608 @@
+<?php
+/**
+ * Diagnosis & Medication Page
+ * 
+ * ICD-10 diagnosis codes linked to prescriptions
+ */
+
+// Include secure authentication middleware
+require_once __DIR__ . '/secure_auth.php';
+
+// User data is now available from secure_auth
+// $user and $role variables are already set
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Diagnosis & Medication - Smart Claims NHIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Apple-inspired styles */
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #0071e3;
+            --secondary-color: #06c;
+            --success-color: #34c759;
+            --warning-color: #ff9500;
+            --danger-color: #ff3b30;
+            --light-bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --border-color: #d2d2d7;
+            
+            /* NHIS Theme Colors */
+            --nhis-primary: #1a5b8a;
+            --nhis-secondary: #2c8fb8;
+            --nhis-accent: #5cb85c;
+            --nhis-gold: #f0ad4e;
+            --ghana-red: #ce1126;
+            --ghana-gold: #fcd116;
+            --ghana-green: #006b3f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            max-width: 100vw;
+        }
+        
+        /* App container */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .app-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0f2b5b, #1e88e5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            transform: rotate(10deg);
+            box-shadow: 0 4px 8px rgba(30, 136, 229, 0.3);
+            margin-right: 0.75rem;
+        }
+        
+        /* Navigation */
+        .app-nav {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .nav-item i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 1.75rem;
+            margin-bottom: 1.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #fff;
+            transition: all 0.2s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        
+        /* Diagnosis search */
+        .diagnosis-search {
+            position: relative;
+        }
+        
+        .diagnosis-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .diagnosis-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background-color 0.2s ease;
+        }
+        
+        .diagnosis-item:hover {
+            background-color: rgba(0, 113, 227, 0.05);
+        }
+        
+        .diagnosis-code {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .diagnosis-name {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        /* Selected diagnosis */
+        .selected-diagnosis {
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.1), rgba(48, 209, 88, 0.1));
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .diagnosis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .diagnosis-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .diagnosis-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Medication styles */
+        .medication-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .medication-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .medication-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .medication-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .medication-strength {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0071e3, #42a1ec);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f5f5f7;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #34c759, #30d158);
+            color: white;
+            box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9500, #ffcc00);
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 149, 0, 0.3);
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        
+        /* Tables */
+        .table-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+        
+        .table th {
+            background: rgba(248, 250, 252, 0.9);
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .table td {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-primary);
+        }
+        
+        /* Alert Styles */
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left-color: #28a745;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left-color: #ffc107;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border-left-color: #dc3545;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left-color: #17a2b8;
+        }
+        
+        /* Drug interaction warning */
+        .interaction-warning {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 0.5rem 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            height: 4.5rem;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .mobile-nav-item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            transition: all 0.2s ease;
+            width: 14.28%; /* 100% / 7 items */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .mobile-nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .mobile-nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .app-nav {
+                display: none;
+            }
+            
+            .mobile-nav {
+                display: flex;
+                justify-content: space-around;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .app-container {
+                padding: 0.5rem;
+                padding-bottom: 5.5rem;
+            }
+        }
+        
+        /* Animated background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+        }
+        
+        .bg-shape-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #0071e3, #5ac8fa);
+            top: -200px;
+            left: -200px;
+            animation: float 25s infinite ease-in-out;
+        }
+        
+        .bg-shape-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #5ac8fa, #007aff);
+            bottom: -150px;
+            right: -150px;
+            animation: float 20s infinite ease-in-out reverse;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 50px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">
+                <div class="app-logo">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                Smart Claims
+            </h1>
+            
+            <div class="user-menu relative">
+                <div class="user-button cursor-pointer" id="userMenuButton">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="hidden md:inline"><?php echo htmlspecialchars($user['full_name'] ?? 'User'); ?></span>
+                    <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                </div>
+                <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50 hidden">
+                    <a href="profile.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        <i class="fas fa-user-circle mr-2"></i> Profile
+                    </a>
+                    <a href="settings.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        <i class="fas fa-cog mr-2"></i> Settings
+                    </a>
+                    <div class="border-t border-gray-200 my-1"></div>
+                    <a href="/smartclaimsCL/api/logout" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Navigation -->
+        <nav class="app-nav">
+            <a href="dashboard" class="nav-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="client-registration" class="nav-item">
+                <i class="fas fa-user-plus"></i>
+                <span>Client Registration</span>
+            </a>
+            <a href="service-requisition" class="nav-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Service Requisition</span>
+            </a>
+            <a href="vital-signs" class="nav-item">
+                <i class="fas fa-heartbeat"></i>
+                <span>Vital Signs</span>
+            </a>
+            <a href="diagnosis-medication" class="nav-item active">
+                <i class="fas fa-stethoscope"></i>
+                <span>Diagnosis & Medication</span>
+            </a>
+            <a href="claims-processing" class="nav-item">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Claims Processing</span>
+            </a>
+            <a href="reports" class="nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </a>
+        </nav>
+        
+        <!-- Main Content -->
+        <main>
+            <!-- Page Header -->
+            <div class="card">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="card-title text-2xl font-bold mb-2">
+                            <i class="fas fa-stethoscope mr-2"></i>
+                            Diagnosis & Medication
+                        </h2>
+                        <p class="text-secondary text-lg">ICD-10 diagnosis codes linked to NHIS-approved prescriptions</p>
+                        <p class="text-sm text-gray-600 mt-2">Automated drug interaction checks and dosage recommendations</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="btn btn-secondary" onclick="loadPreviousPrescription()">
+                            <i class="fas fa-history mr-2"></i>
+                            Previous Rx
+                        </button>
+                        <button class="btn btn-warning" onclick="generatePrescription()">
+                            <i class="fas fa-file-prescription mr-2"></i>
+                            Generate Rx
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Messages -->
+            <div id="alertContainer"></div>
+
+            <!-- Patient Information -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-user-check mr-2"></i>
+                    Patient Information
+                </h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="patient_search" class="form-label">Search Patient</label>
+                        <div class="relative">
+                            <input type="text" 
+                                   id="patient_search" 
+                                   class="form-control pr-10" 
+                                   placeholder="Enter NHIS number or name">
+                            <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500" onclick="searchPatient()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="consultation_date" class="form-label">Consultation Date</label>
+                        <input type="date" id="consultation_date" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="physician" class="form-label">Attending Physician</label>
+                        <input type="text" 
+                               id="physician" 
+                               class="form-control" 
+                               value="<?php echo htmlspecialchars($user['full_name'] ?? 'Current User'); ?>" 
+                               readonly>
+                    </div>
+                </div>
+                
+                <!-- Selected Patient Info -->
+                <div id="selectedPatientInfo" class="hidden">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-blue-800 mb-2">Patient Details</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
+                            <div><strong>Name:</strong> <span id="patient_name">-</span></div>
+                            <div><strong>NHIS:</strong> <span id="patient_nhis">-</span></div>
+                            <div><strong>Age:</strong> <span id="patient_age">-</span></div>
+                            <div><strong>Allergies:</strong> <span id="patient_allergies" class="text-red-600">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clinical Assessment -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-clipboard-check mr-2"></i>
+                    Clinical Assessment
+                </h3>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="chief_complaint" class="form-label">Chief Complaint</label>
+                        <textarea id="chief_complaint" 
+                                  class="form-control" 
+                                  rows="2" 
+                                  placeholder="Patient's main concern or reason for visit"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="history_present_illness" class="form-label">History of Present Illness</label>
+                        <textarea id="history_present_illness" 
+                                  class="form-control" 
+                                  rows="3" 
+                                  placeholder="Detailed history of current illness"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="physical_examination" class="form-label">Physical Examination Findings</label>
+                        <textarea id="physical_examination" 
+                                  class="form-control" 
+                                  rows="3" 
+                                  placeholder="Key physical examination findings"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clinical_impression" class="form-label">Clinical Impression</label>
+                        <textarea id="clinical_impression" 
+                                  class="form-control" 
+                                  rows="2" 
+                                  placeholder="Initial clinical assessment"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnosis Section -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-diagnoses mr-2"></i>
+                    Diagnosis (ICD-10)
+                </h3>
+                
+                <div class="form-group">
+                    <label for="diagnosis_search" class="form-label">Search ICD-10 Codes</label>
+                    <div class="diagnosis-search">
+                        <input type="text" 
+                               id="diagnosis_search" 
+                               class="form-control" 
+                               placeholder="Type diagnosis or ICD-10 code..."
+                               autocomplete="off"
+                               onkeyup="searchDiagnosis(this.value)">
+                        <div id="diagnosis_dropdown" class="diagnosis-dropdown"></div>
+                    </div>
+                </div>
+                
+                <!-- Selected Diagnoses -->
+                <div id="selected_diagnoses">
+                    <!-- Selected diagnoses will appear here -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="differential_diagnosis" class="form-label">Differential Diagnosis</label>
+                    <textarea id="differential_diagnosis" 
+                              class="form-control" 
+                              rows="2" 
+                              placeholder="Alternative diagnoses considered"></textarea>
+                </div>
+            </div>
+
+            <!-- Medication Section -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-pills mr-2"></i>
+                    Medication Prescription
+                </h3>
+                
+                <div id="drug_interactions_alert" class="hidden">
+                    <div class="interaction-warning">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+                            <strong>Drug Interaction Warning:</strong>
+                            <span id="interaction_details"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="medication_search" class="form-label">Search Medication</label>
+                        <div class="relative">
+                            <input type="text" 
+                                   id="medication_search" 
+                                   class="form-control pr-10" 
+                                   placeholder="Search NHIS approved medications">
+                            <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500" onclick="searchMedication()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medication_strength" class="form-label">Strength/Dosage</label>
+                        <select id="medication_strength" class="form-control">
+                            <option value="">Select strength</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dosage_form" class="form-label">Dosage Form</label>
+                        <select id="dosage_form" class="form-control">
+                            <option value="">Select form</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
+                            <option value="Cream">Cream</option>
+                            <option value="Ointment">Ointment</option>
+                            <option value="Drops">Drops</option>
+                            <option value="Inhaler">Inhaler</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="frequency" class="form-label">Frequency</label>
+                        <select id="frequency" class="form-control">
+                            <option value="">Select frequency</option>
+                            <option value="Once daily">Once daily (OD)</option>
+                            <option value="Twice daily">Twice daily (BD)</option>
+                            <option value="Three times daily">Three times daily (TDS)</option>
+                            <option value="Four times daily">Four times daily (QDS)</option>
+                            <option value="Every 4 hours">Every 4 hours</option>
+                            <option value="Every 6 hours">Every 6 hours</option>
+                            <option value="Every 8 hours">Every 8 hours</option>
+                            <option value="As needed">As needed (PRN)</option>
+                            <option value="At bedtime">At bedtime</option>
+                            <option value="Before meals">Before meals</option>
+                            <option value="After meals">After meals</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="duration" class="form-label">Duration</label>
+                        <select id="duration" class="form-control">
+                            <option value="">Select duration</option>
+                            <option value="3 days">3 days</option>
+                            <option value="5 days">5 days</option>
+                            <option value="7 days">7 days</option>
+                            <option value="10 days">10 days</option>
+                            <option value="14 days">14 days</option>
+                            <option value="21 days">21 days</option>
+                            <option value="1 month">1 month</option>
+                            <option value="3 months">3 months</option>
+                            <option value="Ongoing">Ongoing</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" 
+                               id="quantity" 
+                               class="form-control" 
+                               min="1" 
+                               placeholder="Number of units">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="special_instructions" class="form-label">Special Instructions</label>
+                    <textarea id="special_instructions" 
+                              class="form-control" 
+                              rows="2" 
+                              placeholder="Special dosing instructions or patient counseling notes"></textarea>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button class="btn btn-primary" onclick="addMedication()">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Medication
+                    </button>
+                </div>
+                
+                <!-- Prescribed Medications -->
+                <div id="prescribed_medications" class="mt-6">
+                    <h4 class="text-lg font-semibold mb-3">Prescribed Medications</h4>
+                    <div id="medication_list" class="space-y-3">
+                        <div class="text-center text-gray-500 py-4">
+                            <i class="fas fa-pills text-3xl mb-2"></i>
+                            <p>No medications prescribed yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Treatment Plan -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-clipboard-list mr-2"></i>
+                    Treatment Plan & Follow-up
+                </h3>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="treatment_plan" class="form-label">Treatment Plan</label>
+                        <textarea id="treatment_plan" 
+                                  class="form-control" 
+                                  rows="3" 
+                                  placeholder="Detailed treatment plan and recommendations"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="patient_education" class="form-label">Patient Education</label>
+                        <textarea id="patient_education" 
+                                  class="form-control" 
+                                  rows="3" 
+                                  placeholder="Information provided to patient about condition and treatment"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="follow_up" class="form-label">Follow-up Instructions</label>
+                        <select id="follow_up" class="form-control">
+                            <option value="">Select follow-up</option>
+                            <option value="No follow-up needed">No follow-up needed</option>
+                            <option value="Return in 3 days">Return in 3 days</option>
+                            <option value="Return in 1 week">Return in 1 week</option>
+                            <option value="Return in 2 weeks">Return in 2 weeks</option>
+                            <option value="Return in 1 month">Return in 1 month</option>
+                            <option value="Return if symptoms worsen">Return if symptoms worsen</option>
+                            <option value="Refer to specialist">Refer to specialist</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="next_appointment" class="form-label">Next Appointment Date</label>
+                        <input type="date" id="next_appointment" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="warning_signs" class="form-label">Warning Signs</label>
+                        <textarea id="warning_signs" 
+                                  class="form-control" 
+                                  rows="2" 
+                                  placeholder="Signs/symptoms that require immediate medical attention"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="card">
+                <div class="flex justify-between items-center">
+                    <div class="text-sm text-gray-600">
+                        <i class="fas fa-shield-alt mr-1"></i>
+                        All prescriptions are checked against NHIS formulary and drug interactions
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="btn btn-secondary" onclick="saveDraft()">
+                            <i class="fas fa-save mr-2"></i>
+                            Save Draft
+                        </button>
+                        <button class="btn btn-warning" onclick="printPrescription()">
+                            <i class="fas fa-print mr-2"></i>
+                            Print Prescription
+                        </button>
+                        <button class="btn btn-success" onclick="finalizeDiagnosis()">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Finalize & Proceed
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Consultations -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-history mr-2"></i>
+                    Recent Consultations
+                </h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Primary Diagnosis</th>
+                                <th>Medications</th>
+                                <th>Physician</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent_consultations">
+                            <tr>
+                                <td colspan="7" class="text-center py-4">Loading recent consultations...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <a href="dashboard" class="mobile-nav-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="client-registration" class="mobile-nav-item">
+                <i class="fas fa-user-plus"></i>
+                <span>Clients</span>
+            </a>
+            <a href="service-requisition" class="mobile-nav-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Services</span>
+            </a>
+            <a href="vital-signs" class="mobile-nav-item">
+                <i class="fas fa-heartbeat"></i>
+                <span>Vitals</span>
+            </a>
+            <a href="diagnosis-medication" class="mobile-nav-item active">
+                <i class="fas fa-stethoscope"></i>
+                <span>Diagnosis</span>
+            </a>
+            <a href="claims-processing" class="mobile-nav-item">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Claims</span>
+            </a>
+            <a href="reports" class="mobile-nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ICD-10 diagnosis data (sample)
+        const icd10Data = [
+            { code: 'J00', name: 'Acute nasopharyngitis [common cold]', category: 'Respiratory' },
+            { code: 'J06.9', name: 'Acute upper respiratory infection, unspecified', category: 'Respiratory' },
+            { code: 'A09', name: 'Diarrhoea and gastroenteritis of presumed infectious origin', category: 'Digestive' },
+            { code: 'K30', name: 'Functional dyspepsia', category: 'Digestive' },
+            { code: 'M79.1', name: 'Myalgia', category: 'Musculoskeletal' },
+            { code: 'R50.9', name: 'Fever, unspecified', category: 'Symptoms' },
+            { code: 'R51', name: 'Headache', category: 'Symptoms' },
+            { code: 'I10', name: 'Essential (primary) hypertension', category: 'Circulatory' },
+            { code: 'E11.9', name: 'Type 2 diabetes mellitus without complications', category: 'Endocrine' },
+            { code: 'B50.9', name: 'Plasmodium falciparum malaria, unspecified', category: 'Infectious' }
+        ];
+
+        // Medication data (NHIS approved)
+        const medicationData = [
+            { name: 'Paracetamol', strengths: ['500mg', '1000mg'], forms: ['Tablet', 'Syrup'], category: 'Analgesic' },
+            { name: 'Ibuprofen', strengths: ['200mg', '400mg', '600mg'], forms: ['Tablet', 'Syrup'], category: 'NSAID' },
+            { name: 'Amoxicillin', strengths: ['250mg', '500mg'], forms: ['Capsule', 'Syrup'], category: 'Antibiotic' },
+            { name: 'Ciprofloxacin', strengths: ['250mg', '500mg'], forms: ['Tablet'], category: 'Antibiotic' },
+            { name: 'Metformin', strengths: ['500mg', '850mg', '1000mg'], forms: ['Tablet'], category: 'Antidiabetic' },
+            { name: 'Amlodipine', strengths: ['5mg', '10mg'], forms: ['Tablet'], category: 'Antihypertensive' },
+            { name: 'Omeprazole', strengths: ['20mg', '40mg'], forms: ['Capsule'], category: 'PPI' },
+            { name: 'Artesunate-Amodiaquine', strengths: ['100mg/270mg'], forms: ['Tablet'], category: 'Antimalarial' }
+        ];
+
+        let currentPatient = null;
+        let selectedDiagnoses = [];
+        let prescribedMedications = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the page
+            initializePage();
+            loadRecentConsultations();
+            
+            // Set today's date
+            document.getElementById('consultation_date').value = new Date().toISOString().split('T')[0];
+        });
+
+        // Initialize page
+        function initializePage() {
+            // Setup user dropdown
+            const userMenuButton = document.getElementById('userMenuButton');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userMenuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+                
+                // Hide diagnosis dropdown when clicking outside
+                if (!e.target.closest('.diagnosis-search')) {
+                    document.getElementById('diagnosis_dropdown').style.display = 'none';
+                }
+            });
+
+            // Setup patient search
+            document.getElementById('patient_search').addEventListener('input', function() {
+                if (this.value.length >= 3) {
+                    searchPatient();
+                }
+            });
+        }
+
+        // Search patient
+        function searchPatient() {
+            const searchTerm = document.getElementById('patient_search').value.trim();
+            
+            if (searchTerm.length < 3) {
+                showAlert('Please enter at least 3 characters to search', 'warning');
+                return;
+            }
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Mock patient data
+                const mockPatient = {
+                    id: 'PT001',
+                    name: 'Michael Asante',
+                    nhis: '5678901234',
+                    age: '42 years',
+                    gender: 'Male',
+                    allergies: 'Penicillin, Shellfish',
+                    conditions: 'Hypertension, Type 2 Diabetes'
+                };
+                
+                selectPatient(mockPatient);
+            }, 1000);
+        }
+
+        // Select patient
+        function selectPatient(patient) {
+            currentPatient = patient;
+            
+            // Show patient info
+            document.getElementById('selectedPatientInfo').classList.remove('hidden');
+            document.getElementById('patient_name').textContent = patient.name;
+            document.getElementById('patient_nhis').textContent = patient.nhis;
+            document.getElementById('patient_age').textContent = patient.age;
+            document.getElementById('patient_allergies').textContent = patient.allergies;
+            
+            showAlert('Patient selected successfully', 'success');
+            
+            // Show allergy warning if present
+            if (patient.allergies && patient.allergies !== '-') {
+                showAlert(`⚠️ Allergy Alert: ${patient.allergies}`, 'danger');
+            }
+        }
+
+        // Search diagnosis
+        function searchDiagnosis(term) {
+            const dropdown = document.getElementById('diagnosis_dropdown');
+            
+            if (term.length < 2) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            
+            const filtered = icd10Data.filter(diagnosis => 
+                diagnosis.code.toLowerCase().includes(term.toLowerCase()) ||
+                diagnosis.name.toLowerCase().includes(term.toLowerCase())
+            );
+            
+            if (filtered.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            
+            dropdown.innerHTML = '';
+            filtered.forEach(diagnosis => {
+                const item = document.createElement('div');
+                item.className = 'diagnosis-item';
+                item.innerHTML = `
+                    <div class="diagnosis-code">${diagnosis.code}</div>
+                    <div class="diagnosis-name">${diagnosis.name}</div>
+                `;
+                item.onclick = () => selectDiagnosis(diagnosis);
+                dropdown.appendChild(item);
+            });
+            
+            dropdown.style.display = 'block';
+        }
+
+        // Select diagnosis
+        function selectDiagnosis(diagnosis) {
+            // Check if already selected
+            if (selectedDiagnoses.find(d => d.code === diagnosis.code)) {
+                showAlert('Diagnosis already selected', 'warning');
+                return;
+            }
+            
+            selectedDiagnoses.push({...diagnosis, id: Date.now()});
+            updateSelectedDiagnoses();
+            
+            // Clear search
+            document.getElementById('diagnosis_search').value = '';
+            document.getElementById('diagnosis_dropdown').style.display = 'none';
+            
+            showAlert(`Added diagnosis: ${diagnosis.code} - ${diagnosis.name}`, 'success');
+        }
+
+        // Update selected diagnoses display
+        function updateSelectedDiagnoses() {
+            const container = document.getElementById('selected_diagnoses');
+            
+            if (selectedDiagnoses.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = '';
+            selectedDiagnoses.forEach(diagnosis => {
+                const diagnosisDiv = document.createElement('div');
+                diagnosisDiv.className = 'selected-diagnosis';
+                diagnosisDiv.innerHTML = `
+                    <div class="diagnosis-header">
+                        <div>
+                            <div class="diagnosis-title">${diagnosis.code} - ${diagnosis.name}</div>
+                            <div class="diagnosis-subtitle">Category: ${diagnosis.category}</div>
+                        </div>
+                        <button class="text-red-500 hover:text-red-700" onclick="removeDiagnosis(${diagnosis.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(diagnosisDiv);
+            });
+        }
+
+        // Remove diagnosis
+        function removeDiagnosis(id) {
+            selectedDiagnoses = selectedDiagnoses.filter(d => d.id !== id);
+            updateSelectedDiagnoses();
+            showAlert('Diagnosis removed', 'success');
+        }
+
+        // Search medication
+        function searchMedication() {
+            const searchTerm = document.getElementById('medication_search').value.trim().toLowerCase();
+            
+            if (!searchTerm) {
+                showAlert('Please enter medication name', 'warning');
+                return;
+            }
+            
+            const medication = medicationData.find(med => 
+                med.name.toLowerCase().includes(searchTerm)
+            );
+            
+            if (medication) {
+                // Populate strength options
+                const strengthSelect = document.getElementById('medication_strength');
+                strengthSelect.innerHTML = '<option value="">Select strength</option>';
+                medication.strengths.forEach(strength => {
+                    const option = document.createElement('option');
+                    option.value = strength;
+                    option.textContent = strength;
+                    strengthSelect.appendChild(option);
+                });
+                
+                showAlert(`Found: ${medication.name} (${medication.category})`, 'success');
+            } else {
+                showAlert('Medication not found in NHIS formulary', 'danger');
+            }
+        }
+
+        // Add medication to prescription
+        function addMedication() {
+            const medicationName = document.getElementById('medication_search').value.trim();
+            const strength = document.getElementById('medication_strength').value;
+            const form = document.getElementById('dosage_form').value;
+            const frequency = document.getElementById('frequency').value;
+            const duration = document.getElementById('duration').value;
+            const quantity = document.getElementById('quantity').value;
+            const instructions = document.getElementById('special_instructions').value;
+            
+            // Validate required fields
+            if (!medicationName || !strength || !form || !frequency || !duration || !quantity) {
+                showAlert('Please fill in all required medication fields', 'warning');
+                return;
+            }
+            
+            // Check for duplicates
+            if (prescribedMedications.find(med => med.name === medicationName && med.strength === strength)) {
+                showAlert('This medication is already prescribed', 'warning');
+                return;
+            }
+            
+            const medication = {
+                id: Date.now(),
+                name: medicationName,
+                strength: strength,
+                form: form,
+                frequency: frequency,
+                duration: duration,
+                quantity: quantity,
+                instructions: instructions
+            };
+            
+            prescribedMedications.push(medication);
+            updateMedicationList();
+            clearMedicationForm();
+            checkDrugInteractions();
+            
+            showAlert(`Added medication: ${medicationName} ${strength}`, 'success');
+        }
+
+        // Update medication list display
+        function updateMedicationList() {
+            const container = document.getElementById('medication_list');
+            
+            if (prescribedMedications.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-4">
+                        <i class="fas fa-pills text-3xl mb-2"></i>
+                        <p>No medications prescribed yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            prescribedMedications.forEach(medication => {
+                const medicationDiv = document.createElement('div');
+                medicationDiv.className = 'medication-item';
+                medicationDiv.innerHTML = `
+                    <div class="medication-header">
+                        <div>
+                            <div class="medication-name">${medication.name} ${medication.strength}</div>
+                            <div class="medication-strength">${medication.form} - ${medication.frequency} for ${medication.duration}</div>
+                        </div>
+                        <button class="text-red-500 hover:text-red-700" onclick="removeMedication(${medication.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="text-sm text-gray-600 mt-2">
+                        <strong>Quantity:</strong> ${medication.quantity} units
+                        ${medication.instructions ? `<br><strong>Instructions:</strong> ${medication.instructions}` : ''}
+                    </div>
+                `;
+                container.appendChild(medicationDiv);
+            });
+        }
+
+        // Remove medication
+        function removeMedication(id) {
+            prescribedMedications = prescribedMedications.filter(med => med.id !== id);
+            updateMedicationList();
+            checkDrugInteractions();
+            showAlert('Medication removed', 'success');
+        }
+
+        // Clear medication form
+        function clearMedicationForm() {
+            document.getElementById('medication_search').value = '';
+            document.getElementById('medication_strength').value = '';
+            document.getElementById('dosage_form').value = '';
+            document.getElementById('frequency').value = '';
+            document.getElementById('duration').value = '';
+            document.getElementById('quantity').value = '';
+            document.getElementById('special_instructions').value = '';
+        }
+
+        // Check drug interactions
+        function checkDrugInteractions() {
+            const alertDiv = document.getElementById('drug_interactions_alert');
+            const detailsSpan = document.getElementById('interaction_details');
+            
+            // Simple interaction check (in real implementation, use drug interaction database)
+            const interactions = [];
+            
+            // Check for common interactions
+            const medicationNames = prescribedMedications.map(med => med.name.toLowerCase());
+            
+            if (medicationNames.includes('warfarin') && medicationNames.includes('ibuprofen')) {
+                interactions.push('Warfarin + Ibuprofen: Increased bleeding risk');
+            }
+            
+            if (medicationNames.includes('metformin') && medicationNames.includes('ciprofloxacin')) {
+                interactions.push('Metformin + Ciprofloxacin: Monitor glucose levels');
+            }
+            
+            if (interactions.length > 0) {
+                detailsSpan.textContent = interactions.join('; ');
+                alertDiv.classList.remove('hidden');
+            } else {
+                alertDiv.classList.add('hidden');
+            }
+        }
+
+        // Finalize diagnosis and proceed to claims
+        function finalizeDiagnosis() {
+            if (!currentPatient) {
+                showAlert('Please select a patient first', 'warning');
+                return;
+            }
+            
+            if (selectedDiagnoses.length === 0) {
+                showAlert('Please add at least one diagnosis', 'warning');
+                return;
+            }
+            
+            if (prescribedMedications.length === 0) {
+                showAlert('Please add at least one medication', 'warning');
+                return;
+            }
+            
+            const consultationData = {
+                patient: currentPatient,
+                date: document.getElementById('consultation_date').value,
+                physician: document.getElementById('physician').value,
+                chiefComplaint: document.getElementById('chief_complaint').value,
+                historyPresentIllness: document.getElementById('history_present_illness').value,
+                physicalExamination: document.getElementById('physical_examination').value,
+                clinicalImpression: document.getElementById('clinical_impression').value,
+                diagnoses: selectedDiagnoses,
+                medications: prescribedMedications,
+                treatmentPlan: document.getElementById('treatment_plan').value,
+                patientEducation: document.getElementById('patient_education').value,
+                followUp: document.getElementById('follow_up').value,
+                nextAppointment: document.getElementById('next_appointment').value,
+                warningSigns: document.getElementById('warning_signs').value,
+                consultationId: 'CONS' + Date.now()
+            };
+            
+            // Show processing
+            showAlert('Finalizing consultation...', 'warning');
+            
+            // Simulate API call
+            setTimeout(() => {
+                showAlert(`Consultation finalized! ID: ${consultationData.consultationId}`, 'success');
+                
+                // Ask if user wants to proceed to claims processing
+                setTimeout(() => {
+                    if (confirm('Would you like to proceed to claims processing for this consultation?')) {
+                        window.location.href = `claims-processing?consultation=${consultationData.consultationId}&patient=${currentPatient.id}`;
+                    }
+                }, 2000);
+            }, 2000);
+        }
+
+        // Save draft
+        function saveDraft() {
+            const draftData = {
+                patient: currentPatient,
+                diagnoses: selectedDiagnoses,
+                medications: prescribedMedications,
+                formData: {
+                    chiefComplaint: document.getElementById('chief_complaint').value,
+                    historyPresentIllness: document.getElementById('history_present_illness').value,
+                    physicalExamination: document.getElementById('physical_examination').value,
+                    clinicalImpression: document.getElementById('clinical_impression').value,
+                    treatmentPlan: document.getElementById('treatment_plan').value,
+                    patientEducation: document.getElementById('patient_education').value,
+                    followUp: document.getElementById('follow_up').value,
+                    nextAppointment: document.getElementById('next_appointment').value,
+                    warningSigns: document.getElementById('warning_signs').value
+                }
+            };
+            
+            localStorage.setItem('consultationDraft', JSON.stringify(draftData));
+            showAlert('Draft saved successfully', 'success');
+        }
+
+        // Print prescription
+        function printPrescription() {
+            if (prescribedMedications.length === 0) {
+                showAlert('No medications to print', 'warning');
+                return;
+            }
+            
+            window.print();
+        }
+
+        // Generate prescription
+        function generatePrescription() {
+            if (prescribedMedications.length === 0) {
+                showAlert('No medications prescribed', 'warning');
+                return;
+            }
+            
+            showAlert('Generating NHIS prescription form...', 'warning');
+            
+            // Simulate form generation
+            setTimeout(() => {
+                showAlert('Prescription form generated successfully!', 'success');
+            }, 2000);
+        }
+
+        // Load previous prescription
+        function loadPreviousPrescription() {
+            if (!currentPatient) {
+                showAlert('Please select a patient first', 'warning');
+                return;
+            }
+            
+            // Mock previous prescription data
+            const previousRx = [
+                {
+                    name: 'Amlodipine',
+                    strength: '5mg',
+                    form: 'Tablet',
+                    frequency: 'Once daily',
+                    duration: '1 month',
+                    quantity: '30',
+                    instructions: 'Take in the morning'
+                }
+            ];
+            
+            prescribedMedications = previousRx.map(med => ({...med, id: Date.now() + Math.random()}));
+            updateMedicationList();
+            
+            showAlert('Previous prescription loaded', 'success');
+        }
+
+        // Load recent consultations
+        function loadRecentConsultations() {
+            const tableBody = document.getElementById('recent_consultations');
+            
+            // Mock data
+            const mockConsultations = [
+                {
+                    date: '2024-01-15',
+                    patient: 'Sarah Johnson',
+                    diagnosis: 'J00 - Common cold',
+                    medications: '3 medications',
+                    physician: 'Dr. Smith',
+                    status: 'Completed',
+                    id: 'CONS001'
+                },
+                {
+                    date: '2024-01-14',
+                    patient: 'John Doe',
+                    diagnosis: 'I10 - Hypertension',
+                    medications: '2 medications',
+                    physician: 'Dr. Johnson',
+                    status: 'Pending Claims',
+                    id: 'CONS002'
+                }
+            ];
+            
+            tableBody.innerHTML = '';
+            
+            mockConsultations.forEach(consultation => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${consultation.date}</td>
+                    <td>${consultation.patient}</td>
+                    <td>${consultation.diagnosis}</td>
+                    <td>${consultation.medications}</td>
+                    <td>${consultation.physician}</td>
+                    <td>
+                        <span class="px-2 py-1 text-xs rounded-full ${consultation.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                            ${consultation.status}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="viewConsultation('${consultation.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // View consultation details
+        function viewConsultation(id) {
+            showAlert(`Viewing consultation ${id}`, 'success');
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'exclamation-circle'} mr-2"></i>
+                ${message}
+            `;
+            
+            alertContainer.appendChild(alertDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

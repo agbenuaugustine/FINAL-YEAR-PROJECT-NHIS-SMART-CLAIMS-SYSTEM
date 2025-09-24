@@ -1,0 +1,1177 @@
+[27-Jun-2025 12:31:15 UTC] User logged out successfully
+[27-Jun-2025 12:54:24 UTC] Create requisition request received from user: 15
+[27-Jun-2025 12:54:24 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[27-Jun-2025 12:54:24 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[27-Jun-2025 13:01:28 UTC] User logged out successfully
+[27-Jun-2025 13:07:47 UTC] User logged out successfully
+[27-Jun-2025 13:11:31 UTC] User logged out successfully
+[27-Jun-2025 13:15:00 UTC] User logged out successfully
+[27-Jun-2025 13:31:50 UTC] User logged out successfully
+[27-Jun-2025 13:39:16 UTC] User logged out successfully
+[27-Jun-2025 14:08:27 UTC] User logged out successfully
+[27-Jun-2025 14:09:53 UTC] User logged out successfully
+[27-Jun-2025 14:49:39 UTC] User logged out successfully
+[27-Jun-2025 14:51:24 UTC] User logged out successfully
+[27-Jun-2025 15:11:23 UTC] User logged out successfully
+[27-Jun-2025 15:14:53 UTC] User logged out successfully
+[27-Jun-2025 15:16:07 UTC] User logged out successfully
+[27-Jun-2025 16:14:32 UTC] User logged out successfully
+[27-Jun-2025 16:14:49 UTC] User logged out successfully
+[27-Jun-2025 16:15:09 UTC] User logged out successfully
+[27-Jun-2025 17:02:32 UTC] User logged out successfully
+[27-Jun-2025 17:18:16 UTC] User logged out successfully
+[27-Jun-2025 17:25:57 UTC] User logged out successfully
+[27-Jun-2025 17:39:13 UTC] User logged out successfully
+[27-Jun-2025 19:42:17 UTC] User logged out successfully
+[27-Jun-2025 20:59:46 UTC] User logged out successfully
+[27-Jun-2025 20:59:47 UTC] User logged out successfully
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:03 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:04 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:11 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:12 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:14 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:15 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:22 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:21:23 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:26:37 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:26:40 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:28:51 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:39:54 UTC] Create requisition request received from user: 15
+[27-Jun-2025 21:39:54 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[27-Jun-2025 21:39:54 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:44:36 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:44:39 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:44:49 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 21:51:59 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 22:02:23 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 22:12:28 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[27-Jun-2025 22:12:38 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[28-Jun-2025 06:21:05 UTC] User logged out successfully
+[28-Jun-2025 06:22:07 UTC] User logged out successfully
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[28-Jun-2025 06:25:38 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[28-Jun-2025 06:41:20 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[28-Jun-2025 06:48:37 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[28-Jun-2025 06:50:00 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[28-Jun-2025 06:50:15 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 06:56:00 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 07:09:38 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 07:09:41 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[28-Jun-2025 07:12:39 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[28-Jun-2025 07:12:49 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 07:17:13 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 07:17:17 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 07:17:19 UTC] PHP Warning:  Undefined array key "blood_pressure" in /home2/uenrclai/public_html/api/models/VitalSigns.php on line 180
+[28-Jun-2025 07:50:41 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:50:50 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:50:50 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:50:51 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:50:56 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:50:56 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:58:11 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:58:27 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 07:59:52 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 438
+[28-Jun-2025 08:03:30 UTC] PHP Fatal error:  Illegal offset type in /home2/uenrclai/public_html/api/diagnosis-medication-api.php on line 449
+[28-Jun-2025 09:55:55 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 09:55:55 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/PrescriptionController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(232): PrescriptionController->savePrescription()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/PrescriptionController.php on line 35
+[28-Jun-2025 10:48:53 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 10:49:03 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:08:17 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:17:13 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:17:27 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:28:16 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:28:28 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:28:38 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:36:40 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:39:48 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:42:35 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 11:55:09 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 19:12:17 UTC] User logged out successfully
+[28-Jun-2025 19:19:20 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 19:34:13 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[28-Jun-2025 19:51:01 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:35
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 35
+[29-Jun-2025 07:20:43 UTC] User logged out successfully
+[29-Jun-2025 07:59:54 UTC] Attempting to insert ICD-10 code: '1751183962601' (length: 13)
+[29-Jun-2025 07:59:54 UTC] Failed to insert ICD-10 code: '1751183962601' - Error: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'id' at row 1
+[29-Jun-2025 08:05:09 UTC] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) could not be passed by reference in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php:33
+Stack trace:
+#0 /home2/uenrclai/public_html/api/diagnosis-medication-api.php(206): DiagnosisController->saveDiagnosis()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/controllers/DiagnosisController.php on line 33
+[29-Jun-2025 11:16:20 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:16:22 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:16:23 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:16:23 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:16:23 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:16:24 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:16:54 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:16:57 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 11:58:11 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=test): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 11:58:11 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=get_claimable_consultations): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 11:58:11 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=search_consultations&amp;q=kwame): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 12:03:40 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=test): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 12:03:40 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=get_claimable_consultations): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 12:03:40 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=search_consultations&amp;q=kwame): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 12:12:53 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 12:12:53 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed in /home2/uenrclai/public_html/api/config/database.php:43
+Stack trace:
+#0 /home2/uenrclai/public_html/api/controllers/PatientController.php(25): Database->getConnection()
+#1 /home2/uenrclai/public_html/api/patients.php(30): PatientController->__construct()
+#2 {main}
+  thrown in /home2/uenrclai/public_html/api/config/database.php on line 43
+[29-Jun-2025 12:12:53 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 12:12:53 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed in /home2/uenrclai/public_html/api/config/database.php:43
+Stack trace:
+#0 /home2/uenrclai/public_html/api/dashboard.php(43): Database->getConnection()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/config/database.php on line 43
+[29-Jun-2025 12:13:05 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 12:13:05 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed in /home2/uenrclai/public_html/api/config/database.php:43
+Stack trace:
+#0 /home2/uenrclai/public_html/api/dashboard.php(43): Database->getConnection()
+#1 {main}
+  thrown in /home2/uenrclai/public_html/api/config/database.php on line 43
+[29-Jun-2025 12:13:05 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 12:13:05 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed in /home2/uenrclai/public_html/api/config/database.php:43
+Stack trace:
+#0 /home2/uenrclai/public_html/api/controllers/PatientController.php(25): Database->getConnection()
+#1 /home2/uenrclai/public_html/api/patients.php(30): PatientController->__construct()
+#2 {main}
+  thrown in /home2/uenrclai/public_html/api/config/database.php on line 43
+[29-Jun-2025 12:13:12 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 12:13:12 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed in /home2/uenrclai/public_html/api/config/database.php:43
+Stack trace:
+#0 /home2/uenrclai/public_html/api/controllers/PatientController.php(25): Database->getConnection()
+#1 /home2/uenrclai/public_html/api/patients.php(30): PatientController->__construct()
+#2 {main}
+  thrown in /home2/uenrclai/public_html/api/config/database.php on line 43
+[29-Jun-2025 12:13:15 UTC] Database connection error: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[29-Jun-2025 12:13:15 UTC] PHP Fatal error:  Uncaught Exception: Database connection failed in /home2/uenrclai/public_html/api/config/database.php:43
+Stack trace:
+#0 /home2/uenrclai/public_html/api/controllers/PatientController.php(25): Database->getConnection()
+#1 /home2/uenrclai/public_html/api/patients.php(30): PatientController->__construct()
+#2 {main}
+  thrown in /home2/uenrclai/public_html/api/config/database.php on line 43
+[29-Jun-2025 13:38:14 UTC] PHP Fatal error:  Cannot redeclare ClaimsController::getVisitServices() in /home2/uenrclai/public_html/api/controllers/ClaimsController.php on line 687
+[29-Jun-2025 13:38:40 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=test): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 13:38:40 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=get_claimable_consultations): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 13:38:40 UTC] PHP Warning:  file_get_contents(../claims-api.php?action=search_consultations&amp;q=kwame): Failed to open stream: No such file or directory in /home2/uenrclai/public_html/api/test_api.php on line 17
+[29-Jun-2025 14:32:53 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:32:53 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:32:53 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:32:53 UTC] Claims API Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.phone_number' in 'SELECT'
+[29-Jun-2025 14:32:53 UTC] Claims API: Result status = error
+[29-Jun-2025 14:32:55 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:32:55 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:32:55 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:32:55 UTC] Claims API Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.phone_number' in 'SELECT'
+[29-Jun-2025 14:32:55 UTC] Claims API: Result status = error
+[29-Jun-2025 14:33:28 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:33:28 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:33:28 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:33:28 UTC] Claims API Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.phone_number' in 'SELECT'
+[29-Jun-2025 14:33:28 UTC] Claims API: Result status = error
+[29-Jun-2025 14:36:19 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:36:19 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:36:19 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:36:19 UTC] Claims API Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.phone_number' in 'SELECT'
+[29-Jun-2025 14:36:19 UTC] Claims API: Result status = error
+[29-Jun-2025 14:39:13 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:39:13 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:39:13 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:39:13 UTC] Claims API Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'dept.name' in 'SELECT'
+[29-Jun-2025 14:39:13 UTC] Claims API: Result status = error
+[29-Jun-2025 14:39:27 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:39:27 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:39:27 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:39:27 UTC] Claims API Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'dept.name' in 'SELECT'
+[29-Jun-2025 14:39:27 UTC] Claims API: Result status = error
+[29-Jun-2025 14:39:53 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:39:53 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:39:53 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:39:53 UTC] Claims API Error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'dept.name' in 'SELECT'
+[29-Jun-2025 14:39:53 UTC] Claims API: Result status = error
+[29-Jun-2025 14:44:20 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:44:20 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:44:20 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:44:20 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:44:20 UTC] Claims API: Result status = success
+[29-Jun-2025 14:44:31 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:44:31 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:44:31 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:44:31 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:44:31 UTC] Claims API: Result status = success
+[29-Jun-2025 14:44:35 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:44:35 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:44:35 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:44:35 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:44:35 UTC] Claims API: Result status = success
+[29-Jun-2025 14:53:18 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:53:18 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:53:18 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:53:18 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:53:18 UTC] Claims API: Result status = success
+[29-Jun-2025 14:53:27 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:53:27 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:53:27 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:53:27 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:53:27 UTC] Claims API: Result status = success
+[29-Jun-2025 14:54:56 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:54:56 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:54:56 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:54:56 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:54:56 UTC] Claims API: Result status = success
+[29-Jun-2025 14:55:00 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:55:00 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:55:00 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:55:00 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:55:00 UTC] Claims API: Result status = success
+[29-Jun-2025 14:55:01 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 14:55:01 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 14:55:01 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 14:55:01 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 14:55:01 UTC] Claims API: Result status = success
+[29-Jun-2025 15:17:12 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:17:12 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:17:12 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:17:12 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:17:12 UTC] Claims API: Result status = success
+[29-Jun-2025 15:17:19 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:17:19 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:17:19 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:17:19 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:17:19 UTC] Claims API: Result status = success
+[29-Jun-2025 15:17:21 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:17:21 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:17:21 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:17:21 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:17:21 UTC] Claims API: Result status = success
+[29-Jun-2025 15:25:17 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:25:17 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:25:17 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:25:17 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:25:17 UTC] Claims API: Result status = success
+[29-Jun-2025 15:25:24 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[29-Jun-2025 15:25:24 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:25:24 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:25:24 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:25:44 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=sam Action: search_consultations
+[29-Jun-2025 15:25:44 UTC] Claims API Action: search_consultations
+[29-Jun-2025 15:25:47 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=undefined Action: get_consultation_details
+[29-Jun-2025 15:25:47 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:26:06 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=ako Action: search_consultations
+[29-Jun-2025 15:26:06 UTC] Claims API Action: search_consultations
+[29-Jun-2025 15:26:15 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=undefined Action: get_consultation_details
+[29-Jun-2025 15:26:15 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:26:30 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=32 Action: get_consultation_details
+[29-Jun-2025 15:26:30 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:26:30 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:26:30 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:26:35 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:26:35 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:26:35 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:26:35 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:26:35 UTC] Claims API: Result status = success
+[29-Jun-2025 15:26:36 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=32 Action: get_consultation_details
+[29-Jun-2025 15:26:36 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:26:36 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:26:36 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:33:29 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:33:29 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:33:29 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:33:29 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:33:29 UTC] Claims API: Result status = success
+[29-Jun-2025 15:36:36 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[29-Jun-2025 15:36:36 UTC] Claims API Action: get_claims
+[29-Jun-2025 15:36:36 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[29-Jun-2025 15:36:36 UTC] Claims API Action: get_claims_analytics
+[29-Jun-2025 15:36:36 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:36:36 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:36:36 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:36:36 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:36:36 UTC] Claims API: Result status = success
+[29-Jun-2025 15:36:46 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=sam Action: search_consultations
+[29-Jun-2025 15:36:46 UTC] Claims API Action: search_consultations
+[29-Jun-2025 15:36:48 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=undefined Action: get_consultation_details
+[29-Jun-2025 15:36:48 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:37:15 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=sam Action: search_consultations
+[29-Jun-2025 15:37:15 UTC] Claims API Action: search_consultations
+[29-Jun-2025 15:37:16 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=undefined Action: get_consultation_details
+[29-Jun-2025 15:37:16 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:37:39 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[29-Jun-2025 15:37:39 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:37:39 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:37:39 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:37:42 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=32 Action: get_consultation_details
+[29-Jun-2025 15:37:42 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:37:42 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:37:42 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:37:53 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[29-Jun-2025 15:37:53 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:37:53 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:37:53 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:38:03 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:38:03 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:38:03 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:38:03 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:38:03 UTC] Claims API: Result status = success
+[29-Jun-2025 15:38:03 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[29-Jun-2025 15:38:03 UTC] Claims API Action: get_claims
+[29-Jun-2025 15:38:03 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[29-Jun-2025 15:38:03 UTC] Claims API Action: get_claims_analytics
+[29-Jun-2025 15:38:12 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[29-Jun-2025 15:38:12 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:38:12 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:38:12 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:03 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[29-Jun-2025 15:39:03 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:39:03 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:03 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:03 UTC] Claims API Request: POST /api/claims-api.php?action=verify_nhis_eligibility Action: verify_nhis_eligibility
+[29-Jun-2025 15:39:03 UTC] Claims API Action: verify_nhis_eligibility
+[29-Jun-2025 15:39:08 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[29-Jun-2025 15:39:08 UTC] Claims API Action: calculate_claim_amount
+[29-Jun-2025 15:39:08 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:08 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:11 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=32 Action: get_consultation_details
+[29-Jun-2025 15:39:11 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:39:11 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:11 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:11 UTC] Claims API Request: POST /api/claims-api.php?action=verify_nhis_eligibility Action: verify_nhis_eligibility
+[29-Jun-2025 15:39:11 UTC] Claims API Action: verify_nhis_eligibility
+[29-Jun-2025 15:39:12 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[29-Jun-2025 15:39:12 UTC] Claims API Action: calculate_claim_amount
+[29-Jun-2025 15:39:12 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:12 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:15 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[29-Jun-2025 15:39:15 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:39:15 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:15 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:15 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[29-Jun-2025 15:39:15 UTC] Claims API Action: calculate_claim_amount
+[29-Jun-2025 15:39:15 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:15 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:16 UTC] Claims API Request: POST /api/claims-api.php?action=verify_nhis_eligibility Action: verify_nhis_eligibility
+[29-Jun-2025 15:39:16 UTC] Claims API Action: verify_nhis_eligibility
+[29-Jun-2025 15:39:17 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[29-Jun-2025 15:39:17 UTC] Claims API Action: calculate_claim_amount
+[29-Jun-2025 15:39:17 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:17 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:21 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[29-Jun-2025 15:39:21 UTC] Claims API Action: calculate_claim_amount
+[29-Jun-2025 15:39:21 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:39:21 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:39:55 UTC] Claims API Request: POST /api/claims-api.php?action=generate_claim Action: generate_claim
+[29-Jun-2025 15:39:55 UTC] Claims API Action: generate_claim
+[29-Jun-2025 15:41:17 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=32 Action: get_consultation_details
+[29-Jun-2025 15:41:17 UTC] Claims API Action: get_consultation_details
+[29-Jun-2025 15:41:17 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:41:17 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:41:18 UTC] Claims API Request: POST /api/claims-api.php?action=verify_nhis_eligibility Action: verify_nhis_eligibility
+[29-Jun-2025 15:41:18 UTC] Claims API Action: verify_nhis_eligibility
+[29-Jun-2025 15:41:19 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[29-Jun-2025 15:41:19 UTC] Claims API Action: calculate_claim_amount
+[29-Jun-2025 15:41:19 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:41:19 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:41:22 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[29-Jun-2025 15:41:22 UTC] Claims API Action: calculate_claim_amount
+[29-Jun-2025 15:41:22 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[29-Jun-2025 15:41:22 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[29-Jun-2025 15:43:56 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 15:43:56 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 15:43:56 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 15:43:56 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[29-Jun-2025 15:43:56 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[29-Jun-2025 15:43:56 UTC] Claims API Action: get_claims
+[29-Jun-2025 15:43:56 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 15:43:56 UTC] Claims API: Result status = success
+[29-Jun-2025 15:43:56 UTC] Claims API Action: get_claims_analytics
+[29-Jun-2025 15:48:25 UTC] Create requisition request received from user: 15
+[29-Jun-2025 15:48:25 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[29-Jun-2025 15:48:25 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[29-Jun-2025 15:49:30 UTC] User logged out successfully
+[29-Jun-2025 15:50:14 UTC] User logged out successfully
+[29-Jun-2025 15:59:29 UTC] User logged out successfully
+[29-Jun-2025 16:02:47 UTC] User logged out successfully
+[29-Jun-2025 16:03:47 UTC] User logged out successfully
+[29-Jun-2025 16:04:43 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[29-Jun-2025 16:04:43 UTC] Claims API Action: get_claimable_consultations
+[29-Jun-2025 16:04:43 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[29-Jun-2025 16:04:43 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[29-Jun-2025 16:04:43 UTC] Claims API Query executed successfully. Found 2 consultations.
+[29-Jun-2025 16:04:43 UTC] Claims API Action: get_claims
+[29-Jun-2025 16:04:43 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[29-Jun-2025 16:04:43 UTC] Claims API: Result status = success
+[29-Jun-2025 16:04:43 UTC] Claims API Action: get_claims_analytics
+[29-Jun-2025 20:27:17 UTC] User logged out successfully
+[01-Jul-2025 14:53:35 UTC] User logged out successfully
+[07-Jul-2025 14:03:30 UTC] User logged out successfully
+[07-Jul-2025 14:13:35 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[07-Jul-2025 14:13:35 UTC] Claims API Action: get_claimable_consultations
+[07-Jul-2025 14:13:35 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[07-Jul-2025 14:13:35 UTC] Claims API Query executed successfully. Found 2 consultations.
+[07-Jul-2025 14:13:35 UTC] Claims API: Result status = success
+[07-Jul-2025 14:13:35 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[07-Jul-2025 14:13:35 UTC] Claims API Action: get_claims
+[07-Jul-2025 14:13:35 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[07-Jul-2025 14:13:35 UTC] Claims API Action: get_claims_analytics
+[07-Jul-2025 14:14:09 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[07-Jul-2025 14:14:09 UTC] Claims API Action: get_consultation_details
+[07-Jul-2025 14:14:09 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[07-Jul-2025 14:14:09 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[07-Jul-2025 14:14:09 UTC] Claims API Request: POST /api/claims-api.php?action=verify_nhis_eligibility Action: verify_nhis_eligibility
+[07-Jul-2025 14:14:09 UTC] Claims API Action: verify_nhis_eligibility
+[07-Jul-2025 14:14:13 UTC] Claims API Request: POST /api/claims-api.php?action=calculate_claim_amount Action: calculate_claim_amount
+[07-Jul-2025 14:14:13 UTC] Claims API Action: calculate_claim_amount
+[07-Jul-2025 14:14:13 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[07-Jul-2025 14:14:13 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[07-Jul-2025 14:18:27 UTC] User logged out successfully
+[08-Jul-2025 08:00:01 UTC] User logged out successfully
+[08-Jul-2025 08:00:15 UTC] User logged out successfully
+[08-Jul-2025 08:01:04 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[08-Jul-2025 08:01:04 UTC] Claims API Action: get_claimable_consultations
+[08-Jul-2025 08:01:04 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[08-Jul-2025 08:01:04 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[08-Jul-2025 08:01:04 UTC] Claims API Query executed successfully. Found 2 consultations.
+[08-Jul-2025 08:01:04 UTC] Claims API: Result status = success
+[08-Jul-2025 08:01:04 UTC] Claims API Action: get_claims
+[08-Jul-2025 08:01:04 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[08-Jul-2025 08:01:04 UTC] Claims API Action: get_claims_analytics
+[08-Jul-2025 08:02:11 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[08-Jul-2025 08:02:11 UTC] Claims API Action: get_claimable_consultations
+[08-Jul-2025 08:02:11 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[08-Jul-2025 08:02:11 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[08-Jul-2025 08:02:11 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[08-Jul-2025 08:02:11 UTC] Claims API Action: get_claims
+[08-Jul-2025 08:02:11 UTC] Claims API Action: get_claims_analytics
+[08-Jul-2025 08:02:11 UTC] Claims API Query executed successfully. Found 2 consultations.
+[08-Jul-2025 08:02:11 UTC] Claims API: Result status = success
+[09-Jul-2025 12:23:49 UTC] User logged out successfully
+[15-Jul-2025 18:25:53 UTC] User logged out successfully
+[16-Jul-2025 23:08:22 UTC] User logged out successfully
+[16-Jul-2025 23:11:15 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[16-Jul-2025 23:11:16 UTC] Claims API Action: get_claimable_consultations
+[16-Jul-2025 23:11:16 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[16-Jul-2025 23:11:16 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[16-Jul-2025 23:11:16 UTC] Claims API Action: get_claims
+[16-Jul-2025 23:11:16 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[16-Jul-2025 23:11:16 UTC] Claims API Query executed successfully. Found 2 consultations.
+[16-Jul-2025 23:11:16 UTC] Claims API: Result status = success
+[16-Jul-2025 23:11:16 UTC] Claims API Action: get_claims_analytics
+[16-Jul-2025 23:20:25 UTC] User logged out successfully
+[16-Jul-2025 23:24:55 UTC] User logged out successfully
+[16-Jul-2025 23:26:30 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[16-Jul-2025 23:26:30 UTC] Claims API Action: get_claimable_consultations
+[16-Jul-2025 23:26:30 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[16-Jul-2025 23:26:30 UTC] Claims API Query executed successfully. Found 2 consultations.
+[16-Jul-2025 23:26:30 UTC] Claims API: Result status = success
+[16-Jul-2025 23:26:30 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[16-Jul-2025 23:26:30 UTC] Claims API Action: get_claims
+[16-Jul-2025 23:26:30 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[16-Jul-2025 23:26:30 UTC] Claims API Action: get_claims_analytics
+[24-Jul-2025 06:15:25 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:15:25 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:15:25 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:15:37 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:15:37 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:15:37 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:16:18 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:16:18 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:16:18 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:18:05 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:18:05 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:18:05 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:18:22 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:18:22 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:18:22 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:18:30 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[24-Jul-2025 06:18:30 UTC] Claims API Action: get_claims
+[24-Jul-2025 06:18:30 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[24-Jul-2025 06:18:30 UTC] Claims API Action: get_claimable_consultations
+[24-Jul-2025 06:18:30 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[24-Jul-2025 06:18:30 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[24-Jul-2025 06:18:30 UTC] Claims API Action: get_claims_analytics
+[24-Jul-2025 06:18:30 UTC] Claims API Query executed successfully. Found 2 consultations.
+[24-Jul-2025 06:18:30 UTC] Claims API: Result status = success
+[24-Jul-2025 06:18:43 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=121 Action: search_consultations
+[24-Jul-2025 06:18:43 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:43 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=1212 Action: search_consultations
+[24-Jul-2025 06:18:43 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:43 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=12121 Action: search_consultations
+[24-Jul-2025 06:18:43 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:44 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=121212 Action: search_consultations
+[24-Jul-2025 06:18:44 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:45 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=1212121 Action: search_consultations
+[24-Jul-2025 06:18:45 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:45 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=12121212 Action: search_consultations
+[24-Jul-2025 06:18:45 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:48 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=1212121 Action: search_consultations
+[24-Jul-2025 06:18:48 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=121212 Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=12121 Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=1212 Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Request: GET /api/claims-api.php?action=search_consultations&q=121 Action: search_consultations
+[24-Jul-2025 06:18:49 UTC] Claims API Action: search_consultations
+[24-Jul-2025 06:18:56 UTC] Claims API Request: GET /api/claims-api.php?action=get_consultation_details&visit_id=35 Action: get_consultation_details
+[24-Jul-2025 06:18:56 UTC] Claims API Action: get_consultation_details
+[24-Jul-2025 06:18:56 UTC] Lab orders table not found: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'lo.test_id' in 'ON'
+[24-Jul-2025 06:18:56 UTC] Services table not found: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'uenrclai_claims.service_types' doesn't exist
+[24-Jul-2025 06:19:29 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:19:29 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:19:29 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:20:47 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:20:47 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:20:47 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:21:46 UTC] Create requisition request received from user: 1
+[24-Jul-2025 06:21:46 UTC] Error creating service requisition: SQLSTATE[HY000]: General error: 1364 Field 'visit_number' doesn't have a default value
+[24-Jul-2025 06:21:46 UTC] Stack trace: #0 /home2/uenrclai/public_html/api/services-api.php(1043): PDOStatement->execute()
+#1 {main}
+[24-Jul-2025 06:22:18 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[24-Jul-2025 06:22:18 UTC] Claims API Action: get_claimable_consultations
+[24-Jul-2025 06:22:18 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[24-Jul-2025 06:22:18 UTC] Claims API Query executed successfully. Found 2 consultations.
+[24-Jul-2025 06:22:18 UTC] Claims API: Result status = success
+[24-Jul-2025 06:22:18 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[24-Jul-2025 06:22:18 UTC] Claims API Action: get_claims
+[24-Jul-2025 06:22:18 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[24-Jul-2025 06:22:18 UTC] Claims API Action: get_claims_analytics
+[26-Jul-2025 08:02:49 UTC] User logged out successfully
+[26-Jul-2025 08:03:39 UTC] Create requisition request received from user: 15
+[26-Jul-2025 08:05:16 UTC] Create requisition request received from user: 15
+[26-Jul-2025 19:47:14 UTC] User logged out successfully
+[26-Jul-2025 19:53:04 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[26-Jul-2025 19:53:04 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[26-Jul-2025 19:53:04 UTC] Claims API Action: get_claimable_consultations
+[26-Jul-2025 19:53:04 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[26-Jul-2025 19:53:04 UTC] Claims API Action: get_claims
+[26-Jul-2025 19:53:04 UTC] Claims API Query executed successfully. Found 2 consultations.
+[26-Jul-2025 19:53:04 UTC] Claims API: Result status = success
+[26-Jul-2025 19:53:04 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[26-Jul-2025 19:53:04 UTC] Claims API Action: get_claims_analytics
+[03-Aug-2025 17:15:11 UTC] Create requisition request received from user: 33
+[03-Aug-2025 17:31:20 UTC] Create requisition request received from user: 33
+[03-Aug-2025 17:35:31 UTC] Create requisition request received from user: 33
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "nhis_expiry" in /home2/uenrclai/public_html/api/models/Patient.php on line 197
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "membership_type" in /home2/uenrclai/public_html/api/models/Patient.php on line 198
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "policy_status" in /home2/uenrclai/public_html/api/models/Patient.php on line 199
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "title" in /home2/uenrclai/public_html/api/models/Patient.php on line 202
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "middle_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 204
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "phone_primary" in /home2/uenrclai/public_html/api/models/Patient.php on line 212
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "phone_secondary" in /home2/uenrclai/public_html/api/models/Patient.php on line 213
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "email" in /home2/uenrclai/public_html/api/models/Patient.php on line 214
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "region" in /home2/uenrclai/public_html/api/models/Patient.php on line 218
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "district" in /home2/uenrclai/public_html/api/models/Patient.php on line 219
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "town_city" in /home2/uenrclai/public_html/api/models/Patient.php on line 220
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "postal_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 221
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "residential_address" in /home2/uenrclai/public_html/api/models/Patient.php on line 222
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "landmark" in /home2/uenrclai/public_html/api/models/Patient.php on line 223
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "chronic_conditions" in /home2/uenrclai/public_html/api/models/Patient.php on line 228
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "emergency_contact_name" in /home2/uenrclai/public_html/api/models/Patient.php on line 229
+[03-Aug-2025 17:39:09 UTC] PHP Warning:  Undefined array key "emergency_contact_relationship" in /home2/uenrclai/public_html/api/models/Patient.php on line 230
+[03-Aug-2025 17:52:40 UTC] User logged out successfully
+[03-Aug-2025 17:55:39 UTC] User logged out successfully
+[03-Aug-2025 18:01:58 UTC] User logged out successfully
+[03-Aug-2025 18:02:18 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[03-Aug-2025 18:02:18 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[03-Aug-2025 18:02:18 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[03-Aug-2025 18:02:18 UTC] Claims API Action: get_claims_analytics
+[03-Aug-2025 18:02:18 UTC] Claims API Action: get_claims
+[03-Aug-2025 18:02:18 UTC] Claims API Action: get_claimable_consultations
+[03-Aug-2025 18:02:18 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[03-Aug-2025 18:02:18 UTC] Claims API Query executed successfully. Found 0 consultations.
+[03-Aug-2025 18:02:18 UTC] Claims API: Result status = success
+[10-Aug-2025 18:21:19 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[10-Aug-2025 18:21:19 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[10-Aug-2025 18:21:19 UTC] Claims API Action: get_claims
+[10-Aug-2025 18:21:19 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[10-Aug-2025 18:21:19 UTC] Claims API Action: get_claims_analytics
+[10-Aug-2025 18:21:19 UTC] Claims API Action: get_claimable_consultations
+[10-Aug-2025 18:21:19 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[10-Aug-2025 18:21:19 UTC] Claims API Query executed successfully. Found 0 consultations.
+[10-Aug-2025 18:21:19 UTC] Claims API: Result status = success
+[10-Aug-2025 18:22:50 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[10-Aug-2025 18:22:50 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[10-Aug-2025 18:22:50 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[10-Aug-2025 18:22:50 UTC] Claims API Action: get_claims_analytics
+[10-Aug-2025 18:22:50 UTC] Claims API Action: get_claimable_consultations
+[10-Aug-2025 18:22:50 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[10-Aug-2025 18:22:50 UTC] Claims API Action: get_claims
+[10-Aug-2025 18:22:50 UTC] Claims API Query executed successfully. Found 0 consultations.
+[10-Aug-2025 18:22:50 UTC] Claims API: Result status = success
+[10-Aug-2025 19:24:39 UTC] Claims API Request: GET /api/claims-api.php?action=get_claimable_consultations Action: get_claimable_consultations
+[10-Aug-2025 19:24:39 UTC] Claims API Action: get_claimable_consultations
+[10-Aug-2025 19:24:39 UTC] Claims API: Getting claimable consultations with params - dateFrom: , dateTo: , status: , department: 
+[10-Aug-2025 19:24:39 UTC] Claims API Query executed successfully. Found 0 consultations.
+[10-Aug-2025 19:24:39 UTC] Claims API: Result status = success
+[10-Aug-2025 19:24:39 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims&limit=10 Action: get_claims
+[10-Aug-2025 19:24:39 UTC] Claims API Action: get_claims
+[10-Aug-2025 19:24:39 UTC] Claims API Request: GET /api/claims-api.php?action=get_claims_analytics&period=month Action: get_claims_analytics
+[10-Aug-2025 19:24:39 UTC] Claims API Action: get_claims_analytics

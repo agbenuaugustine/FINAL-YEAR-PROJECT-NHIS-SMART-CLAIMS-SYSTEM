@@ -1,0 +1,361 @@
+<?php
+/**
+ * Pharmacy Department Dashboard
+ * 
+ * Dashboard for pharmacy staff - Stage 4 of NHIS Claims Workflow
+ * Primary responsibility: Medication Dispensing & Pharmaceutical Care
+ */
+
+// Include secure authentication middleware
+require_once __DIR__ . '/secure_auth.php';
+
+// Define department configuration
+define('DEPARTMENT_CONFIG', [
+    'name' => 'Pharmacy Dashboard',
+    'code' => 'PHARM',
+    'icon' => 'fas fa-pills',
+    'description' => 'Pharmacy Services - Prescription Processing, Medication Dispensing & Drug Management',
+    'workflow_stage' => 4, // Handles stage 4 (after diagnosis)
+    'primary_functions' => ['prescription_processing', 'medication_dispensing', 'drug_counseling'],
+    'next_stage' => 'claims_processing',
+    'allowed_roles' => ['hospital_admin', 'admin', 'pharmacist', 'doctor'],
+    'primary_action' => [
+        'label' => 'Process Prescriptions',
+        'url' => 'prescriptions.php',
+        'icon' => 'fas fa-prescription-bottle'
+    ]
+]);
+
+// Mock data for demonstration - replace with database queries
+$pharmacy_stats = [
+    'pending_prescriptions' => 18,
+    'dispensed_today' => 67,
+    'low_stock_items' => 5,
+    'expired_items' => 2,
+    'revenue_today' => 2450.75
+];
+
+$pending_prescriptions = [
+    [
+        'id' => 1,
+        'patient_name' => 'Mary Johnson',
+        'patient_number' => 'PAT001',
+        'prescribed_by' => 'Dr. Smith',
+        'prescription_time' => '08:30 AM',
+        'medications' => [
+            ['name' => 'Amoxicillin 500mg', 'quantity' => 21, 'frequency' => '3x daily'],
+            ['name' => 'Paracetamol 500mg', 'quantity' => 20, 'frequency' => '4x daily as needed']
+        ],
+        'priority' => 'Normal',
+        'patient_waiting' => true
+    ],
+    [
+        'id' => 2,
+        'patient_name' => 'John Wilson',
+        'patient_number' => 'PAT002',
+        'prescribed_by' => 'Dr. Johnson',
+        'prescription_time' => '09:15 AM',
+        'medications' => [
+            ['name' => 'Insulin Glargine', 'quantity' => 1, 'frequency' => 'Once daily'],
+            ['name' => 'Metformin 500mg', 'quantity' => 60, 'frequency' => '2x daily']
+        ],
+        'priority' => 'Urgent',
+        'patient_waiting' => true
+    ],
+    [
+        'id' => 3,
+        'patient_name' => 'Sarah Davis',
+        'patient_number' => 'PAT003',
+        'prescribed_by' => 'Dr. Brown',
+        'prescription_time' => '10:00 AM',
+        'medications' => [
+            ['name' => 'Hypertension Combo', 'quantity' => 30, 'frequency' => 'Once daily']
+        ],
+        'priority' => 'Normal',
+        'patient_waiting' => false
+    ]
+];
+
+$low_stock_items = [
+    ['name' => 'Amoxicillin 500mg', 'current_stock' => 45, 'minimum_stock' => 100, 'status' => 'Low'],
+    ['name' => 'Insulin Glargine', 'current_stock' => 8, 'minimum_stock' => 20, 'status' => 'Critical'],
+    ['name' => 'Paracetamol 500mg', 'current_stock' => 78, 'minimum_stock' => 150, 'status' => 'Low']
+];
+
+// Capture department-specific content
+ob_start();
+?>
+
+<!-- Pharmacy Department Statistics -->
+<div class="card">
+    <h2 class="card-title text-xl font-bold mb-4">
+        <i class="fas fa-chart-line mr-2"></i>
+        Pharmacy Statistics
+    </h2>
+    <div class="card-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #ff9500, #ff6b35);">
+                <i class="fas fa-prescription-bottle"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value"><?php echo $pharmacy_stats['pending_prescriptions']; ?></div>
+                <div class="stat-label">Pending Prescriptions</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #34c759, #30d158);">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value"><?php echo $pharmacy_stats['dispensed_today']; ?></div>
+                <div class="stat-label">Dispensed Today</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #ff3b30, #ff6b6b);">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value"><?php echo $pharmacy_stats['low_stock_items']; ?></div>
+                <div class="stat-label">Low Stock Items</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #af52de, #bf5af2);">
+                <i class="fas fa-calendar-times"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value"><?php echo $pharmacy_stats['expired_items']; ?></div>
+                <div class="stat-label">Expired Items</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #0071e3, #5ac8fa);">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value">₵<?php echo number_format($pharmacy_stats['revenue_today'], 2); ?></div>
+                <div class="stat-label">Revenue Today</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pharmacy Primary Functions -->
+<div class="card">
+    <h2 class="card-title text-xl font-bold mb-4">
+        <i class="fas fa-tasks mr-2"></i>
+        Pharmacy Functions (Stage 4)
+    </h2>
+    <div class="card-grid">
+        <a href="prescriptions.php" class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #0071e3, #5ac8fa);">
+                <i class="fas fa-prescription"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value text-lg">Prescription Processing</div>
+                <div class="stat-label">Review & validate prescriptions from doctors</div>
+                <div class="text-xs text-green-600 mt-1">
+                    <i class="fas fa-arrow-left"></i> From: Diagnosis & Medication
+                </div>
+            </div>
+        </a>
+        
+        <a href="medication-dispensing.php" class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #34c759, #30d158);">
+                <i class="fas fa-pills"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value text-lg">Medication Dispensing</div>
+                <div class="stat-label">Dispense medications & provide instructions</div>
+                <div class="text-xs text-blue-600 mt-1">
+                    <i class="fas fa-arrow-right"></i> Patient Counseling
+                </div>
+            </div>
+        </a>
+        
+        <a href="drug-counseling.php" class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #af52de, #bf5af2);">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value text-lg">Patient Counseling</div>
+                <div class="stat-label">Educate patients on medication use</div>
+                <div class="text-xs text-blue-600 mt-1">
+                    <i class="fas fa-arrow-right"></i> Medication Adherence
+                </div>
+            </div>
+        </a>
+        
+        <a href="inventory-management.php" class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #ff9500, #ff6b35);">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value text-lg">Inventory Management</div>
+                <div class="stat-label">Manage drug stock & expiry dates</div>
+                <div class="text-xs text-green-600 mt-1">
+                    <i class="fas fa-arrow-right"></i> Next: Claims Processing
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Pending Prescriptions -->
+<div class="card">
+    <h2 class="card-title text-xl font-bold mb-4">
+        <i class="fas fa-prescription-bottle mr-2"></i>
+        Pending Prescriptions
+    </h2>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Patient #</th>
+                    <th>Prescribed By</th>
+                    <th>Time</th>
+                    <th>Medications</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pending_prescriptions as $prescription): ?>
+                <tr>
+                    <td class="font-semibold"><?php echo htmlspecialchars($prescription['patient_name']); ?></td>
+                    <td class="font-mono"><?php echo htmlspecialchars($prescription['patient_number']); ?></td>
+                    <td><?php echo htmlspecialchars($prescription['prescribed_by']); ?></td>
+                    <td><?php echo htmlspecialchars($prescription['prescription_time']); ?></td>
+                    <td class="text-sm">
+                        <?php foreach ($prescription['medications'] as $med): ?>
+                            <div class="mb-1">
+                                <strong><?php echo htmlspecialchars($med['name']); ?></strong><br>
+                                <span class="text-gray-600">Qty: <?php echo $med['quantity']; ?> | <?php echo htmlspecialchars($med['frequency']); ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </td>
+                    <td>
+                        <span class="status-badge <?php 
+                            echo $prescription['priority'] == 'Urgent' ? 'status-urgent' : 'status-waiting';
+                        ?>">
+                            <?php echo $prescription['priority']; ?>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge <?php echo $prescription['patient_waiting'] ? 'status-in-progress' : 'status-waiting'; ?>">
+                            <?php echo $prescription['patient_waiting'] ? 'Patient Waiting' : 'Can Collect Later'; ?>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="flex gap-2">
+                            <a href="prescription-details.php?id=<?php echo $prescription['id']; ?>" 
+                               class="text-blue-600 hover:text-blue-800" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="dispense-medication.php?id=<?php echo $prescription['id']; ?>" 
+                               class="text-green-600 hover:text-green-800" title="Dispense Medication">
+                                <i class="fas fa-pills"></i>
+                            </a>
+                            <a href="check-interactions.php?id=<?php echo $prescription['id']; ?>" 
+                               class="text-purple-600 hover:text-purple-800" title="Check Drug Interactions">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Low Stock Alert -->
+<?php if (!empty($low_stock_items)): ?>
+<div class="card border-orange-200 bg-orange-50">
+    <h2 class="card-title text-xl font-bold mb-4 text-orange-700">
+        <i class="fas fa-exclamation-triangle mr-2"></i>
+        Low Stock Alert - Reorder Required
+    </h2>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Medication</th>
+                    <th>Current Stock</th>
+                    <th>Minimum Stock</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($low_stock_items as $item): ?>
+                <tr class="<?php echo $item['status'] == 'Critical' ? 'bg-red-100 border-red-200' : 'bg-orange-100 border-orange-200'; ?>">
+                    <td class="font-semibold"><?php echo htmlspecialchars($item['name']); ?></td>
+                    <td class="font-bold <?php echo $item['status'] == 'Critical' ? 'text-red-700' : 'text-orange-700'; ?>">
+                        <?php echo $item['current_stock']; ?>
+                    </td>
+                    <td class="text-sm text-gray-600"><?php echo $item['minimum_stock']; ?></td>
+                    <td>
+                        <span class="status-badge <?php echo $item['status'] == 'Critical' ? 'status-urgent' : 'status-in-progress'; ?>">
+                            <?php echo $item['status']; ?>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="flex gap-2">
+                            <a href="reorder-medication.php?item=<?php echo urlencode($item['name']); ?>" 
+                               class="text-blue-600 hover:text-blue-800" title="Reorder">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                            <a href="find-alternatives.php?item=<?php echo urlencode($item['name']); ?>" 
+                               class="text-green-600 hover:text-green-800" title="Find Alternatives">
+                                <i class="fas fa-search"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php endif; ?>
+
+<!-- Workflow Guide for Pharmacy -->
+<div class="card">
+    <h2 class="card-title text-xl font-bold mb-4">
+        <i class="fas fa-route mr-2"></i>
+        Pharmacy Workflow Guide
+    </h2>
+    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+        <h3 class="font-semibold text-green-800 mb-2">Stage 4: Pharmacy Responsibilities</h3>
+        <ol class="list-decimal list-inside text-green-700 space-y-2">
+            <li><strong>Receive Prescriptions:</strong> Process prescriptions from Diagnosis & Medication (Stage 4)</li>
+            <li><strong>Prescription Review:</strong> Verify prescription accuracy and check for drug interactions</li>
+            <li><strong>Medication Dispensing:</strong> Dispense correct medications with proper labeling</li>
+            <li><strong>Patient Counseling:</strong> Educate patients on medication use, dosage, and side effects</li>
+            <li><strong>Hand-off:</strong> Complete pharmaceutical care and send to Claims Processing (Stage 5)</li>
+        </ol>
+        <div class="mt-3 p-3 bg-white rounded border border-green-200">
+            <p class="text-sm text-green-600">
+                <i class="fas fa-info-circle mr-1"></i>
+                <strong>Safety First:</strong> Always verify patient identity, check for allergies, and counsel on proper medication use. 
+                Report any adverse reactions immediately.
+            </p>
+        </div>
+    </div>
+</div>
+
+<?php
+// Store the captured content in global variable for template
+$GLOBALS['department_content'] = ob_get_clean();
+
+// Include the standardized template
+require_once __DIR__ . '/includes/department_dashboard_template.php';
+?>

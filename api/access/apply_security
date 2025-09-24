@@ -1,0 +1,68 @@
+<?php
+/**
+ * Security Application Script
+ * This script applies the secure authentication middleware to all PHP files
+ * Run this script once to secure all files in the api/access directory
+ */
+
+$directory = __DIR__;
+$files = glob($directory . '/*.php');
+
+// Files to exclude from security application
+$exclude_files = [
+    'secure_auth',
+    'auth', 
+    'login',
+    'logout',
+    'unauthorized',
+    'apply_security'
+];
+
+foreach ($files as $file) {
+    $filename = basename($file);
+    
+    // Skip excluded files
+    if (in_array($filename, $exclude_files)) {
+        continue;
+    }
+    
+    echo "Processing: $filename\n";
+    
+    // Read file content
+    $content = file_get_contents($file);
+    
+    // Check if secure_auth is already included
+    if (strpos($content, 'secure_auth') !== false) {
+        echo "  - Already secured\n";
+        continue;
+    }
+    
+    // Find the opening PHP tag and add the include after it
+    $pattern = '/^<\?php\s*/';
+    $replacement = "<?php\n// Include secure authentication middleware\nrequire_once __DIR__ . '/secure_auth';\n\n";
+    
+    $new_content = preg_replace($pattern, $replacement, $content, 1);
+    
+    // Remove old session_start() and authentication code if present
+    $patterns_to_remove = [
+        '/session_start\(\);\s*/',
+        '/\/\/ Check if user is logged in\s*if \(!isset\(\$_SESSION\[\'user\'\]\) \|\| !isset\(\$_SESSION\[\'user\'\]\[\'id\'\]\)\) \{[^}]*\}/s',
+        '/\$user = \$_SESSION\[\'user\'\];\s*/',
+        '/\$role = \$_SESSION\[\'user\'\]\[\'role\'\] \?\? \'user\';\s*/'
+    ];
+    
+    foreach ($patterns_to_remove as $pattern) {
+        $new_content = preg_replace($pattern, '', $new_content);
+    }
+    
+    // Write the modified content back to the file
+    if (file_put_contents($file, $new_content)) {
+        echo "  - Secured successfully\n";
+    } else {
+        echo "  - Error securing file\n";
+    }
+}
+
+echo "\nSecurity application completed!\n";
+echo "All files in the api/access directory are now protected.\n";
+?> 

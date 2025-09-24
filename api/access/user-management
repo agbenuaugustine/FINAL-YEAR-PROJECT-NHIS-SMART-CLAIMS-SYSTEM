@@ -1,0 +1,425 @@
+<?php
+/**
+ * User Management Page
+ * 
+ * Allow hospital admin to create and manage users
+ */
+
+// Include secure authentication middleware
+require_once __DIR__ . '/secure_auth';
+
+// Check if user is hospital admin
+if (!in_array($role, ['hospital_admin', 'admin', 'superadmin'])) {
+    header('Location: unauthorized');
+    exit();
+}
+
+require_once __DIR__ . '/../config/database.php';
+
+$database = new Database();
+$conn = $database->getConnection();
+
+$message = '';
+$messageType = '';
+
+// Handle form submissions
+if ($_POST) {
+    // CSRF Protection
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $message = 'Security token mismatch. Please try again.';
+        $messageType = 'error';
+    } elseif (isset($_POST['action'])) {
+        switch ($_POST['action']) {
+            case 'create_user':
+                $username = trim($_POST['username']);
+                $email = trim($_POST['email']);
+                $full_name = trim($_POST['full_name']);
+                $password = $_POST['password'];
+                $role = $_POST['role'];
+                $hospital_id = $user['hospital_id']; // Current user's hospital
+                
+                // Validate inputs
+                if (empty($username) || empty($email) || empty($full_name) || empty($password) || empty($role)) {
+                    $message = 'All fields are required';
+                    $messageType = 'error';
+                } else {
+                    // Check if username or email already exists
+                    $check_stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+                    $check_stmt->execute([$username, $email]);
+                    
+                    if ($check_stmt->fetch()) {
+                        $message = 'Username or email already exists';
+                        $messageType = 'error';
+                    } else {
+                        // Create user
+                        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                        $insert_stmt = $conn->prepare("
+                            INSERT INTO users (username, email, full_name, password, role, hospital_id, is_active, created_at) 
+                            VALUES (?, ?, ?, ?, ?, ?, 1, NOW())
+                        ");
+                        
+                        if ($insert_stmt->execute([$username, $email, $full_name, $password_hash, $role, $hospital_id])) {
+                            $message = 'User created successfully';
+                            $messageType = 'success';
+                        } else {
+                            $message = 'Error creating user';
+                            $messageType = 'error';
+                        }
+                    }
+                }
+                break;
+                
+            case 'toggle_user_status':
+                $user_id = $_POST['user_id'];
+                $new_status = $_POST['new_status'];
+                
+                $update_stmt = $conn->prepare("UPDATE users SET is_active = ? WHERE id = ? AND hospital_id = ?");
+                if ($update_stmt->execute([$new_status, $user_id, $user['hospital_id']])) {
+                    $message = 'User status updated successfully';
+                    $messageType = 'success';
+                } else {
+                    $message = 'Error updating user status';
+                    $messageType = 'error';
+                }
+                break;
+                
+            case 'update_user_role':
+                $user_id = $_POST['user_id'];
+                $new_role = $_POST['new_role'];
+                
+                $update_stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ? AND hospital_id = ?");
+                if ($update_stmt->execute([$new_role, $user_id, $user['hospital_id']])) {
+                    $message = 'User role updated successfully';
+                    $messageType = 'success';
+                } else {
+                    $message = 'Error updating user role';
+                    $messageType = 'error';
+                }
+                break;
+        }
+    } // End of elseif (isset($_POST['action']))
+} // End of if ($_POST)
+
+// Regenerate CSRF token after processing (security best practice)
+if ($_POST && $messageType === 'success') {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Get all users for current hospital
+$users_stmt = $conn->prepare("
+    SELECT id, username, email, full_name, role, is_active, created_at, last_login
+    FROM users 
+    WHERE hospital_id = ? 
+    ORDER BY created_at DESC
+");
+$users_stmt->execute([$user['hospital_id']]);
+$users = $users_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Available roles
+$available_roles = [
+    'doctor' => 'Doctor',
+    'nurse' => 'Nurse', 
+    'receptionist' => 'Receptionist',
+    'lab_technician' => 'Lab Technician',
+    'pharmacist' => 'Pharmacist',
+    'claims_officer' => 'Claims Officer',
+    'finance_officer' => 'Finance Officer',
+    'records_officer' => 'Records Officer'
+];
+
+// Department mapping
+$role_departments = [
+    'doctor' => 'OPD',
+    'nurse' => 'OPD',
+    'receptionist' => 'OPD',
+    'lab_technician' => 'Laboratory',
+    'pharmacist' => 'Pharmacy',
+    'claims_officer' => 'Claims',
+    'finance_officer' => 'Finance',
+    'records_officer' => 'Records'
+];
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Smart Claims NHIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0071e3, #005bb5);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+        }
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-success {
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #0071e3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background-color: #d1fae5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+        }
+        .alert-error {
+            background-color: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+        .status-active {
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-inactive {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .department-badge {
+            background-color: #e0e7ff;
+            color: #3730a3;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen bg-gray-50">
+        <!-- Header -->
+        <div class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <i class="fas fa-users-cog text-2xl text-blue-600 mr-3"></i>
+                        <h1 class="text-xl font-bold text-gray-900">User Management</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-600">
+                            <i class="fas fa-user-circle mr-1"></i>
+                            <?php echo htmlspecialchars($user['full_name']); ?>
+                        </span>
+                        <a href="dashboard" class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Messages -->
+            <?php if ($message): ?>
+            <div class="alert alert-<?php echo $messageType; ?>">
+                <i class="fas fa-<?php echo $messageType == 'success' ? 'check-circle' : 'exclamation-triangle'; ?> mr-2"></i>
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+            <?php endif; ?>
+
+            <!-- Create New User -->
+            <div class="card">
+                <h2 class="text-xl font-bold mb-4">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    Create New User
+                </h2>
+                
+                <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="hidden" name="action" value="create_user">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                        <input type="text" name="username" required class="form-input" placeholder="Enter username">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" name="email" required class="form-input" placeholder="Enter email address">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" name="full_name" required class="form-input" placeholder="Enter full name">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Role & Department</label>
+                        <select name="role" required class="form-input">
+                            <option value="">Select Role</option>
+                            <?php foreach ($available_roles as $role_key => $role_name): ?>
+                            <option value="<?php echo $role_key; ?>">
+                                <?php echo $role_name; ?> (<?php echo $role_departments[$role_key]; ?>)
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input type="password" name="password" required class="form-input" placeholder="Enter password (min 6 characters)" minlength="6">
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-plus mr-2"></i>
+                            Create User
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Existing Users -->
+            <div class="card">
+                <h2 class="text-xl font-bold mb-4">
+                    <i class="fas fa-users mr-2"></i>
+                    Existing Users (<?php echo count($users); ?>)
+                </h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role & Department</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <?php foreach ($users as $user_item): ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div>
+                                        <div class="font-medium text-gray-900"><?php echo htmlspecialchars($user_item['full_name']); ?></div>
+                                        <div class="text-sm text-gray-500">
+                                            <?php echo htmlspecialchars($user_item['username']); ?> | <?php echo htmlspecialchars($user_item['email']); ?>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        <span class="font-medium"><?php echo ucwords(str_replace('_', ' ', $user_item['role'])); ?></span>
+                                        <span class="department-badge mt-1">
+                                            <?php echo $role_departments[$user_item['role']] ?? 'General'; ?>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-<?php echo $user_item['is_active'] ? 'active' : 'inactive'; ?>">
+                                        <?php echo $user_item['is_active'] ? 'Active' : 'Inactive'; ?>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <?php echo date('M d, Y', strtotime($user_item['created_at'])); ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <!-- Toggle Status -->
+                                        <form method="POST" style="display: inline;">
+                                            <input type="hidden" name="action" value="toggle_user_status">
+                                            <input type="hidden" name="user_id" value="<?php echo $user_item['id']; ?>">
+                                            <input type="hidden" name="new_status" value="<?php echo $user_item['is_active'] ? '0' : '1'; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                            <button type="submit" class="<?php echo $user_item['is_active'] ? 'btn-secondary' : 'btn-success'; ?>">
+                                                <i class="fas fa-<?php echo $user_item['is_active'] ? 'pause' : 'play'; ?>"></i>
+                                                <?php echo $user_item['is_active'] ? 'Disable' : 'Enable'; ?>
+                                            </button>
+                                        </form>
+                                        
+                                        <!-- Change Role -->
+                                        <form method="POST" style="display: inline;">
+                                            <input type="hidden" name="action" value="update_user_role">
+                                            <input type="hidden" name="user_id" value="<?php echo $user_item['id']; ?>">
+                                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                            <select name="new_role" onchange="this.form.submit()" class="text-sm p-1 border rounded">
+                                                <option value="">Change Role</option>
+                                                <?php foreach ($available_roles as $role_key => $role_name): ?>
+                                                <option value="<?php echo $role_key; ?>" <?php echo $user_item['role'] == $role_key ? 'selected' : ''; ?>>
+                                                    <?php echo $role_name; ?>
+                                                </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
