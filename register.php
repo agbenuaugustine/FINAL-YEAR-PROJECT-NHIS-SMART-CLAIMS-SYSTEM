@@ -211,39 +211,6 @@
         .message-animation {
             animation: fadeInDown 0.5s ease-out forwards;
         }
-        
-        /* Validation styles */
-        .form-input.invalid {
-            border-color: #dc2626;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
-        }
-        
-        .form-input.valid {
-            border-color: #059669;
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
-        }
-        
-        .error-text {
-            color: #dc2626;
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-        
-        .auto-generated {
-            background-color: #f3f4f6;
-            cursor: not-allowed;
-        }
-        
-        .character-count {
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-top: 0.25rem;
-        }
-        
-        .character-count.over-limit {
-            color: #dc2626;
-        }
     </style>
 </head>
 <body>
@@ -303,26 +270,15 @@
                             <div class="input-icon-container">
                                 <i class="fas fa-hospital input-icon"></i>
                                 <input type="text" id="hospitalName" name="hospitalName" class="form-input input-with-icon" placeholder="Enter hospital name" required>
-                                <div class="error-text" id="hospitalNameError"></div>
                             </div>
                         </div>
                         
                         <div class="mb-4">
-                            <label for="hospitalCode" class="block text-sm font-medium text-gray-700 mb-1">Hospital Code <span class="text-xs text-green-600">(Auto-generated)</span></label>
+                            <label for="hospitalCode" class="block text-sm font-medium text-gray-700 mb-1">Hospital Code</label>
                             <div class="input-icon-container">
                                 <i class="fas fa-barcode input-icon"></i>
-                                <input type="text" id="hospitalCode" name="hospitalCode" class="form-input input-with-icon auto-generated" placeholder="Will be auto-generated" readonly>
-                                <div class="error-text" id="hospitalCodeError"></div>
+                                <input type="text" id="hospitalCode" name="hospitalCode" class="form-input input-with-icon" placeholder="Enter hospital code" required>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="hospitalId" class="block text-sm font-medium text-gray-700 mb-1">Hospital ID <span class="text-xs text-green-600">(Auto-generated)</span></label>
-                        <div class="input-icon-container">
-                            <i class="fas fa-id-card input-icon"></i>
-                            <input type="text" id="hospitalId" name="hospitalId" class="form-input input-with-icon auto-generated" placeholder="Will be auto-generated" readonly>
-                            <div class="error-text" id="hospitalIdError"></div>
                         </div>
                     </div>
                     
@@ -354,11 +310,10 @@
                     </div>
                     
                     <div class="mb-4">
-                        <label for="nhiaAccreditation" class="block text-sm font-medium text-gray-700 mb-1">NHIA Accreditation Number <span class="text-xs text-gray-500">(Numbers only)</span></label>
+                        <label for="nhiaAccreditation" class="block text-sm font-medium text-gray-700 mb-1">NHIA Accreditation Number</label>
                         <div class="input-icon-container">
                             <i class="fas fa-certificate input-icon"></i>
-                            <input type="text" id="nhiaAccreditation" name="nhiaAccreditation" class="form-input input-with-icon" placeholder="Enter NHIA accreditation number (numbers only)" pattern="[0-9]*" inputmode="numeric">
-                            <div class="error-text" id="nhiaAccreditationError"></div>
+                            <input type="text" id="nhiaAccreditation" name="nhiaAccreditation" class="form-input input-with-icon" placeholder="Enter NHIA accreditation number">
                         </div>
                     </div>
                 </div>
@@ -437,16 +392,14 @@
                             <div class="input-icon-container">
                                 <i class="fas fa-envelope input-icon"></i>
                                 <input type="email" id="contactEmail" name="contactEmail" class="form-input input-with-icon" placeholder="Enter contact email" required>
-                                <div class="error-text" id="contactEmailError"></div>
                             </div>
                         </div>
                         
                         <div class="mb-4">
-                            <label for="contactPhone" class="block text-sm font-medium text-gray-700 mb-1">Contact Phone <span class="text-xs text-gray-500">(Numbers only)</span></label>
+                            <label for="contactPhone" class="block text-sm font-medium text-gray-700 mb-1">Contact Phone</label>
                             <div class="input-icon-container">
                                 <i class="fas fa-phone input-icon"></i>
-                                <input type="tel" id="contactPhone" name="contactPhone" class="form-input input-with-icon" placeholder="Enter contact phone (numbers only)" pattern="[0-9]*" inputmode="numeric" required>
-                                <div class="error-text" id="contactPhoneError"></div>
+                                <input type="tel" id="contactPhone" name="contactPhone" class="form-input input-with-icon" placeholder="Enter contact phone" required>
                             </div>
                         </div>
                     </div>
@@ -462,7 +415,6 @@
                             <div class="input-icon-container">
                                 <i class="fas fa-user input-icon"></i>
                                 <input type="text" id="adminUsername" name="adminUsername" class="form-input input-with-icon" placeholder="Choose admin username" required>
-                                <div class="error-text" id="adminUsernameError"></div>
                             </div>
                         </div>
                         
@@ -496,7 +448,7 @@
                 </div>
                 
                 <div class="mt-4 text-center">
-                    <p class="text-sm text-gray-600">Already have an account? <a href="index.php" class="text-blue-600 hover:underline">Login here</a></p>
+                    <p class="text-sm text-gray-600">Already have an account? <a href="/smartclaimsCL" class="text-blue-600 hover:underline">Login here</a></p>
                 </div>
             </form>
         </div>
@@ -509,134 +461,6 @@
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
             const errorText = document.getElementById('errorText');
-            
-            // Auto-generate hospital code when hospital name changes
-            const hospitalNameInput = document.getElementById('hospitalName');
-            const hospitalCodeInput = document.getElementById('hospitalCode');
-            const hospitalIdInput = document.getElementById('hospitalId');
-            const hospitalIdCount = document.getElementById('hospitalIdCount');
-            const nhiaAccreditationInput = document.getElementById('nhiaAccreditation');
-            const contactPhoneInput = document.getElementById('contactPhone');
-            
-            // Generate hospital code and ID based on hospital name
-            hospitalNameInput.addEventListener('input', function() {
-                const name = this.value.trim();
-                if (name) {
-                    // Create code from first letters of words + random number
-                    const words = name.split(' ');
-                    const initials = words.map(word => word.charAt(0).toUpperCase()).join('');
-                    const randomNum = Math.floor(Math.random() * 9000) + 1000; // 4-digit random number
-                    const code = initials.substring(0, 4) + randomNum;
-                    hospitalCodeInput.value = code;
-                    
-                    // Generate Hospital ID (HSP + timestamp + random)
-                    const timestamp = Date.now().toString().slice(-6); // Last 6 digits of timestamp
-                    const randomId = Math.floor(Math.random() * 900) + 100; // 3-digit random number
-                    const hospitalId = 'HSP' + timestamp + randomId;
-                    hospitalIdInput.value = hospitalId;
-                } else {
-                    hospitalCodeInput.value = '';
-                    hospitalIdInput.value = '';
-                }
-            });
-            
-            // Hospital ID is now auto-generated, no need for character count
-            
-            // Restrict NHIA accreditation to numbers only
-            nhiaAccreditationInput.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                validateField(this, 'nhiaAccreditationError', 'NHIA accreditation number must contain only numbers');
-            });
-            
-            // Restrict contact phone to numbers only
-            contactPhoneInput.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                validateField(this, 'contactPhoneError', 'Phone number must contain only numbers');
-            });
-            
-            // Validation functions
-            function validateField(field, errorElementId, errorMessage) {
-                const errorElement = document.getElementById(errorElementId);
-                const value = field.value.trim();
-                
-                // Clear previous validation state
-                field.classList.remove('invalid', 'valid');
-                errorElement.style.display = 'none';
-                
-                // Check if field is required and empty
-                if (field.hasAttribute('required') && !value) {
-                    field.classList.add('invalid');
-                    errorElement.textContent = `${field.previousElementSibling.textContent.replace(/\s*\(.*?\)/g, '')} is required`;
-                    errorElement.style.display = 'block';
-                    return false;
-                }
-                
-                // Specific field validations
-                if (field.type === 'email' && value) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(value)) {
-                        field.classList.add('invalid');
-                        errorElement.textContent = 'Please enter a valid email address';
-                        errorElement.style.display = 'block';
-                        return false;
-                    }
-                }
-                
-                // Hospital ID is auto-generated, no validation needed
-                
-                if (field.id === 'contactPhone' && value) {
-                    if (value.length < 10) {
-                        field.classList.add('invalid');
-                        errorElement.textContent = 'Phone number must be at least 10 digits';
-                        errorElement.style.display = 'block';
-                        return false;
-                    }
-                }
-                
-                if (field.id === 'nhiaAccreditation' && value) {
-                    if (value.length < 6) {
-                        field.classList.add('invalid');
-                        errorElement.textContent = 'NHIA accreditation number must be at least 6 digits';
-                        errorElement.style.display = 'block';
-                        return false;
-                    }
-                }
-                
-                if (field.id === 'adminUsername' && value) {
-                    if (value.length < 4) {
-                        field.classList.add('invalid');
-                        errorElement.textContent = 'Username must be at least 4 characters';
-                        errorElement.style.display = 'block';
-                        return false;
-                    }
-                    const usernameRegex = /^[a-zA-Z0-9_]+$/;
-                    if (!usernameRegex.test(value)) {
-                        field.classList.add('invalid');
-                        errorElement.textContent = 'Username can only contain letters, numbers, and underscores';
-                        errorElement.style.display = 'block';
-                        return false;
-                    }
-                }
-                
-                // If we get here, field is valid
-                if (value) {
-                    field.classList.add('valid');
-                }
-                return true;
-            }
-            
-            // Add validation to all form inputs
-            const formInputs = registrationForm.querySelectorAll('input, select');
-            formInputs.forEach(input => {
-                if (input.type !== 'checkbox') {
-                    input.addEventListener('blur', function() {
-                        const errorElementId = this.id + 'Error';
-                        if (document.getElementById(errorElementId)) {
-                            validateField(this, errorElementId);
-                        }
-                    });
-                }
-            });
             
             // Function to show a message and scroll to it
             function showMessage(isSuccess, message = '') {
@@ -675,70 +499,12 @@
                 successMessage.classList.add('hidden');
                 errorMessage.classList.add('hidden');
                 
-                // Validate all fields before submission
-                let isFormValid = true;
-                const requiredFields = [
-                    { id: 'hospitalName', errorId: 'hospitalNameError' },
-                    { id: 'hospitalType', errorId: null },
-                    { id: 'hospitalCategory', errorId: null },
-                    { id: 'region', errorId: null },
-                    { id: 'district', errorId: null },
-                    { id: 'townCity', errorId: null },
-                    { id: 'postalAddress', errorId: null },
-                    { id: 'contactPerson', errorId: null },
-                    { id: 'contactEmail', errorId: 'contactEmailError' },
-                    { id: 'contactPhone', errorId: 'contactPhoneError' },
-                    { id: 'adminUsername', errorId: 'adminUsernameError' },
-                    { id: 'adminPassword', errorId: null },
-                    { id: 'adminFullName', errorId: null }
-                ];
-                
-                // Validate each required field
-                requiredFields.forEach(field => {
-                    const element = document.getElementById(field.id);
-                    if (field.errorId) {
-                        if (!validateField(element, field.errorId)) {
-                            isFormValid = false;
-                        }
-                    } else {
-                        // Basic required field check for fields without specific error elements
-                        if (!element.value.trim()) {
-                            element.classList.add('invalid');
-                            isFormValid = false;
-                        } else {
-                            element.classList.remove('invalid');
-                            element.classList.add('valid');
-                        }
-                    }
-                });
-                
-                // Check if NHIA accreditation has value and validate
-                const nhiaAccreditation = document.getElementById('nhiaAccreditation');
-                if (nhiaAccreditation.value.trim()) {
-                    if (!validateField(nhiaAccreditation, 'nhiaAccreditationError')) {
-                        isFormValid = false;
-                    }
-                }
-                
-                // Check terms and conditions
-                const termsCheckbox = registrationForm.querySelector('input[type="checkbox"]');
-                if (!termsCheckbox.checked) {
-                    showMessage(false, 'Please accept the Terms and Conditions to continue.');
-                    return;
-                }
-                
-                if (!isFormValid) {
-                    showMessage(false, 'Please fix the validation errors before submitting.');
-                    return;
-                }
-                
                 // Get form values
                 const hospitalName = document.getElementById('hospitalName').value;
                 const hospitalCode = document.getElementById('hospitalCode').value;
-                const hospitalId = document.getElementById('hospitalId').value;
                 const hospitalType = document.getElementById('hospitalType').value;
                 const hospitalCategory = document.getElementById('hospitalCategory').value;
-                const nhiaAccreditationValue = document.getElementById('nhiaAccreditation').value;
+                const nhiaAccreditation = document.getElementById('nhiaAccreditation').value;
                 const region = document.getElementById('region').value;
                 const district = document.getElementById('district').value;
                 const townCity = document.getElementById('townCity').value;
@@ -754,10 +520,9 @@
                 const data = {
                     hospital_name: hospitalName,
                     hospital_code: hospitalCode,
-                    hospital_id: hospitalId,
                     hospital_type: hospitalType,
                     hospital_category: hospitalCategory,
-                    nhia_accreditation_number: nhiaAccreditationValue,
+                    nhia_accreditation_number: nhiaAccreditation,
                     region: region,
                     district: district,
                     town_city: townCity,
@@ -777,7 +542,7 @@
                 submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...';
                 
                 // Send registration request to hospital registration API
-                fetch('api/hospital-register.php', {
+                fetch('/smartclaimsCL/api/hospital-register.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -811,7 +576,7 @@
                         registrationForm.reset();
                     } else {
                         // Show error message and scroll to it
-                        showMessage(false, result.message || 'Registration failed. Try again later or reach support');
+                        showMessage(false, result.message || 'Registration failed');
                     }
                 })
                 .catch(error => {

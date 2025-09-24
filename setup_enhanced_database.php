@@ -204,14 +204,7 @@ try {
     echo "</ul>\n";
     echo "</div>\n";
 
-    // Get the current application path dynamically
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'];
-    $script_name = $_SERVER['SCRIPT_NAME'];
-    $app_path = dirname($script_name); // Get the directory of the current script
-    $login_url = $app_path . '/index.php';
-    
-    echo "<p><a href='" . $login_url . "' style='display: inline-block; background: #007cba; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Go to Login Page</a></p>\n";
+    echo "<p><a href='/smartclaimsCL/index.php' style='display: inline-block; background: #007cba; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Go to Login Page</a></p>\n";
 
 } catch (Exception $e) {
     echo "<div style='background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin: 20px 0;'>\n";

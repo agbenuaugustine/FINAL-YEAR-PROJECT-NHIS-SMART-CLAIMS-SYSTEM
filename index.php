@@ -496,7 +496,7 @@
                     </button>
                     
                     <div class="mt-4 text-center">
-                        <p class="text-sm text-gray-600">Are you a healthcare provider? <a href="/register" class="text-blue-600 hover:underline">Register here</a></p>
+                        <p class="text-sm text-gray-600">Are you a healthcare provider? <a href="/smartclaimsCL/register" class="text-blue-600 hover:underline">Register here</a></p>
                     </div>
                 </form>
             </div>
@@ -711,7 +711,7 @@
             };
             
             // Send login request to API
-            fetch('api/login.php', {
+            fetch('/smartclaimsCL/api/login.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -740,36 +740,36 @@
                     const userHospitalId = result.user.hospital_id;
                     
                     // Role-based redirect
-                    let redirectUrl = 'api/access/dashboard';
+                    let redirectUrl = '/smartclaimsCL/api/access/dashboard.php';
                     
                     switch(userRole) {
                         case 'superadmin':
-                            redirectUrl = 'api/access/superadmin/index.php';
+                            redirectUrl = '/smartclaimsCL/api/access/dashboard.php?section=admin';
                             break;
                         case 'hospital_admin':
-                            redirectUrl = 'api/access/dashboard.php?section=hospital';
+                            redirectUrl = '/smartclaimsCL/api/access/dashboard.php?section=hospital';
                             break;
                         case 'doctor':
                         case 'nurse':
-                            redirectUrl = 'api/access/dashboard?section=clinical';
+                            redirectUrl = '/smartclaimsCL/api/access/dashboard.php?section=clinical';
                             break;
                         case 'lab_technician':
-                            redirectUrl = 'api/access/lab-dashboard';
+                            redirectUrl = '/smartclaimsCL/api/access/lab-dashboard.php';
                             break;
                         case 'pharmacist':
-                            redirectUrl = 'api/access/pharmacy-dashboard';
+                            redirectUrl = '/smartclaimsCL/api/access/pharmacy-dashboard.php';
                             break;
                         case 'records_officer':
-                            redirectUrl = 'api/access/records-dashboard';
+                            redirectUrl = '/smartclaimsCL/api/access/records-dashboard.php';
                             break;
                         case 'finance_officer':
-                            redirectUrl = 'api/access/finance-dashboard';
+                            redirectUrl = '/smartclaimsCL/api/access/finance-dashboard.php';
                             break;
                         case 'claims_officer':
-                            redirectUrl = 'api/access/claims-dashboard';
+                            redirectUrl = '/smartclaimsCL/api/access/claims-dashboard.php';
                             break;
                         default:
-                            redirectUrl = 'api/access/dashboard';
+                            redirectUrl = '/smartclaimsCL/api/access/dashboard.php';
                     }
                     
                     // Show success message briefly before redirect
