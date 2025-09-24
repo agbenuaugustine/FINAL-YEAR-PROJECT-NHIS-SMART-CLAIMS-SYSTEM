@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Claims Page Fix</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4f6d4; }
+        .error { background: #f6d4d4; }
+        .info { background: #d4e6f6; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Test Claims Page Auto-Load Fix</h1>
+    
+    <button onclick="testAutoLoad()">Test Auto Load Function</button>
+    <button onclick="testTablePopulation()">Test Direct Table Population</button>
+    
+    <div id="results"></div>
+
+    <script>
+        function addResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = 'result ' + type;
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+
+        async function testAutoLoad() {
+            addResult('Testing the exact same loadConsultations function used in claims-processing page...', 'info');
+            
+            try {
+                const response = await fetch('api/claims-api.php?action=get_claimable_consultations');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.status === 'success' && result.data) {
+                    const consultations = result.data;
+                    
+                    if (consultations.length > 0) {
+                        addResult(`✅ SUCCESS: Found ${consultations.length} consultations`, 'success');
+                        addResult(`Data: ${consultations.map(c => c.full_name).join(', ')}`, 'success');
+                        addResult('🎯 Claims-processing page should now auto-load this data!', 'success');
+                    } else {
+                        addResult('⚠️ No consultations found', 'error');
+                    }
+                } else {
+                    addResult(`❌ API Error: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                addResult(`❌ Connection Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testTablePopulation() {
+            addResult('Testing direct table population logic...', 'info');
+            
+            // Create a test table
+            const testTable = document.createElement('table');
+            testTable.innerHTML = '<tbody id="test_table"></tbody>';
+            document.body.appendChild(testTable);
+            
+            try {
+                const response = await fetch('api/claims-api.php?action=get_claimable_consultations');
+                const result = await response.json();
+                
+                if (result.status === 'success' && result.data) {
+                    const consultations = result.data;
+                    const tableBody = document.getElementById('test_table');
+                    
+                    // Same logic as in claims-processing page
+                    tableBody.innerHTML = '';
+                    
+                    consultations.forEach(consultation => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${consultation.visit_id}</td>
+                            <td>${consultation.full_name}</td>
+                            <td>${consultation.nhis_number}</td>
+                            <td>${new Date(consultation.visit_date).toLocaleDateString()}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                    
+                    addResult(`✅ Table populated with ${consultations.length} rows`, 'success');
+                    addResult('Check the table below - this is exactly what should appear in claims-processing page!', 'success');
+                    
+                } else {
+                    addResult(`❌ Failed to populate table: ${result.message}`, 'error');
+                }
+                
+            } catch (error) {
+                addResult(`❌ Table population error: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-run test
+        document.addEventListener('DOMContentLoaded', function() {
+            addResult('Page loaded. The claims-processing page should now auto-load data properly.', 'info');
+            testAutoLoad();
+        });
+    </script>
+</body>
+</html>

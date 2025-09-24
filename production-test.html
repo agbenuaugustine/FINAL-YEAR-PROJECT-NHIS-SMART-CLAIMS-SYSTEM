@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Production Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { background: #d4f6d4; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #f6d4d4; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Production Claims System Test</h1>
+    
+    <div id="result"></div>
+    
+    <button onclick="testProduction()">Test Production API</button>
+
+    <script>
+        async function testProduction() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('api/claims-api.php?action=get_claimable_consultations');
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    result.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Production API Working!</h3>
+                            <p><strong>Found:</strong> ${data.data.length} consultations</p>
+                            <p><strong>Status:</strong> Ready for production</p>
+                            <p><strong>Next:</strong> Go to your Claims Processing page - it should load automatically now!</p>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <div class="error">
+                            <h3>❌ API Error</h3>
+                            <p>${data.message}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Connection Error</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Auto test on load
+        document.addEventListener('DOMContentLoaded', testProduction);
+    </script>
+</body>
+</html>

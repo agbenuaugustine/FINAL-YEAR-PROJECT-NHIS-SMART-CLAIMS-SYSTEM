@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify API Paths</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ddd; }
+        .success { background: #d4f6d4; }
+        .error { background: #f6d4d4; }
+        button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>API Path Verification</h1>
+    <p>Current page location: <span id="currentPath"></span></p>
+    
+    <div class="test">
+        <h3>Test 1: claims-api.php from root</h3>
+        <button onclick="testPath('api/claims-api.php')">Test api/claims-api.php</button>
+        <div id="test1"></div>
+    </div>
+    
+    <div class="test">
+        <h3>Test 2: claims-api.php from api/access/</h3>
+        <button onclick="testPath('../claims-api.php')">Test ../claims-api.php</button>
+        <div id="test2"></div>
+    </div>
+    
+    <div class="test">
+        <h3>Test 3: test-api.php from root</h3>
+        <button onclick="testPath('api/test-api.php')">Test api/test-api.php</button>
+        <div id="test3"></div>
+    </div>
+    
+    <div class="test">
+        <h3>Test 4: test-api.php from api/access/</h3>
+        <button onclick="testPath('../test-api.php')">Test ../test-api.php</button>
+        <div id="test4"></div>
+    </div>
+
+    <script>
+        document.getElementById('currentPath').textContent = window.location.pathname;
+        
+        async function testPath(path) {
+            const testNum = path.includes('../') ? (path.includes('claims') ? 'test2' : 'test4') : (path.includes('claims') ? 'test1' : 'test3');
+            const resultDiv = document.getElementById(testNum);
+            
+            try {
+                resultDiv.innerHTML = 'Testing...';
+                const response = await fetch(path + '?action=test');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `✅ SUCCESS: ${response.status} - ${data.status || 'OK'}`;
+                    resultDiv.parentElement.className = 'test success';
+                } else {
+                    resultDiv.innerHTML = `❌ FAILED: ${response.status} ${response.statusText}`;
+                    resultDiv.parentElement.className = 'test error';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `❌ ERROR: ${error.message}`;
+                resultDiv.parentElement.className = 'test error';
+            }
+        }
+    </script>
+</body>
+</html>

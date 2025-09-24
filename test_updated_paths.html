@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Updated Paths</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .result { margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Path Update Test</h1>
+    <p>Testing the updated paths after removing hardcoded URLs.</p>
+    
+    <div class="test-section">
+        <h2>Login API Test</h2>
+        <button onclick="testLogin()">Test Login Endpoint</button>
+        <div id="login-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Services API Test</h2>
+        <button onclick="testServices()">Test Services Endpoint</button>
+        <div id="services-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Patients API Test</h2>
+        <button onclick="testPatients()">Test Patients Endpoint</button>
+        <div id="patients-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Navigation Links Test</h2>
+        <p>Test navigation to key pages:</p>
+        <button onclick="window.location.href='index.php'">Go to Login Page</button>
+        <button onclick="window.location.href='register'">Go to Registration</button>
+        <button onclick="window.location.href='api/access/dashboard'">Go to Dashboard</button>
+        <button onclick="window.location.href='api/access/service-requisition'">Go to Service Requisition</button>
+    </div>
+
+    <script>
+        async function testEndpoint(url, description) {
+            try {
+                const response = await fetch(url);
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                
+                if (response.ok) {
+                    if (isJson) {
+                        const data = await response.json();
+                        return { 
+                            status: 'success', 
+                            message: `✅ ${description} - Status: ${response.status}`,
+                            data: data 
+                        };
+                    } else {
+                        return { 
+                            status: 'success', 
+                            message: `✅ ${description} - Status: ${response.status} (HTML/Text response)` 
+                        };
+                    }
+                } else {
+                    return { 
+                        status: 'error', 
+                        message: `❌ ${description} - Status: ${response.status} ${response.statusText}` 
+                    };
+                }
+            } catch (error) {
+                return { 
+                    status: 'error', 
+                    message: `❌ ${description} - Error: ${error.message}` 
+                };
+            }
+        }
+        
+        async function testLogin() {
+            const resultDiv = document.getElementById('login-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            const result = await testEndpoint('api/login.php', 'Login API');
+            resultDiv.innerHTML = `<span class="${result.status}">${result.message}</span>`;
+        }
+        
+        async function testServices() {
+            const resultDiv = document.getElementById('services-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            const result = await testEndpoint('api/services-api?action=services', 'Services API');
+            resultDiv.innerHTML = `<span class="${result.status}">${result.message}</span>`;
+            
+            if (result.data) {
+                resultDiv.innerHTML += `<br><small>Found categories: ${Object.keys(result.data).join(', ')}</small>`;
+            }
+        }
+        
+        async function testPatients() {
+            const resultDiv = document.getElementById('patients-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            const result = await testEndpoint('api/patients.php', 'Patients API');
+            resultDiv.innerHTML = `<span class="${result.status}">${result.message}</span>`;
+        }
+    </script>
+</body>
+</html>

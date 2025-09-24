@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Recent Requisitions</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 10px 20px; margin: 10px; }
+        .result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h2>Test Recent Requisitions</h2>
+    
+    <button onclick="testRecentRequisitions()">Load Recent Requisitions</button>
+    <button onclick="testViewRequisition()">Test View Requisition</button>
+    
+    <div id="result" class="result"></div>
+    
+    <script>
+        async function testRecentRequisitions() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Loading recent requisitions...</p>';
+            
+            try {
+                const response = await fetch('/smartclaimsCL/api/services-api.php?action=recent_requisitions&limit=5');
+                const result = await response.json();
+                
+                console.log('Recent requisitions response:', result);
+                
+                if (result.status === 'success') {
+                    let html = `<h3 class="success">✅ Recent Requisitions (${result.data.length})</h3>`;
+                    
+                    if (result.data.length > 0) {
+                        html += `
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Visit Number</th>
+                                        <th>Patient</th>
+                                        <th>Services</th>
+                                        <th>Total Tariff</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+                        
+                        result.data.forEach(req => {
+                            html += `
+                                <tr>
+                                    <td>${req.id}</td>
+                                    <td>${req.visit_number || 'N/A'}</td>
+                                    <td>${req.patient_name}<br><small>NHIS: ${req.nhis_number || 'N/A'}</small></td>
+                                    <td>${req.services_count} services</td>
+                                    <td>₵${(req.total_tariff || 0).toFixed(2)}</td>
+                                    <td>${req.status}</td>
+                                    <td><button onclick="viewRequisition(${req.id})">View</button></td>
+                                </tr>
+                            `;
+                        });
+                        
+                        html += '</tbody></table>';
+                    } else {
+                        html += '<p>No recent requisitions found</p>';
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">❌ Error: ${result.message}</p>`;
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+        
+        async function testViewRequisition() {
+            // First get a requisition ID
+            try {
+                const response = await fetch('/smartclaimsCL/api/services-api.php?action=recent_requisitions&limit=1');
+                const result = await response.json();
+                
+                if (result.status === 'success' && result.data.length > 0) {
+                    const visitId = result.data[0].id;
+                    viewRequisition(visitId);
+                } else {
+                    document.getElementById('result').innerHTML = '<p class="error">No requisitions found to test view</p>';
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+        
+        async function viewRequisition(visitId) {
+            try {
+                const response = await fetch(`/smartclaimsCL/api/services-api.php?action=view_requisition&id=${visitId}`);
+                const result = await response.json();
+                
+                console.log('View requisition response:', result);
+                
+                if (result.status === 'success') {
+                    const data = result.data;
+                    
+                    let html = `
+                        <h3 class="success">✅ Requisition Details (ID: ${visitId})</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                            <div>
+                                <h4>Patient Information</h4>
+                                <p><strong>Name:</strong> ${data.patient.name}</p>
+                                <p><strong>NHIS:</strong> ${data.patient.nhis || 'N/A'}</p>
+                                <p><strong>Age:</strong> ${data.patient.age || 'N/A'}</p>
+                                <p><strong>Gender:</strong> ${data.patient.gender || 'N/A'}</p>
+                            </div>
+                            <div>
+                                <h4>Visit Information</h4>
+                                <p><strong>Visit Number:</strong> ${data.visit.visit_number || 'N/A'}</p>
+                                <p><strong>Date:</strong> ${new Date(data.visit.visit_date).toLocaleDateString()}</p>
+                                <p><strong>Type:</strong> ${data.visit.visit_type}</p>
+                                <p><strong>Status:</strong> ${data.visit.status}</p>
+                            </div>
+                        </div>
+                        
+                        <h4>Services (${data.summary.services_count})</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Service</th>
+                                    <th>Category</th>
+                                    <th>Tariff</th>
+                                    <th>NHIS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    data.services.forEach(service => {
+                        html += `
+                            <tr>
+                                <td>${service.code}</td>
+                                <td>${service.name}</td>
+                                <td>${service.category}</td>
+                                <td>₵${service.tariff.toFixed(2)}</td>
+                                <td>${service.nhis_covered ? '✓' : '✗'}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += `
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; background-color: #f0f0f0;">
+                                    <td colspan="3">TOTAL</td>
+                                    <td>₵${data.summary.total_tariff.toFixed(2)}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    `;
+                    
+                    document.getElementById('result').innerHTML = html;
+                } else {
+                    document.getElementById('result').innerHTML = `<p class="error">❌ Error: ${result.message}</p>`;
+                }
+                
+            } catch (error) {
+                console.error('Error viewing requisition:', error);
+                document.getElementById('result').innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Hospital Registration</title>
+</head>
+<body>
+    <h1>Test Hospital Registration</h1>
+    <p>Open the browser console to see the test results.</p>
+    
+    <script>
+        // Test data
+        const testData = {
+            hospital_name: "Test Hospital",
+            hospital_code: "TH1234",
+            hospital_id: "HSP123456789",
+            hospital_type: "Private",
+            hospital_category: "District Hospital",
+            nhia_accreditation_number: "123456789",
+            region: "Greater Accra",
+            district: "Accra Metropolitan",
+            town_city: "Accra",
+            postal_address: "P.O. Box 123, Accra",
+            primary_contact_person: "John Doe",
+            primary_contact_email: "john@testhospital.com",
+            primary_contact_phone: "0244123456",
+            admin_username: "testadmin",
+            admin_password: "testpass123",
+            admin_full_name: "John Doe"
+        };
+        
+        // Test the registration
+        fetch('api/hospital-register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(testData)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Registration Test Result:', result);
+            
+            if (result.status === 'success') {
+                console.log('✅ Registration successful!');
+                console.log('Hospital ID:', result.hospital.hospital_id);
+                console.log('Hospital Code:', result.hospital.code);
+            } else {
+                console.log('❌ Registration failed:', result.message);
+            }
+        })
+        .catch(error => {
+            console.error('❌ Error:', error);
+        });
+    </script>
+</body>
+</html>

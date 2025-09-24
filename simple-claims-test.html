@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Claims Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .status { padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+        .loading { background: yellow; }
+        .success { background: lightgreen; }
+        .error { background: lightcoral; }
+    </style>
+</head>
+<body>
+    <h1>Simple Claims Test</h1>
+    
+    <div>
+        <button onclick="loadTestData()">Load Test Data</button>
+        <button onclick="testAPI()">Test Claims API</button>
+        <button onclick="clearTable()">Clear Table</button>
+    </div>
+    
+    <div id="status" class="status loading">Ready to test</div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Visit ID</th>
+                <th>Patient Name</th>
+                <th>NHIS Number</th>
+                <th>Visit Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="consultations_table">
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 20px;">
+                    Loading available consultations...
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        console.log('Simple test script loaded');
+        
+        function updateStatus(message, type = 'loading') {
+            const status = document.getElementById('status');
+            status.className = 'status ' + type;
+            status.textContent = message;
+        }
+        
+        function loadTestData() {
+            console.log('Loading test data...');
+            updateStatus('Loading test data...', 'loading');
+            
+            const tableBody = document.getElementById('consultations_table');
+            
+            const testData = [
+                {
+                    visit_id: 'TEST001',
+                    full_name: 'John Doe',
+                    nhis_number: 'NH123456789',
+                    visit_date: '2024-01-15',
+                    status: 'Available'
+                },
+                {
+                    visit_id: 'TEST002',
+                    full_name: 'Jane Smith',
+                    nhis_number: 'NH987654321',
+                    visit_date: '2024-01-14',
+                    status: 'Available'
+                }
+            ];
+            
+            tableBody.innerHTML = '';
+            
+            testData.forEach(consultation => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${consultation.visit_id}</td>
+                    <td>${consultation.full_name}</td>
+                    <td>${consultation.nhis_number}</td>
+                    <td>${consultation.visit_date}</td>
+                    <td>${consultation.status}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            updateStatus('Test data loaded successfully', 'success');
+        }
+        
+        async function testAPI() {
+            console.log('Testing Claims API...');
+            updateStatus('Testing Claims API...', 'loading');
+            
+            try {
+                const response = await fetch('api/claims-api.php?action=get_claimable_consultations');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                if (data.status === 'success') {
+                    const tableBody = document.getElementById('consultations_table');
+                    tableBody.innerHTML = '';
+                    
+                    if (data.data && data.data.length > 0) {
+                        data.data.forEach(consultation => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${consultation.visit_id}</td>
+                                <td>${consultation.full_name}</td>
+                                <td>${consultation.nhis_number}</td>
+                                <td>${new Date(consultation.visit_date).toLocaleDateString()}</td>
+                                <td>${consultation.claim_status || 'Available'}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                        updateStatus(`API Success: ${data.data.length} consultations loaded`, 'success');
+                    } else {
+                        tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No consultations found</td></tr>';
+                        updateStatus('API Success: No data found', 'success');
+                    }
+                } else {
+                    throw new Error(data.message || 'API returned error status');
+                }
+                
+            } catch (error) {
+                console.error('API Test Error:', error);
+                updateStatus('API Error: ' + error.message, 'error');
+                
+                const tableBody = document.getElementById('consultations_table');
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Error: ${error.message}</td></tr>`;
+            }
+        }
+        
+        function clearTable() {
+            const tableBody = document.getElementById('consultations_table');
+            tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Table cleared</td></tr>';
+            updateStatus('Table cleared', 'loading');
+        }
+        
+        // Auto-test on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded - ready for testing');
+            updateStatus('Ready for testing', 'success');
+        });
+    </script>
+</body>
+</html>

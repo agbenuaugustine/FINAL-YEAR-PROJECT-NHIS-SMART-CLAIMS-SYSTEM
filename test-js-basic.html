@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic JavaScript Test</title>
+</head>
+<body>
+    <h1>JavaScript Test</h1>
+    <button onclick="testAlert()">Test Alert</button>
+    <button onclick="testConsole()">Test Console</button>
+    <button onclick="testAPI()">Test API</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        function testAlert() {
+            alert('JavaScript is working!');
+        }
+        
+        function testConsole() {
+            console.log('Console test - JavaScript working');
+            document.getElementById('result').innerHTML = 'Console test completed - check F12 console';
+        }
+        
+        async function testAPI() {
+            try {
+                document.getElementById('result').innerHTML = 'Testing API...';
+                const response = await fetch('api/claims-api.php?action=get_claimable_consultations');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = 'API Response: ' + JSON.stringify(data, null, 2);
+                console.log('API Response:', data);
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'API Error: ' + error.message;
+                console.error('API Error:', error);
+            }
+        }
+        
+        console.log('Basic test script loaded successfully');
+    </script>
+</body>
+</html>

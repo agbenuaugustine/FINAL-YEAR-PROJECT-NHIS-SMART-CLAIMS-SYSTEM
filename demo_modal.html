@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Modal Demo - Hospital Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f7;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-table th {
+            background: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .demo-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .demo-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .single-action-btn {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .single-action-btn:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Modal Sidebar Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 90vw;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-sidebar.active {
+            transform: translateX(0);
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .modal-content {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .hospital-info {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .hospital-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+        
+        .hospital-email {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .hospital-status {
+            margin-top: 0.5rem;
+        }
+        
+        .actions-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+        
+        .action-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .action-section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .modal-action-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            gap: 0.75rem;
+            text-align: left;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-action-btn i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .modal-action-btn .action-desc {
+            font-size: 0.75rem;
+            color: inherit;
+            opacity: 0.8;
+            margin-top: 0.25rem;
+        }
+        
+        /* Modal button colors */
+        .modal-btn-view {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #dbeafe;
+        }
+        
+        .modal-btn-view:hover {
+            background: #dbeafe;
+        }
+        
+        .modal-btn-edit {
+            background: #fffbeb;
+            color: #d97706;
+            border: 1px solid #fed7aa;
+        }
+        
+        .modal-btn-edit:hover {
+            background: #fed7aa;
+        }
+        
+        .modal-btn-approve {
+            background: #f0fdf4;
+            color: #059669;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .modal-btn-approve:hover {
+            background: #bbf7d0;
+        }
+        
+        .modal-btn-decline {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .modal-btn-decline:hover {
+            background: #fecaca;
+        }
+        
+        .modal-btn-activate {
+            background: #f0fdf4;
+            color: #059669;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .modal-btn-activate:hover {
+            background: #bbf7d0;
+        }
+        
+        .modal-btn-deactivate {
+            background: #f9fafb;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+        }
+        
+        .modal-btn-deactivate:hover {
+            background: #f3f4f6;
+        }
+        
+        .modal-btn-delete {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .modal-btn-delete:hover {
+            background: #fecaca;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🎯 Action Modal Demo - Hospital Management</h1>
+        <p style="margin-bottom: 2rem; color: #6b7280;">Click on any "Actions" button to see the modal sidebar in action.</p>
+        
+        <table class="demo-table">
+            <thead>
+                <tr>
+                    <th>Hospital Name</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="font-weight: 600;">Korle-Bu Teaching Hospital</div>
+                        <div style="font-size: 0.8rem; color: #6b7280;">korlebu@hospital.gov.gh</div>
+                    </td>
+                    <td>Accra, Greater Accra</td>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td style="text-align: center;">
+                        <button onclick="openDemoModal('pending')" class="single-action-btn">
+                            <i class="fas fa-cog"></i>
+                            <span>Actions</span>
+                            <i class="fas fa-chevron-right" style="font-size: 0.75rem; margin-left: auto;"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="font-weight: 600;">Ridge Hospital</div>
+                        <div style="font-size: 0.8rem; color: #6b7280;">info@ridgehospital.com</div>
+                    </td>
+                    <td>Accra, Greater Accra</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td style="text-align: center;">
+                        <button onclick="openDemoModal('active')" class="single-action-btn">
+                            <i class="fas fa-cog"></i>
+                            <span>Actions</span>
+                            <i class="fas fa-chevron-right" style="font-size: 0.75rem; margin-left: auto;"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="font-weight: 600;">Ghana Police Hospital</div>
+                        <div style="font-size: 0.8rem; color: #6b7280;">admin@policehospital.gov.gh</div>
+                    </td>
+                    <td>Accra, Greater Accra</td>
+                    <td><span class="status-badge status-inactive">Suspended</span></td>
+                    <td style="text-align: center;">
+                        <button onclick="openDemoModal('suspended')" class="single-action-btn">
+                            <i class="fas fa-cog"></i>
+                            <span>Actions</span>
+                            <i class="fas fa-chevron-right" style="font-size: 0.75rem; margin-left: auto;"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Action Modal Sidebar -->
+    <div class="modal-overlay" id="actionModal" onclick="closeModal()">
+        <div class="modal-sidebar" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Hospital Actions</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-content">
+                <!-- Hospital Info -->
+                <div class="hospital-info">
+                    <div class="hospital-name" id="hospitalName"></div>
+                    <div class="hospital-email" id="hospitalEmail"></div>
+                    <div class="hospital-status">
+                        <span id="hospitalStatus"></span>
+                    </div>
+                </div>
+                
+                <!-- General Actions -->
+                <div class="action-section">
+                    <div class="action-section-title">General Actions</div>
+                    <div class="actions-grid">
+                        <button class="modal-action-btn modal-btn-view" onclick="showDemo('View Details')">
+                            <i class="fas fa-eye"></i>
+                            <div>
+                                <div>View Details</div>
+                                <div class="action-desc">View hospital information and statistics</div>
+                            </div>
+                        </button>
+                        
+                        <button class="modal-action-btn modal-btn-edit" onclick="showDemo('Edit Hospital')">
+                            <i class="fas fa-edit"></i>
+                            <div>
+                                <div>Edit Hospital</div>
+                                <div class="action-desc">Modify hospital information and settings</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Status Management -->
+                <div class="action-section">
+                    <div class="action-section-title">Status Management</div>
+                    <div class="actions-grid" id="statusActions">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                </div>
+                
+                <!-- Dangerous Actions -->
+                <div class="action-section">
+                    <div class="action-section-title">Dangerous Actions</div>
+                    <div class="actions-grid">
+                        <button class="modal-action-btn modal-btn-delete" onclick="showDemo('Delete Hospital')">
+                            <i class="fas fa-trash"></i>
+                            <div>
+                                <div>Delete Hospital</div>
+                                <div class="action-desc">Permanently remove hospital and all data</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hospitals = {
+            pending: {
+                name: 'Korle-Bu Teaching Hospital',
+                email: 'korlebu@hospital.gov.gh',
+                status: 'Pending',
+                statusClass: 'status-pending',
+                actions: [
+                    { action: 'approve', icon: 'fas fa-check', title: 'Approve Hospital', desc: 'Approve registration and activate hospital', class: 'modal-btn-approve' },
+                    { action: 'decline', icon: 'fas fa-times', title: 'Decline Hospital', desc: 'Reject hospital registration', class: 'modal-btn-decline' }
+                ]
+            },
+            active: {
+                name: 'Ridge Hospital',
+                email: 'info@ridgehospital.com',
+                status: 'Active',
+                statusClass: 'status-active',
+                actions: [
+                    { action: 'deactivate', icon: 'fas fa-pause', title: 'Deactivate Hospital', desc: 'Temporarily disable hospital operations', class: 'modal-btn-deactivate' },
+                    { action: 'suspend', icon: 'fas fa-ban', title: 'Suspend Hospital', desc: 'Suspend hospital with reason', class: 'modal-btn-deactivate' }
+                ]
+            },
+            suspended: {
+                name: 'Ghana Police Hospital',
+                email: 'admin@policehospital.gov.gh',
+                status: 'Suspended',
+                statusClass: 'status-inactive',
+                actions: [
+                    { action: 'reactivate', icon: 'fas fa-undo', title: 'Reactivate Hospital', desc: 'Restore suspended hospital', class: 'modal-btn-activate' }
+                ]
+            }
+        };
+
+        function openDemoModal(type) {
+            const hospital = hospitals[type];
+            
+            // Populate hospital info
+            document.getElementById('hospitalName').textContent = hospital.name;
+            document.getElementById('hospitalEmail').textContent = hospital.email;
+            document.getElementById('hospitalStatus').innerHTML = `<span class="status-badge ${hospital.statusClass}">${hospital.status}</span>`;
+            
+            // Generate status actions
+            const container = document.getElementById('statusActions');
+            container.innerHTML = '';
+            
+            hospital.actions.forEach(actionData => {
+                const button = document.createElement('button');
+                button.className = `modal-action-btn ${actionData.class}`;
+                button.onclick = () => showDemo(actionData.title);
+                button.innerHTML = `
+                    <i class="${actionData.icon}"></i>
+                    <div>
+                        <div>${actionData.title}</div>
+                        <div class="action-desc">${actionData.desc}</div>
+                    </div>
+                `;
+                container.appendChild(button);
+            });
+            
+            // Show modal
+            document.getElementById('actionModal').classList.add('active');
+            document.querySelector('.modal-sidebar').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('actionModal').classList.remove('active');
+            document.querySelector('.modal-sidebar').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function showDemo(action) {
+            alert(`Demo: ${action} would be executed here!`);
+            closeModal();
+        }
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('actionModal').classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
