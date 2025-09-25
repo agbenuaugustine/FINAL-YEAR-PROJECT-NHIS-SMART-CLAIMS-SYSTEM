@@ -1,0 +1,2161 @@
+<?php
+/**
+ * Service Requisition Page
+ * 
+ * OPD, Laboratory, and Pharmacy services with auto-generated tariffs
+ */
+
+// Include secure authentication middleware
+require_once __DIR__ . '/secure_auth.php';
+
+// User data is now available from secure_auth.php
+// $user and $role variables are already set
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Service Requisition - Smart Claims NHIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Apple-inspired styles */
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #0071e3;
+            --secondary-color: #06c;
+            --success-color: #34c759;
+            --warning-color: #ff9500;
+            --danger-color: #ff3b30;
+            --light-bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --border-color: #d2d2d7;
+            
+            /* NHIS Theme Colors */
+            --nhis-primary: #1a5b8a;
+            --nhis-secondary: #2c8fb8;
+            --nhis-accent: #5cb85c;
+            --nhis-gold: #f0ad4e;
+            --ghana-red: #ce1126;
+            --ghana-gold: #fcd116;
+            --ghana-green: #006b3f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+            max-width: 100vw;
+        }
+        
+        /* App container */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .app-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0f2b5b, #1e88e5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            transform: rotate(10deg);
+            box-shadow: 0 4px 8px rgba(30, 136, 229, 0.3);
+            margin-right: 0.75rem;
+        }
+        
+        /* Navigation */
+        .app-nav {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .nav-item i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 1.75rem;
+            margin-bottom: 1.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Service tabs */
+        .service-tabs {
+            display: flex;
+            background: rgba(248, 250, 252, 0.9);
+            border-radius: 12px;
+            padding: 0.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-tab {
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .service-tab.active {
+            background: white;
+            color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-tab:hover:not(.active) {
+            color: var(--primary-color);
+        }
+        
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #fff;
+            transition: all 0.2s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0071e3, #42a1ec);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f5f5f7;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #34c759, #30d158);
+            color: white;
+            box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9500, #ffcc00);
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 149, 0, 0.3);
+        }
+        
+        /* Service Item Styles */
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            background: white;
+            transition: all 0.2s ease;
+        }
+        
+        .service-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-item.selected {
+            border-color: var(--primary-color);
+            background: rgba(0, 113, 227, 0.05);
+        }
+        
+        .service-info {
+            flex: 1;
+        }
+        
+        .service-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .service-code {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .service-tariff {
+            font-weight: 600;
+            color: var(--nhis-primary);
+            margin-left: 1rem;
+        }
+        
+        /* Cart styles */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(248, 250, 252, 0.9);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-total {
+            background: linear-gradient(135deg, #0071e3, #42a1ec);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        /* Tables */
+        .table-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+        
+        .table th {
+            background: rgba(248, 250, 252, 0.9);
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .table td {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-primary);
+        }
+        
+        /* Alert Styles */
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left-color: #28a745;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left-color: #ffc107;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border-left-color: #dc3545;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 0.5rem 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            height: 4.5rem;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .mobile-nav-item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            font-size: 0.65rem;
+            transition: all 0.2s ease;
+            width: 14.28%; /* 100% / 7 items */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .mobile-nav-item i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mobile-nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .mobile-nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .app-nav {
+                display: none;
+            }
+            
+            .mobile-nav {
+                display: flex;
+                justify-content: space-around;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .app-container {
+                padding: 0.5rem;
+                padding-bottom: 5.5rem;
+            }
+            
+            .service-tabs {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+        }
+        
+        /* Animated background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+        }
+        
+        .bg-shape-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #0071e3, #5ac8fa);
+            top: -200px;
+            left: -200px;
+            animation: float 25s infinite ease-in-out;
+        }
+        
+        .bg-shape-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #5ac8fa, #007aff);
+            bottom: -150px;
+            right: -150px;
+            animation: float 20s infinite ease-in-out reverse;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 50px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">
+                <div class="app-logo">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                Smart Claims
+            </h1>
+            
+            <div class="user-menu relative">
+                <div class="user-button cursor-pointer" id="userMenuButton">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="hidden md:inline"><?php echo htmlspecialchars($user['full_name'] ?? 'User'); ?></span>
+                    <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                </div>
+                <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50 hidden">
+                    <a href="profile.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        <i class="fas fa-user-circle mr-2"></i> Profile
+                    </a>
+                    <a href="settings.php" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                        <i class="fas fa-cog mr-2"></i> Settings
+                    </a>
+                    <div class="border-t border-gray-200 my-1"></div>
+                    <a href="/smartclaimsCL/api/logout.php" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Navigation -->
+        <nav class="app-nav">
+            <a href="dashboard.php" class="nav-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="client-registration.php" class="nav-item">
+                <i class="fas fa-user-plus"></i>
+                <span>Client Registration</span>
+            </a>
+            <a href="service-requisition.php" class="nav-item active">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Service Requisition</span>
+            </a>
+            <a href="vital-signs.php" class="nav-item">
+                <i class="fas fa-heartbeat"></i>
+                <span>Vital Signs</span>
+            </a>
+            <a href="diagnosis-medication.php" class="nav-item">
+                <i class="fas fa-stethoscope"></i>
+                <span>Diagnosis & Medication</span>
+            </a>
+            <a href="claims-processing.php" class="nav-item">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Claims Processing</span>
+            </a>
+            <a href="reports.php" class="nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </a>
+        </nav>
+        
+        <!-- Main Content -->
+        <main>
+            <!-- Page Header -->
+            <div class="card">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="card-title text-2xl font-bold mb-2">
+                            <i class="fas fa-clipboard-list mr-2"></i>
+                            Service Requisition
+                        </h2>
+                        <p class="text-secondary text-lg">Request OPD, Laboratory, and Pharmacy services with auto-generated NHIS tariffs</p>
+                        <p class="text-sm text-gray-600 mt-2">Real-time tariff calculation based on NHIA approved rates</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="btn btn-secondary" onclick="viewSavedDrafts()">
+                            <i class="fas fa-folder-open mr-2"></i>
+                            View Drafts
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearRequisition()">
+                            <i class="fas fa-broom mr-2"></i>
+                            Clear All
+                        </button>
+                        <button class="btn btn-warning" onclick="generateRequisition()">
+                            <i class="fas fa-file-download mr-2"></i>
+                            Generate Form
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Messages -->
+            <div id="alertContainer" class="fixed top-20 right-4 z-50 space-y-2 max-w-md"></div>
+
+            <!-- Client Selection -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-user-check mr-2"></i>
+                    Client Selection
+                </h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="client_search" class="form-label">Search Client</label>
+                        <div class="relative">
+                            <input type="text" 
+                                   id="client_search" 
+                                   class="form-control pr-10" 
+                                   placeholder="Enter NHIS number or name to search..."
+                                   autocomplete="off">
+                            <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-500" onclick="searchClient()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="visit_type" class="form-label">Visit Type</label>
+                        <select id="visit_type" class="form-control">
+                            <option value="">Select visit type</option>
+                            <option value="OPD">Out Patient Department (OPD)</option>
+                            <option value="Emergency">Emergency</option>
+                            <option value="Follow_up">Follow-up</option>
+                            <option value="Referral">Referral</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="visit_date" class="form-label">Visit Date</label>
+                        <input type="date" id="visit_date" class="form-control">
+                    </div>
+                </div>
+                
+                <!-- Selected Client Info -->
+                <div id="selectedClientInfo" class="hidden">
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-green-800 mb-2">Selected Client</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div><strong>Name:</strong> <span id="client_name">-</span></div>
+                            <div><strong>NHIS:</strong> <span id="client_nhis">-</span></div>
+                            <div><strong>Age:</strong> <span id="client_age">-</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Categories -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-hospital mr-2"></i>
+                    Service Categories
+                </h3>
+                
+                <!-- Service Tabs -->
+                <div class="service-tabs">
+                    <div class="service-tab active" data-service="opd" onclick="switchService('opd')">
+                        <i class="fas fa-clinic-medical mr-2"></i>
+                        OPD Services
+                    </div>
+                    <div class="service-tab" data-service="lab" onclick="switchService('lab')">
+                        <i class="fas fa-vials mr-2"></i>
+                        Laboratory
+                    </div>
+                    <div class="service-tab" data-service="pharmacy" onclick="switchService('pharmacy')">
+                        <i class="fas fa-pills mr-2"></i>
+                        Pharmacy
+                    </div>
+                </div>
+
+                <!-- OPD Services -->
+                <div id="opd-services" class="service-content">
+                    <div class="mb-4">
+                        <input type="text" 
+                               id="opd-search" 
+                               class="form-control" 
+                               placeholder="Search OPD services..."
+                               onkeyup="filterServices('opd')">
+                    </div>
+                    <div id="opd-list" class="space-y-2">
+                        <!-- OPD services will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Laboratory Services -->
+                <div id="lab-services" class="service-content hidden">
+                    <div class="mb-4">
+                        <input type="text" 
+                               id="lab-search" 
+                               class="form-control" 
+                               placeholder="Search laboratory tests..."
+                               onkeyup="filterServices('lab')">
+                    </div>
+                    <div id="lab-list" class="space-y-2">
+                        <!-- Lab services will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Pharmacy Services -->
+                <div id="pharmacy-services" class="service-content hidden">
+                    <div class="mb-4">
+                        <input type="text" 
+                               id="pharmacy-search" 
+                               class="form-control" 
+                               placeholder="Search medications..."
+                               onkeyup="filterServices('pharmacy')">
+                    </div>
+                    <div id="pharmacy-list" class="space-y-2">
+                        <!-- Pharmacy services will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Cart -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    Selected Services
+                    <span id="cart-count" class="bg-blue-500 text-white text-sm px-2 py-1 rounded-full ml-2">0</span>
+                </h3>
+                
+                <div id="service-cart" class="space-y-2 mb-4">
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+                        <p>No services selected yet</p>
+                        <p class="text-sm">Browse services above to add them to your requisition</p>
+                    </div>
+                </div>
+                
+                <div id="cart-summary" class="hidden">
+                    <div class="cart-total">
+                        <div class="flex justify-between items-center">
+                            <span>Total NHIS Tariff:</span>
+                            <span id="total-amount">₵0.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="cart-actions" class="flex justify-between items-center mt-4 hidden">
+                    <div class="text-sm text-gray-600">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        Tariffs are auto-calculated based on NHIA rates
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="btn btn-secondary" onclick="saveRequisition()">
+                            <i class="fas fa-save mr-2"></i>
+                            Save Draft
+                        </button>
+                        <button class="btn btn-success" onclick="submitRequisition()">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Submit Requisition
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Requisitions -->
+            <div class="card">
+                <h3 class="card-title text-xl font-bold mb-4">
+                    <i class="fas fa-history mr-2"></i>
+                    Recent Requisitions
+                </h3>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Services</th>
+                                <th>Total Tariff</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-requisitions">
+                            <tr>
+                                <td colspan="6" class="text-center py-4">Loading recent requisitions...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <a href="dashboard.php" class="mobile-nav-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="client-registration.php" class="mobile-nav-item">
+                <i class="fas fa-user-plus"></i>
+                <span>Clients</span>
+            </a>
+            <a href="service-requisition.php" class="mobile-nav-item active">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Services</span>
+            </a>
+            <a href="vital-signs.php" class="mobile-nav-item">
+                <i class="fas fa-heartbeat"></i>
+                <span>Vitals</span>
+            </a>
+            <a href="diagnosis-medication.php" class="mobile-nav-item">
+                <i class="fas fa-stethoscope"></i>
+                <span>Diagnosis</span>
+            </a>
+            <a href="claims-processing.php" class="mobile-nav-item">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Claims</span>
+            </a>
+            <a href="reports.php" class="mobile-nav-item">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Service data will be loaded from API
+        let serviceData = {
+            opd: [],
+            lab: [],
+            pharmacy: []
+        };
+
+        let selectedServices = [];
+        let currentClient = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the page
+            initializePage();
+            loadServicesFromAPI();
+            loadRecentRequisitions();
+            updateDraftCount();
+            testAPIConnection();
+            
+            // Set today's date
+            document.getElementById('visit_date').value = new Date().toISOString().split('T')[0];
+        });
+        
+        // Test API connection
+        async function testAPIConnection() {
+            try {
+                const response = await fetch('/smartclaimsCL/api/services-api.php?action=test');
+                const result = await response.json();
+                console.log('API Connection Test:', result);
+                
+                if (result.status === 'success') {
+                    console.log('✅ API is working correctly');
+                } else {
+                    console.error('❌ API test failed:', result);
+                }
+            } catch (error) {
+                console.error('❌ API connection test failed:', error);
+                showAlert('Warning: API connection issues detected. Please check your server connection.', 'warning', 3000);
+            }
+        }
+        
+        // Update draft count display
+        function updateDraftCount() {
+            const drafts = JSON.parse(localStorage.getItem('requisitionDrafts') || '[]');
+            const draftButton = document.querySelector('button[onclick="viewSavedDrafts()"]');
+            
+            if (drafts.length > 0) {
+                draftButton.innerHTML = `
+                    <i class="fas fa-folder-open mr-2"></i>
+                    View Drafts
+                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full ml-2">${drafts.length}</span>
+                `;
+            } else {
+                draftButton.innerHTML = `
+                    <i class="fas fa-folder-open mr-2"></i>
+                    View Drafts
+                `;
+            }
+        }
+
+        // Initialize page
+        function initializePage() {
+            // Setup user dropdown
+            const userMenuButton = document.getElementById('userMenuButton');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            userMenuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+
+            // Setup client search with debounce
+            let searchTimeout;
+            document.getElementById('client_search').addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const searchTerm = this.value.trim();
+                
+                if (searchTerm.length >= 3) {
+                    searchTimeout = setTimeout(() => {
+                        searchClient();
+                    }, 500); // Debounce for 500ms
+                } else if (searchTerm.length === 0) {
+                    // Clear dropdown when search is empty
+                    clearPatientDropdown();
+                }
+            });
+        }
+
+        // Load services from API
+        async function loadServicesFromAPI() {
+            try {
+                const response = await fetch('/smartclaimsCL/api/services-api.php?action=services');
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    serviceData = result.data;
+                    loadServices();
+                    console.log('Services loaded successfully from database');
+                } else {
+                    console.error('Failed to load services:', result.message);
+                    showAlert('Failed to load services from database, using fallback data', 'warning', 3000);
+                    // Load fallback static data if API fails
+                    loadFallbackServices();
+                }
+            } catch (error) {
+                console.error('Error loading services:', error);
+                showAlert('Error connecting to service database, using fallback data', 'warning', 3000);
+                // Load fallback static data if API fails
+                loadFallbackServices();
+            }
+        }
+        
+        // Fallback services in case API fails
+        function loadFallbackServices() {
+            serviceData = {
+                opd: [
+                    { id: 1, code: 'OPD001', name: 'General Consultation', tariff: 25.00, category: 'Consultation' },
+                    { id: 2, code: 'OPD002', name: 'Specialist Consultation', tariff: 45.00, category: 'Consultation' },
+                    { id: 3, code: 'OPD003', name: 'Emergency Consultation', tariff: 35.00, category: 'Emergency' }
+                ],
+                lab: [
+                    { id: 4, code: 'LAB001', name: 'Full Blood Count (FBC)', tariff: 35.00, category: 'Hematology' },
+                    { id: 5, code: 'LAB002', name: 'Malaria Test (RDT)', tariff: 15.00, category: 'Parasitology' }
+                ],
+                pharmacy: [
+                    { id: 6, code: 'PHARM001', name: 'Paracetamol 500mg (10 tablets)', tariff: 5.00, category: 'Analgesics' },
+                    { id: 7, code: 'PHARM002', name: 'Ibuprofen 400mg (10 tablets)', tariff: 8.00, category: 'Analgesics' }
+                ]
+            };
+            loadServices();
+        }
+        
+        // Load services into their respective tabs
+        function loadServices() {
+            loadServiceCategory('opd');
+            loadServiceCategory('lab');
+            loadServiceCategory('pharmacy');
+        }
+
+        // Load services for a specific category
+        function loadServiceCategory(category) {
+            const container = document.getElementById(`${category}-list`);
+            const services = serviceData[category];
+            
+            container.innerHTML = '';
+            
+            services.forEach(service => {
+                const serviceItem = createServiceItem(service, category);
+                container.appendChild(serviceItem);
+            });
+        }
+
+        // Create service item element
+        function createServiceItem(service, category) {
+            const div = document.createElement('div');
+            div.className = 'service-item';
+            div.dataset.serviceId = service.id;
+            div.dataset.category = category;
+            
+            div.innerHTML = `
+                <div class="service-info">
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-code">${service.code} - ${service.category}</div>
+                    ${service.description ? `<div class="service-description text-sm text-gray-600">${service.description}</div>` : ''}
+                </div>
+                <div class="service-tariff">₵${service.tariff.toFixed(2)}</div>
+                <button class="btn btn-primary btn-sm ml-2" onclick="addToCart(${service.id}, '${category}')">
+                    <i class="fas fa-plus"></i>
+                </button>
+            `;
+            
+            return div;
+        }
+
+        // Switch between service categories
+        function switchService(category) {
+            // Update tabs
+            document.querySelectorAll('.service-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-service="${category}"]`).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.service-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`${category}-services`).classList.remove('hidden');
+        }
+
+        // Filter services
+        function filterServices(category) {
+            const searchTerm = document.getElementById(`${category}-search`).value.toLowerCase();
+            const services = document.querySelectorAll(`#${category}-list .service-item`);
+            
+            services.forEach(service => {
+                const name = service.querySelector('.service-name').textContent.toLowerCase();
+                const code = service.querySelector('.service-code').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || code.includes(searchTerm)) {
+                    service.style.display = 'flex';
+                } else {
+                    service.style.display = 'none';
+                }
+            });
+        }
+
+        // Search client
+        async function searchClient() {
+            const searchTerm = document.getElementById('client_search').value.trim();
+            
+            if (searchTerm.length < 3) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/smartclaimsCL/api/services-api.php?action=search_patients&q=${encodeURIComponent(searchTerm)}`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    if (result.data.length > 0) {
+                        // Always show dropdown for selection
+                        showPatientSelection(result.data);
+                    } else {
+                        showPatientSelection([], 'No patients found matching your search');
+                    }
+                } else {
+                    showPatientSelection([], `Search failed: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                showPatientSelection([], 'Search failed. Please check your connection.');
+            }
+        }
+        
+        // Show patient selection dropdown
+        function showPatientSelection(patients, errorMessage = null) {
+            const searchContainer = document.getElementById('client_search').parentElement;
+            
+            // Remove existing dropdown
+            clearPatientDropdown();
+            
+            // Don't show dropdown if search input is empty
+            const searchInput = document.getElementById('client_search');
+            if (!searchInput.value.trim()) {
+                return;
+            }
+            
+            // Create dropdown
+            const dropdown = document.createElement('div');
+            dropdown.className = 'patient-dropdown absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto';
+            dropdown.style.top = '100%';
+            dropdown.style.left = '0';
+            dropdown.style.right = '0';
+            
+            if (errorMessage) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'px-4 py-3 text-center text-gray-500';
+                errorDiv.textContent = errorMessage;
+                dropdown.appendChild(errorDiv);
+            } else if (patients.length === 0) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'px-4 py-3 text-center text-gray-500';
+                emptyDiv.textContent = 'No patients found';
+                dropdown.appendChild(emptyDiv);
+            } else {
+                patients.forEach(patient => {
+                    const option = document.createElement('div');
+                    option.className = 'px-4 py-3 hover:bg-blue-50 cursor-pointer border-b last:border-b-0 transition-colors';
+                    option.innerHTML = `
+                        <div class="font-medium text-gray-900">${patient.name}</div>
+                        <div class="text-sm text-gray-600">NHIS: ${patient.nhis || 'N/A'} | ${patient.age} | ${patient.gender}</div>
+                        <div class="text-xs text-gray-500">${patient.membership_type || 'N/A'} - ${patient.policy_status || 'N/A'}</div>
+                    `;
+                    option.addEventListener('click', () => {
+                        selectClient(patient);
+                        clearPatientDropdown();
+                        searchInput.value = patient.name; // Set the selected patient name in input
+                    });
+                    dropdown.appendChild(option);
+                });
+            }
+            
+            searchContainer.appendChild(dropdown);
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function closeDropdown(e) {
+                if (!searchContainer.contains(e.target)) {
+                    clearPatientDropdown();
+                    document.removeEventListener('click', closeDropdown);
+                }
+            });
+        }
+        
+        // Clear patient dropdown
+        function clearPatientDropdown() {
+            const searchContainer = document.getElementById('client_search').parentElement;
+            const existingDropdown = searchContainer.querySelector('.patient-dropdown');
+            if (existingDropdown) {
+                existingDropdown.remove();
+            }
+        }
+
+        // Select client
+        function selectClient(client) {
+            currentClient = client;
+            
+            // Show client info
+            document.getElementById('selectedClientInfo').classList.remove('hidden');
+            document.getElementById('client_name').textContent = client.name;
+            document.getElementById('client_nhis').textContent = client.nhis;
+            document.getElementById('client_age').textContent = client.age;
+            
+            showAlert('Client selected successfully', 'success');
+        }
+
+        // Add service to cart
+        function addToCart(serviceId, category) {
+            if (!currentClient) {
+                showAlert('Please select a client first', 'warning');
+                return;
+            }
+            
+            // Find service in data by ID
+            const service = serviceData[category].find(s => s.id == serviceId);
+            if (!service) {
+                showAlert('Service not found', 'danger');
+                return;
+            }
+            
+            // Check if already in cart
+            if (selectedServices.find(s => s.id == serviceId)) {
+                showAlert('Service already added to requisition', 'warning');
+                return;
+            }
+            
+            // Add to cart
+            selectedServices.push({
+                ...service,
+                category: category,
+                unique_id: Date.now() // For UI purposes
+            });
+            
+            updateCart();
+            showAlert(`${service.name} added to requisition`, 'success');
+        }
+
+        // Remove service from cart
+        function removeFromCart(serviceId) {
+            selectedServices = selectedServices.filter(s => s.id !== serviceId);
+            updateCart();
+            showAlert('Service removed from requisition', 'success');
+        }
+
+        // Update cart display
+        function updateCart() {
+            const cartContainer = document.getElementById('service-cart');
+            const cartCount = document.getElementById('cart-count');
+            const cartSummary = document.getElementById('cart-summary');
+            const cartActions = document.getElementById('cart-actions');
+            
+            cartCount.textContent = selectedServices.length;
+            
+            if (selectedServices.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+                        <p>No services selected yet</p>
+                        <p class="text-sm">Browse services above to add them to your requisition</p>
+                    </div>
+                `;
+                cartSummary.classList.add('hidden');
+                cartActions.classList.add('hidden');
+                return;
+            }
+            
+            // Show cart items
+            cartContainer.innerHTML = '';
+            let total = 0;
+            
+            selectedServices.forEach(service => {
+                total += service.tariff;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="flex-1">
+                        <div class="font-semibold">${service.name}</div>
+                        <div class="text-sm text-gray-600">${service.code} - ${service.category}</div>
+                    </div>
+                    <div class="font-semibold text-blue-600 mr-2">₵${service.tariff.toFixed(2)}</div>
+                    <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${service.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                cartContainer.appendChild(cartItem);
+            });
+            
+            // Update total
+            document.getElementById('total-amount').textContent = `₵${total.toFixed(2)}`;
+            cartSummary.classList.remove('hidden');
+            cartActions.classList.remove('hidden');
+        }
+
+        // Save requisition as draft
+        function saveRequisition() {
+            if (selectedServices.length === 0) {
+                showAlert('No services selected', 'warning');
+                return;
+            }
+            
+            if (!currentClient) {
+                showAlert('Please select a client first', 'warning');
+                return;
+            }
+            
+            const draftId = 'draft_' + Date.now();
+            const requisitionData = {
+                id: draftId,
+                client: currentClient,
+                visitType: document.getElementById('visit_type').value,
+                visitDate: document.getElementById('visit_date').value,
+                services: selectedServices,
+                total: selectedServices.reduce((sum, service) => sum + service.tariff, 0),
+                status: 'Draft',
+                createdAt: new Date().toISOString(),
+                createdBy: '<?php echo $user['full_name']; ?>'
+            };
+            
+            // Get existing drafts
+            const existingDrafts = JSON.parse(localStorage.getItem('requisitionDrafts') || '[]');
+            
+            // Add new draft
+            existingDrafts.push(requisitionData);
+            
+            // Keep only last 10 drafts
+            if (existingDrafts.length > 10) {
+                existingDrafts.splice(0, existingDrafts.length - 10);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('requisitionDrafts', JSON.stringify(existingDrafts));
+            updateDraftCount(); // Update the draft count display
+            showAlert(`Draft saved successfully (ID: ${draftId.substring(6, 12)})`, 'success');
+        }
+
+        // Submit requisition
+        async function submitRequisition() {
+            if (!currentClient) {
+                showAlert('Please select a client first', 'warning');
+                return;
+            }
+            
+            if (selectedServices.length === 0) {
+                showAlert('Please add at least one service', 'warning');
+                return;
+            }
+            
+            if (!document.getElementById('visit_type').value) {
+                showAlert('Please select a visit type', 'warning');
+                return;
+            }
+            
+            const requisitionData = {
+                patient_id: currentClient.id,
+                visit_type: document.getElementById('visit_type').value,
+                visit_date: document.getElementById('visit_date').value,
+                priority: 'Routine',
+                chief_complaint: 'Service requisition',
+                services: selectedServices.map(service => ({
+                    id: service.id,
+                    tariff: service.tariff,
+                    notes: service.notes || null
+                }))
+            };
+            
+            try {
+                // Show submitting state
+                showAlert('Submitting requisition...', 'info');
+                const submitBtn = document.querySelector('button[onclick="submitRequisition()"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+                    submitBtn.disabled = true;
+                }
+                
+                console.log('Sending requisition data:', requisitionData);
+                
+                const response = await fetch('/smartclaimsCL/api/services-api.php?action=create_requisition', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requisitionData)
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                const responseText = await response.text();
+                console.log('Raw response:', responseText);
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    console.error('Server error response:', responseText);
+                    // Try to parse error response
+                    try {
+                        const errorData = JSON.parse(responseText);
+                        throw new Error(`Server error (${response.status}): ${errorData.message || 'Unknown error'}`);
+                    } catch (parseError) {
+                        throw new Error(`Server error (${response.status}): ${responseText.substring(0, 200)}`);
+                    }
+                }
+                
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error('JSON parse error:', parseError);
+                    console.error('Response was:', responseText);
+                    throw new Error('Invalid JSON response from server: ' + responseText.substring(0, 200));
+                }
+                
+                if (result.status === 'success') {
+                    showAlert(`Requisition submitted successfully! Visit Number: ${result.data.visit_number}`, 'success');
+                    
+                    // Clear form
+                    clearRequisition();
+                    
+                    // Reload recent requisitions
+                    loadRecentRequisitions();
+                    
+                    // Ask if user wants to proceed to vital signs
+                    setTimeout(() => {
+                        if (confirm('Would you like to proceed to record vital signs for this client?')) {
+                            window.location.href = `vital-signs.php?client=${currentClient.id}&visit=${result.data.visit_id}`;
+                        }
+                    }, 2000);
+                } else {
+                    showAlert(`Submission failed: ${result.message}`, 'danger');
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                let errorMessage = 'Submission failed. Please check your connection.';
+                
+                // More specific error messages
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    errorMessage = 'Network error. Please check your internet connection and try again.';
+                } else if (error.message.includes('timeout')) {
+                    errorMessage = 'Request timeout. Please try again.';
+                } else if (error.message.includes('401') || error.message.includes('403')) {
+                    errorMessage = 'Session expired. Please login again.';
+                    setTimeout(() => {
+                        window.location.href = 'login.php';
+                    }, 2000);
+                }
+                
+                showAlert(errorMessage, 'danger', 8000); // Show for 8 seconds
+            } finally {
+                // Reset button
+                const submitBtn = document.querySelector('button[onclick="submitRequisition()"]');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Submit Requisition';
+                    submitBtn.disabled = false;
+                }
+            }
+        }
+
+        // Generate requisition form
+        async function generateRequisition() {
+            if (selectedServices.length === 0) {
+                showAlert('No services selected to generate form', 'warning');
+                return;
+            }
+            
+            if (!currentClient) {
+                showAlert('Please select a client first', 'warning');
+                return;
+            }
+            
+            try {
+                showAlert('Generating NHIS requisition form...', 'info');
+                
+                const formData = {
+                    client: currentClient,
+                    visitType: document.getElementById('visit_type').value,
+                    visitDate: document.getElementById('visit_date').value,
+                    services: selectedServices,
+                    total: selectedServices.reduce((sum, service) => sum + service.tariff, 0),
+                    generatedBy: '<?php echo $user['full_name']; ?>',
+                    generatedAt: new Date().toISOString()
+                };
+                
+                // Create and download PDF
+                generatePDFForm(formData);
+                
+                showAlert('NHIS requisition form generated and downloaded!', 'success');
+                
+            } catch (error) {
+                console.error('Form generation error:', error);
+                showAlert('Failed to generate form. Please try again.', 'danger');
+            }
+        }
+        
+        // Generate PDF form (simplified version - you can enhance this)
+        function generatePDFForm(data) {
+            // Create a simple HTML form for printing/PDF
+            const formHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>NHIS Service Requisition Form</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; }
+                        .section { margin: 20px 0; }
+                        .field { margin: 10px 0; }
+                        .label { font-weight: bold; }
+                        .services { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        .services th, .services td { border: 1px solid #000; padding: 8px; text-align: left; }
+                        .services th { background-color: #f0f0f0; }
+                        .total { font-size: 18px; font-weight: bold; text-align: right; margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h2>NATIONAL HEALTH INSURANCE SCHEME</h2>
+                        <h3>SERVICE REQUISITION FORM</h3>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>PATIENT INFORMATION</h4>
+                        <div class="field"><span class="label">Name:</span> ${data.client.name}</div>
+                        <div class="field"><span class="label">NHIS Number:</span> ${data.client.nhis || 'N/A'}</div>
+                        <div class="field"><span class="label">Age:</span> ${data.client.age}</div>
+                        <div class="field"><span class="label">Gender:</span> ${data.client.gender || 'N/A'}</div>
+                        <div class="field"><span class="label">Visit Type:</span> ${data.visitType}</div>
+                        <div class="field"><span class="label">Visit Date:</span> ${new Date(data.visitDate).toLocaleDateString()}</div>
+                    </div>
+                    
+                    <div class="section">
+                        <h4>REQUESTED SERVICES</h4>
+                        <table class="services">
+                            <thead>
+                                <tr>
+                                    <th>Service Code</th>
+                                    <th>Service Name</th>
+                                    <th>Category</th>
+                                    <th>NHIS Tariff (₵)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.services.map(service => `
+                                    <tr>
+                                        <td>${service.code}</td>
+                                        <td>${service.name}</td>
+                                        <td>${service.category}</td>
+                                        <td>${service.tariff.toFixed(2)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        <div class="total">Total NHIS Tariff: ₵${data.total.toFixed(2)}</div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="field"><span class="label">Generated By:</span> ${data.generatedBy}</div>
+                        <div class="field"><span class="label">Generated On:</span> ${new Date(data.generatedAt).toLocaleString()}</div>
+                    </div>
+                    
+                    <div class="section" style="margin-top: 50px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <div>_________________________</div>
+                                <div>Healthcare Provider Signature</div>
+                            </div>
+                            <div>
+                                <div>_________________________</div>
+                                <div>Date</div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Open in new window for printing/saving as PDF
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(formHTML);
+            printWindow.document.close();
+            
+            // Auto-trigger print dialog
+            setTimeout(() => {
+                printWindow.print();
+            }, 500);
+        }
+
+        // Clear requisition
+        function clearRequisition() {
+            selectedServices = [];
+            currentClient = null;
+            
+            document.getElementById('client_search').value = '';
+            document.getElementById('visit_type').value = '';
+            document.getElementById('selectedClientInfo').classList.add('hidden');
+            
+            updateCart();
+            showAlert('Requisition cleared', 'success');
+        }
+
+        // Load recent requisitions
+        async function loadRecentRequisitions() {
+            const tableBody = document.getElementById('recent-requisitions');
+            
+            try {
+                const response = await fetch('/smartclaimsCL/api/services-api.php?action=recent_requisitions&limit=10');
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    tableBody.innerHTML = '';
+                    
+                    if (result.data.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4">No recent requisitions found</td></tr>';
+                        return;
+                    }
+                    
+                    result.data.forEach(req => {
+                        const row = document.createElement('tr');
+                        
+                        // Format date
+                        const visitDate = new Date(req.visit_date).toLocaleDateString();
+                        
+                        row.innerHTML = `
+                            <td>${visitDate}</td>
+                            <td>
+                                <div class="font-medium">${req.patient_name}</div>
+                                <div class="text-sm text-gray-500">NHIS: ${req.nhis_number || 'N/A'}</div>
+                            </td>
+                            <td>
+                                <div>${req.visit_type}</div>
+                                <div class="text-sm text-gray-500">${req.services_count} services</div>
+                            </td>
+                            <td>
+                                <div class="font-semibold text-blue-600">₵${(req.total_tariff || 0).toFixed(2)}</div>
+                            </td>
+                            <td>
+                                <span class="px-2 py-1 text-xs rounded-full ${getStatusBadgeClass(req.status)}">
+                                    ${req.status}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" onclick="viewRequisition(${req.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    console.error('Failed to load recent requisitions:', result.message);
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-red-500">Failed to load recent requisitions</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading recent requisitions:', error);
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-red-500">Error loading recent requisitions</td></tr>';
+            }
+        }
+        
+        // Get status badge class
+        function getStatusBadgeClass(status) {
+            switch (status.toLowerCase()) {
+                case 'completed':
+                    return 'bg-green-100 text-green-800';
+                case 'waiting':
+                    return 'bg-yellow-100 text-yellow-800';
+                case 'in progress':
+                    return 'bg-blue-100 text-blue-800';
+                case 'cancelled':
+                    return 'bg-red-100 text-red-800';
+                default:
+                    return 'bg-gray-100 text-gray-800';
+            }
+        }
+        
+        // View requisition details
+        async function viewRequisition(visitId) {
+            console.log('Viewing requisition', visitId);
+            
+            try {
+                const response = await fetch(`/smartclaimsCL/api/services-api.php?action=view_requisition&id=${visitId}`);
+                const result = await response.json();
+                
+                console.log('Requisition data received:', result);
+                
+                if (result.status === 'success') {
+                    const data = result.data;
+                    
+                    // Create modal for viewing requisition details
+                    const modal = document.createElement('div');
+                    modal.id = 'requisitionModal';
+                    modal.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 10000;
+                        overflow-y: auto;
+                    `;
+                    
+                    modal.innerHTML = `
+                        <div style="
+                            background: white;
+                            border-radius: 10px;
+                            padding: 24px;
+                            max-width: 900px;
+                            max-height: 90vh;
+                            overflow-y: auto;
+                            width: 90%;
+                            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        ">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                                <h3 style="margin: 0; font-size: 24px; color: #333;">Requisition Details</h3>
+                                <button onclick="document.getElementById('requisitionModal').remove()" style="
+                                    background: none;
+                                    border: none;
+                                    font-size: 24px;
+                                    cursor: pointer;
+                                    color: #666;
+                                    padding: 5px;
+                                ">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                <!-- Patient Information -->
+                                <div>
+                                    <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Patient Information</h4>
+                                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; line-height: 1.6;">
+                                        <div style="margin-bottom: 8px;"><strong>Name:</strong> ${data.patient.name}</div>
+                                        <div style="margin-bottom: 8px;"><strong>NHIS:</strong> ${data.patient.nhis || 'N/A'}</div>
+                                        <div style="margin-bottom: 8px;"><strong>Age:</strong> ${data.patient.age || 'N/A'}</div>
+                                        <div style="margin-bottom: 8px;"><strong>Gender:</strong> ${data.patient.gender || 'N/A'}</div>
+                                        <div style="margin-bottom: 8px;"><strong>Phone:</strong> ${data.patient.phone || 'N/A'}</div>
+                                        <div><strong>Policy Status:</strong> 
+                                            <span style="
+                                                padding: 4px 8px; 
+                                                font-size: 12px; 
+                                                border-radius: 12px; 
+                                                background: ${data.patient.policy_status === 'Active' ? '#dcfce7' : '#fef3c7'}; 
+                                                color: ${data.patient.policy_status === 'Active' ? '#166534' : '#92400e'};
+                                            ">
+                                                ${data.patient.policy_status || 'Unknown'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Visit Information -->
+                                <div>
+                                    <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Visit Information</h4>
+                                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; line-height: 1.6;">
+                                        <div style="margin-bottom: 8px;"><strong>Visit Number:</strong> ${data.visit.visit_number || 'N/A'}</div>
+                                        <div style="margin-bottom: 8px;"><strong>Date:</strong> ${new Date(data.visit.visit_date).toLocaleDateString()}</div>
+                                        <div style="margin-bottom: 8px;"><strong>Type:</strong> ${data.visit.visit_type}</div>
+                                        <div style="margin-bottom: 8px;"><strong>Priority:</strong> ${data.visit.priority}</div>
+                                        <div style="margin-bottom: 8px;"><strong>Status:</strong> 
+                                            <span style="
+                                                padding: 4px 8px; 
+                                                font-size: 12px; 
+                                                border-radius: 12px; 
+                                                background: ${getStatusBadgeColor(data.visit.status).bg}; 
+                                                color: ${getStatusBadgeColor(data.visit.status).text};
+                                            ">
+                                                ${data.visit.status}
+                                            </span>
+                                        </div>
+                                        <div style="margin-bottom: 8px;"><strong>Created By:</strong> ${data.visit.created_by}</div>
+                                        <div><strong>Chief Complaint:</strong> ${data.visit.chief_complaint || 'N/A'}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Services -->
+                            <div>
+                                <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 5px;">Requested Services (${data.summary.services_count})</h4>
+                                <div style="overflow-x: auto;">
+                                    <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;">
+                                        <thead>
+                                            <tr style="background: #f9fafb;">
+                                                <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb; font-weight: 600;">Code</th>
+                                                <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb; font-weight: 600;">Service</th>
+                                                <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb; font-weight: 600;">Category</th>
+                                                <th style="padding: 12px; text-align: right; border: 1px solid #e5e7eb; font-weight: 600;">Tariff</th>
+                                                <th style="padding: 12px; text-align: center; border: 1px solid #e5e7eb; font-weight: 600;">NHIS</th>
+                                                <th style="padding: 12px; text-align: center; border: 1px solid #e5e7eb; font-weight: 600;">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${data.services.map(service => `
+                                                <tr>
+                                                    <td style="padding: 10px; border: 1px solid #e5e7eb; font-family: monospace; font-size: 14px;">${service.code}</td>
+                                                    <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                                                        <div style="font-weight: 500;">${service.name}</div>
+                                                        ${service.description ? `<div style="font-size: 12px; color: #6b7280; margin-top: 2px;">${service.description}</div>` : ''}
+                                                        ${service.notes ? `<div style="font-size: 12px; font-style: italic; color: #2563eb; margin-top: 2px;">Notes: ${service.notes}</div>` : ''}
+                                                    </td>
+                                                    <td style="padding: 10px; border: 1px solid #e5e7eb;">${service.category}</td>
+                                                    <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right; font-weight: 600;">₵${service.tariff.toFixed(2)}</td>
+                                                    <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">
+                                                        ${service.nhis_covered ? '<i class="fas fa-check" style="color: #10b981;"></i>' : '<i class="fas fa-times" style="color: #ef4444;"></i>'}
+                                                    </td>
+                                                    <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">
+                                                        <span style="
+                                                            padding: 4px 8px; 
+                                                            font-size: 12px; 
+                                                            border-radius: 12px; 
+                                                            background: ${getStatusBadgeColor(service.status).bg}; 
+                                                            color: ${getStatusBadgeColor(service.status).text};
+                                                        ">
+                                                            ${service.status}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr style="background: #f9fafb;">
+                                                <th colspan="3" style="padding: 15px; text-align: right; border: 1px solid #e5e7eb; font-weight: 600;">Total:</th>
+                                                <th style="padding: 15px; text-align: right; font-weight: bold; font-size: 18px; color: #1e40af; border: 1px solid #e5e7eb;">₵${data.summary.total_tariff.toFixed(2)}</th>
+                                                <th colspan="2" style="border: 1px solid #e5e7eb;"></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <!-- Actions -->
+                            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #eee; padding-top: 15px;">
+                                <button onclick="printRequisition(${data.visit.id})" style="
+                                    background: #6b7280; 
+                                    color: white; 
+                                    border: none; 
+                                    padding: 10px 20px; 
+                                    border-radius: 6px; 
+                                    cursor: pointer;
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                ">
+                                    <i class="fas fa-print"></i>Print
+                                </button>
+                                <button onclick="document.getElementById('requisitionModal').remove()" style="
+                                    background: #2563eb; 
+                                    color: white; 
+                                    border: none; 
+                                    padding: 10px 20px; 
+                                    border-radius: 6px; 
+                                    cursor: pointer;
+                                ">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(modal);
+                    console.log('Modal added to DOM');
+                    
+                    // Close modal when clicking outside
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === modal) {
+                            modal.remove();
+                        }
+                    });
+                    
+                    // Ensure modal is visible
+                    setTimeout(() => {
+                        modal.style.display = 'flex';
+                    }, 10);
+                    
+                } else {
+                    showAlert(`Failed to load requisition: ${result.message}`, 'danger');
+                }
+                
+            } catch (error) {
+                console.error('Error viewing requisition:', error);
+                showAlert('Error loading requisition details', 'danger');
+            }
+        }
+        
+        // Helper function to get status badge colors
+        function getStatusBadgeColor(status) {
+            switch (status.toLowerCase()) {
+                case 'completed':
+                    return { bg: '#dcfce7', text: '#166534' };
+                case 'waiting':
+                    return { bg: '#fef3c7', text: '#92400e' };
+                case 'in progress':
+                    return { bg: '#dbeafe', text: '#1e40af' };
+                case 'cancelled':
+                    return { bg: '#fecaca', text: '#991b1b' };
+                case 'ordered':
+                    return { bg: '#e0e7ff', text: '#3730a3' };
+                default:
+                    return { bg: '#f3f4f6', text: '#374151' };
+            }
+        }
+        
+        // Print requisition (can be enhanced later)
+        function printRequisition(visitId) {
+            window.open(`/smartclaimsCL/print-requisition.php?visit_id=${visitId}`, '_blank');
+        }
+
+        // View requisition details
+        function viewRequisition(id) {
+            showAlert(`Viewing requisition ${id}`, 'success');
+            // Here you would typically open a modal or navigate to a details page
+        }
+
+        // Show alert message with duplicate prevention
+        let currentAlerts = new Set();
+        
+        function showAlert(message, type = 'info', duration = 5000) {
+            // Prevent duplicate alerts
+            const alertKey = `${message}-${type}`;
+            if (currentAlerts.has(alertKey)) {
+                return;
+            }
+            
+            currentAlerts.add(alertKey);
+            
+            const alertContainer = document.getElementById('alertContainer');
+            if (!alertContainer) {
+                console.warn('Alert container not found');
+                return;
+            }
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} opacity-0 transform translate-y-2 transition-all duration-300`;
+            alertDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-${getAlertIcon(type)} mr-2"></i>
+                        <span>${message}</span>
+                    </div>
+                    <button class="ml-4 text-gray-400 hover:text-gray-600" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            alertContainer.appendChild(alertDiv);
+            
+            // Animate in
+            setTimeout(() => {
+                alertDiv.classList.remove('opacity-0', 'translate-y-2');
+                alertDiv.classList.add('opacity-100', 'translate-y-0');
+            }, 10);
+            
+            // Auto-remove after specified duration
+            setTimeout(() => {
+                if (alertDiv.parentElement) {
+                    alertDiv.classList.add('opacity-0', 'translate-y-2');
+                    setTimeout(() => {
+                        alertDiv.remove();
+                        currentAlerts.delete(alertKey);
+                    }, 300);
+                }
+            }, duration);
+        }
+        
+        // Get alert icon based on type
+        function getAlertIcon(type) {
+            switch (type) {
+                case 'success':
+                    return 'check-circle';
+                case 'warning':
+                    return 'exclamation-triangle';
+                case 'danger':
+                case 'error':
+                    return 'exclamation-circle';
+                case 'info':
+                default:
+                    return 'info-circle';
+            }
+        }
+        
+        // Clear all alerts
+        function clearAlerts() {
+            const alertContainer = document.getElementById('alertContainer');
+            if (alertContainer) {
+                alertContainer.innerHTML = '';
+                currentAlerts.clear();
+            }
+        }
+        
+        // View saved drafts
+        function viewSavedDrafts() {
+            const drafts = JSON.parse(localStorage.getItem('requisitionDrafts') || '[]');
+            
+            if (drafts.length === 0) {
+                showAlert('No saved drafts found', 'info');
+                return;
+            }
+            
+            // Create modal for viewing drafts
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-4xl max-h-96 overflow-y-auto w-full mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Saved Drafts (${drafts.length})</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-3">
+                        ${drafts.map((draft, index) => `
+                            <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <div class="font-semibold">${draft.client.name}</div>
+                                        <div class="text-sm text-gray-600">NHIS: ${draft.client.nhis || 'N/A'}</div>
+                                        <div class="text-sm text-gray-600">${draft.visitType} - ${new Date(draft.visitDate).toLocaleDateString()}</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="font-semibold text-blue-600">₵${draft.total.toFixed(2)}</div>
+                                        <div class="text-xs text-gray-500">${draft.services.length} services</div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500 mb-3">
+                                    Saved: ${new Date(draft.createdAt).toLocaleString()} by ${draft.createdBy}
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button onclick="loadDraft('${draft.id}')" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-upload mr-1"></i>Load
+                                    </button>
+                                    <button onclick="deleteDraft('${draft.id}')" class="btn btn-secondary btn-sm text-red-600">
+                                        <i class="fas fa-trash mr-1"></i>Delete
+                                    </button>
+                                    <button onclick="viewDraftDetails('${draft.id}')" class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-eye mr-1"></i>Details
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        // Load draft into current form
+        function loadDraft(draftId) {
+            const drafts = JSON.parse(localStorage.getItem('requisitionDrafts') || '[]');
+            const draft = drafts.find(d => d.id === draftId);
+            
+            if (!draft) {
+                showAlert('Draft not found', 'danger');
+                return;
+            }
+            
+            // Load draft data
+            currentClient = draft.client;
+            selectedServices = draft.services;
+            
+            // Update form fields
+            document.getElementById('client_search').value = draft.client.name;
+            document.getElementById('visit_type').value = draft.visitType;
+            document.getElementById('visit_date').value = draft.visitDate;
+            
+            // Show client info
+            document.getElementById('selectedClientInfo').classList.remove('hidden');
+            document.getElementById('client_name').textContent = draft.client.name;
+            document.getElementById('client_nhis').textContent = draft.client.nhis;
+            document.getElementById('client_age').textContent = draft.client.age;
+            
+            // Update cart
+            updateCart();
+            
+            // Close modal
+            document.querySelector('.fixed.inset-0').remove();
+            
+            showAlert('Draft loaded successfully', 'success');
+        }
+        
+        // Delete draft
+        function deleteDraft(draftId) {
+            if (!confirm('Are you sure you want to delete this draft?')) {
+                return;
+            }
+            
+            const drafts = JSON.parse(localStorage.getItem('requisitionDrafts') || '[]');
+            const updatedDrafts = drafts.filter(d => d.id !== draftId);
+            
+            localStorage.setItem('requisitionDrafts', JSON.stringify(updatedDrafts));
+            updateDraftCount(); // Update the draft count display
+            
+            // Close and reopen modal to refresh
+            document.querySelector('.fixed.inset-0').remove();
+            setTimeout(() => viewSavedDrafts(), 100);
+            
+            showAlert('Draft deleted successfully', 'success');
+        }
+        
+        // View draft details
+        function viewDraftDetails(draftId) {
+            const drafts = JSON.parse(localStorage.getItem('requisitionDrafts') || '[]');
+            const draft = drafts.find(d => d.id === draftId);
+            
+            if (!draft) {
+                showAlert('Draft not found', 'danger');
+                return;
+            }
+            
+            // Create details modal
+            const detailsModal = document.createElement('div');
+            detailsModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            detailsModal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-2xl max-h-96 overflow-y-auto w-full mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Draft Details</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Patient Information</h4>
+                            <div class="bg-gray-50 p-3 rounded">
+                                <div><strong>Name:</strong> ${draft.client.name}</div>
+                                <div><strong>NHIS:</strong> ${draft.client.nhis || 'N/A'}</div>
+                                <div><strong>Age:</strong> ${draft.client.age}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Visit Information</h4>
+                            <div class="bg-gray-50 p-3 rounded">
+                                <div><strong>Type:</strong> ${draft.visitType}</div>
+                                <div><strong>Date:</strong> ${new Date(draft.visitDate).toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Selected Services (${draft.services.length})</h4>
+                            <div class="space-y-2">
+                                ${draft.services.map(service => `
+                                    <div class="bg-gray-50 p-2 rounded flex justify-between">
+                                        <div>
+                                            <div class="font-medium">${service.name}</div>
+                                            <div class="text-sm text-gray-600">${service.code} - ${service.category}</div>
+                                        </div>
+                                        <div class="font-semibold">₵${service.tariff.toFixed(2)}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="mt-3 p-3 bg-blue-50 rounded">
+                                <div class="font-bold text-lg">Total: ₵${draft.total.toFixed(2)}</div>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            <div><strong>Created:</strong> ${new Date(draft.createdAt).toLocaleString()}</div>
+                            <div><strong>Created By:</strong> ${draft.createdBy}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(detailsModal);
+            
+            // Close modal when clicking outside
+            detailsModal.addEventListener('click', function(e) {
+                if (e.target === detailsModal) {
+                    detailsModal.remove();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

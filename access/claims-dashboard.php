@@ -1,0 +1,479 @@
+<?php
+/**
+ * Claims Processing Department Dashboard
+ * 
+ * Dashboard for claims officers and claims processing staff
+ */
+
+// Include secure authentication middleware
+require_once __DIR__ . '/secure_auth.php';
+
+// Check if user has permission to access Claims Processing
+$allowed_roles = ['hospital_admin', 'department_head', 'admin', 'claims_officer', 'finance_officer'];
+if (!in_array($role, $allowed_roles)) {
+    header('Location: unauthorized.php');
+    exit();
+}
+
+// Mock data for demonstration - will be replaced with database queries
+$claims_stats = [
+    'pending_claims' => 23,
+    'submitted_today' => 15,
+    'approved_claims' => 8,
+    'rejected_claims' => 2,
+    'total_value_pending' => 45230.50,
+    'total_value_submitted' => 28470.25
+];
+
+$pending_claims = [
+    [
+        'id' => 1,
+        'claim_number' => 'CLM2024001',
+        'patient_name' => 'John Doe',
+        'patient_number' => 'PAT001',
+        'visit_date' => '2024-01-15',
+        'total_amount' => 125.50,
+        'services' => 3,
+        'status' => 'Draft',
+        'created_by' => 'Nurse Jane'
+    ],
+    [
+        'id' => 2,
+        'claim_number' => 'CLM2024002',
+        'patient_name' => 'Mary Johnson',
+        'patient_number' => 'PAT002',
+        'visit_date' => '2024-01-15',
+        'total_amount' => 89.25,
+        'services' => 2,
+        'status' => 'Ready to Submit',
+        'created_by' => 'Dr. Smith'
+    ],
+    [
+        'id' => 3,
+        'claim_number' => 'CLM2024003',
+        'patient_name' => 'Robert Brown',
+        'patient_number' => 'PAT003',
+        'visit_date' => '2024-01-14',
+        'total_amount' => 256.75,
+        'services' => 5,
+        'status' => 'Under Review',
+        'created_by' => 'Dr. Wilson'
+    ]
+];
+
+$recent_submissions = [
+    ['claim_number' => 'CLM2024020', 'amount' => 156.50, 'status' => 'Submitted', 'time' => '2 hours ago'],
+    ['claim_number' => 'CLM2024019', 'amount' => 89.25, 'status' => 'Approved', 'time' => '3 hours ago'],
+    ['claim_number' => 'CLM2024018', 'amount' => 234.75, 'status' => 'Submitted', 'time' => '4 hours ago']
+];
+
+$nhia_updates = [
+    ['message' => 'New tariff rates effective from Jan 20, 2024', 'type' => 'info', 'time' => '1 day ago'],
+    ['message' => 'System maintenance scheduled for this weekend', 'type' => 'warning', 'time' => '2 days ago'],
+    ['message' => 'Updated ICD-10 codes now available', 'type' => 'info', 'time' => '3 days ago']
+];
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claims Processing Dashboard - Smart Claims NHIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .stat-card { transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .status-draft { background: #f3f4f6; color: #374151; }
+        .status-ready { background: #dbeafe; color: #1e40af; }
+        .status-submitted { background: #fef3c7; color: #92400e; }
+        .status-approved { background: #d1fae5; color: #065f46; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+        .status-under-review { background: #e0e7ff; color: #3730a3; }
+        .nhia-info { background: #e0f2fe; border-left: 4px solid #0288d1; }
+        .nhia-warning { background: #fff8e1; border-left: 4px solid #ffa000; }
+        .pulse-animation { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-file-invoice-dollar text-2xl text-indigo-600"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-semibold text-gray-900">Claims Processing Dashboard</h1>
+                        <p class="text-sm text-gray-500"><?php echo date('l, F j, Y'); ?></p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">
+                        <i class="fas fa-user-circle mr-1"></i>
+                        <?php echo htmlspecialchars($user['full_name']); ?>
+                        <span class="ml-2 px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs">
+                            <?php echo ucwords(str_replace('_', ' ', $role)); ?>
+                        </span>
+                    </div>
+                    <a href="dashboard.php" class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-arrow-left mr-1"></i> Main Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- NHIA Updates -->
+        <?php if (count($nhia_updates) > 0): ?>
+        <div class="mb-6">
+            <?php foreach ($nhia_updates as $update): ?>
+                <?php if ($update['type'] === 'warning'): ?>
+                <div class="mb-2 nhia-warning p-4 rounded-lg">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-800">
+                                <strong>NHIA Notice:</strong> <?php echo $update['message']; ?>
+                                <span class="text-xs ml-2">(<?php echo $update['time']; ?>)</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <?php break; // Show only the first warning ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+
+        <!-- Quick Actions -->
+        <div class="mb-6">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <?php if (hasPermission('process_claims')): ?>
+                    <a href="claims-processing.php" class="flex items-center p-3 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors">
+                        <i class="fas fa-plus text-indigo-600 mr-3"></i>
+                        <span class="text-sm font-medium text-indigo-700">New Claim</span>
+                    </a>
+                    <?php endif; ?>
+                    
+                    <?php if (hasPermission('submit_claims')): ?>
+                    <a href="#" class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i class="fas fa-upload text-blue-600 mr-3"></i>
+                        <span class="text-sm font-medium text-blue-700">Submit Claims</span>
+                    </a>
+                    <?php endif; ?>
+                    
+                    <?php if (hasPermission('track_claim_status')): ?>
+                    <a href="#" class="flex items-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                        <i class="fas fa-search text-green-600 mr-3"></i>
+                        <span class="text-sm font-medium text-green-700">Track Claims</span>
+                    </a>
+                    <?php endif; ?>
+                    
+                    <?php if (hasPermission('verify_claim_documents')): ?>
+                    <a href="#" class="flex items-center p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+                        <i class="fas fa-check-double text-purple-600 mr-3"></i>
+                        <span class="text-sm font-medium text-purple-700">Verify Claims</span>
+                    </a>
+                    <?php endif; ?>
+                    
+                    <a href="#" class="flex items-center p-3 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors">
+                        <i class="fas fa-chart-bar text-orange-600 mr-3"></i>
+                        <span class="text-sm font-medium text-orange-700">Reports</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-6 mb-8">
+            <div class="stat-card bg-white overflow-hidden shadow-sm rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-hourglass-half text-yellow-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Pending</p>
+                            <p class="text-2xl font-semibold text-gray-900"><?php echo $claims_stats['pending_claims']; ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card bg-white overflow-hidden shadow-sm rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-upload text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Submitted</p>
+                            <p class="text-2xl font-semibold text-gray-900"><?php echo $claims_stats['submitted_today']; ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card bg-white overflow-hidden shadow-sm rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Approved</p>
+                            <p class="text-2xl font-semibold text-gray-900"><?php echo $claims_stats['approved_claims']; ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card bg-white overflow-hidden shadow-sm rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-times-circle text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Rejected</p>
+                            <p class="text-2xl font-semibold text-gray-900"><?php echo $claims_stats['rejected_claims']; ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card bg-white overflow-hidden shadow-sm rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-money-bill-wave text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Pending Value</p>
+                            <p class="text-lg font-semibold text-gray-900">₵<?php echo number_format($claims_stats['total_value_pending'], 2); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card bg-white overflow-hidden shadow-sm rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-indigo-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Submitted Value</p>
+                            <p class="text-lg font-semibold text-gray-900">₵<?php echo number_format($claims_stats['total_value_submitted'], 2); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Pending Claims -->
+            <div class="lg:col-span-2">
+                <div class="bg-white shadow-sm rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <i class="fas fa-list-ul mr-2 text-indigo-600"></i>
+                            Claims Queue
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Claim #</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <?php foreach ($pending_claims as $claim): ?>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($claim['claim_number']); ?></div>
+                                                <div class="text-xs text-gray-500"><?php echo $claim['visit_date']; ?></div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($claim['patient_name']); ?></div>
+                                                <div class="text-xs text-gray-500"><?php echo htmlspecialchars($claim['patient_number']); ?></div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">₵<?php echo number_format($claim['total_amount'], 2); ?></div>
+                                            <div class="text-xs text-gray-500"><?php echo $claim['services']; ?> services</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 py-1 text-xs rounded-full status-<?php echo strtolower(str_replace(' ', '-', $claim['status'])); ?>">
+                                                <?php echo $claim['status']; ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <div class="flex space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-900" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <?php if (hasPermission('process_claims') && $claim['status'] === 'Draft'): ?>
+                                                <button class="text-green-600 hover:text-green-900" title="Process">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <?php endif; ?>
+                                                <?php if (hasPermission('submit_claims') && $claim['status'] === 'Ready to Submit'): ?>
+                                                <button class="text-purple-600 hover:text-purple-900" title="Submit">
+                                                    <i class="fas fa-upload"></i>
+                                                </button>
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Recent Submissions -->
+                <div class="bg-white shadow-sm rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <i class="fas fa-clock mr-2 text-green-600"></i>
+                            Recent Activity
+                        </h3>
+                        <div class="space-y-3">
+                            <?php foreach ($recent_submissions as $submission): ?>
+                            <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-file-invoice text-green-600 text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <p class="text-sm font-medium text-gray-900"><?php echo $submission['claim_number']; ?></p>
+                                    <p class="text-sm text-gray-600">₵<?php echo number_format($submission['amount'], 2); ?></p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs px-2 py-1 rounded-full status-<?php echo strtolower($submission['status']); ?>">
+                                            <?php echo $submission['status']; ?>
+                                        </span>
+                                        <span class="text-xs text-gray-500"><?php echo $submission['time']; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NHIA Updates -->
+                <div class="bg-white shadow-sm rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <i class="fas fa-bell mr-2 text-orange-600"></i>
+                            NHIA Updates
+                        </h3>
+                        <div class="space-y-3">
+                            <?php foreach ($nhia_updates as $update): ?>
+                            <div class="p-3 rounded-lg nhia-<?php echo $update['type']; ?>">
+                                <p class="text-sm text-gray-800"><?php echo $update['message']; ?></p>
+                                <p class="text-xs text-gray-600 mt-1"><?php echo $update['time']; ?></p>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Claims Performance -->
+                <div class="bg-white shadow-sm rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                            <i class="fas fa-chart-line mr-2 text-blue-600"></i>
+                            Performance Metrics
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Approval Rate</span>
+                                <span class="text-sm font-medium text-green-600">94.2%</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Average Processing Time</span>
+                                <span class="text-sm font-medium text-gray-900">2.3 days</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Monthly Target</span>
+                                <span class="text-sm font-medium text-blue-600">78% completed</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Revenue This Month</span>
+                                <span class="text-sm font-medium text-gray-900">₵125,450</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSRF Token for AJAX requests -->
+    <script>
+        const csrfToken = '<?php echo $_SESSION['csrf_token']; ?>';
+        
+        // Auto-refresh functionality for claims status
+        setInterval(function() {
+            // Check for claims status updates
+            console.log('Checking claims status updates...');
+        }, 60000); // Check every minute
+        
+        // NHIA system connectivity check
+        function checkNHIAConnection() {
+            console.log('Checking NHIA system connectivity...');
+            // You can implement actual connectivity check here
+        }
+        
+        setInterval(checkNHIAConnection, 300000); // Check every 5 minutes
+        
+        // Bulk submission functionality
+        function bulkSubmitClaims() {
+            const readyClaims = document.querySelectorAll('[data-status="Ready to Submit"]');
+            if (readyClaims.length > 0) {
+                console.log(`${readyClaims.length} claims ready for bulk submission`);
+                // Implement bulk submission logic
+            }
+        }
+    </script>
+</body>
+</html>

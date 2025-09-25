@@ -1,0 +1,414 @@
+<?php
+/**
+ * Hospital Management Page
+ * 
+ * Superadmin interface for managing hospital registrations
+ */
+
+// Include secure authentication middleware
+require_once __DIR__ . '/secure_auth.php';
+
+// Ensure only superadmin can access this page
+if (!isSuperAdmin()) {
+    header('Location: unauthorized.php');
+    exit();
+}
+
+// Mock hospital data - will be replaced with database later
+$hospitals = [
+    [
+        'id' => 1,
+        'hospital_name' => 'Korle Bu Teaching Hospital',
+        'hospital_code' => 'KBTH001',
+        'registration_status' => 'Approved',
+        'primary_contact_person' => 'Dr. John Doe',
+        'primary_contact_email' => 'admin@korlebu.edu.gh',
+        'primary_contact_phone' => '+233 302 665401',
+        'region' => 'Greater Accra',
+        'district' => 'Accra Metropolis',
+        'town_city' => 'Accra',
+        'hospital_type' => 'Government',
+        'hospital_category' => 'Teaching Hospital',
+        'registration_date' => '2024-01-15',
+        'approval_date' => '2024-01-20'
+    ],
+    [
+        'id' => 2,
+        'hospital_name' => 'Komfo Anokye Teaching Hospital',
+        'hospital_code' => 'KATH002',
+        'registration_status' => 'Pending',
+        'primary_contact_person' => 'Dr. Jane Smith',
+        'primary_contact_email' => 'admin@kath.edu.gh',
+        'primary_contact_phone' => '+233 322 022308',
+        'region' => 'Ashanti',
+        'district' => 'Kumasi Metropolis',
+        'town_city' => 'Kumasi',
+        'hospital_type' => 'Government',
+        'hospital_category' => 'Teaching Hospital',
+        'registration_date' => '2024-01-10',
+        'approval_date' => null
+    ],
+    [
+        'id' => 3,
+        'hospital_name' => 'Trust Hospital',
+        'hospital_code' => 'TH003',
+        'registration_status' => 'Approved',
+        'primary_contact_person' => 'Dr. Michael Johnson',
+        'primary_contact_email' => 'admin@trusthospital.com',
+        'primary_contact_phone' => '+233 302 765432',
+        'region' => 'Greater Accra',
+        'district' => 'Accra Metropolis',
+        'town_city' => 'Accra',
+        'hospital_type' => 'Private',
+        'hospital_category' => 'Regional Hospital',
+        'registration_date' => '2024-01-05',
+        'approval_date' => '2024-01-12'
+    ]
+];
+
+// Handle form submissions
+$message = '';
+$message_type = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
+    // Verify CSRF token
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $message = 'Security token mismatch. Please try again.';
+        $message_type = 'error';
+    } else {
+        switch ($_POST['action']) {
+            case 'approve':
+                $hospital_id = $_POST['hospital_id'];
+                $message = "Hospital ID {$hospital_id} has been approved successfully!";
+                $message_type = 'success';
+                logActivity('HOSPITAL_APPROVED', "Approved hospital ID: {$hospital_id}");
+                break;
+                
+            case 'reject':
+                $hospital_id = $_POST['hospital_id'];
+                $reason = $_POST['rejection_reason'];
+                $message = "Hospital ID {$hospital_id} has been rejected.";
+                $message_type = 'success';
+                logActivity('HOSPITAL_REJECTED', "Rejected hospital ID: {$hospital_id} - Reason: {$reason}");
+                break;
+                
+            case 'suspend':
+                $hospital_id = $_POST['hospital_id'];
+                $reason = $_POST['suspension_reason'];
+                $message = "Hospital ID {$hospital_id} has been suspended.";
+                $message_type = 'success';
+                logActivity('HOSPITAL_SUSPENDED', "Suspended hospital ID: {$hospital_id} - Reason: {$reason}");
+                break;
+        }
+    }
+}
+
+// Get statistics
+$total_hospitals = count($hospitals);
+$pending_hospitals = array_filter($hospitals, function($h) { return $h['registration_status'] === 'Pending'; });
+$approved_hospitals = array_filter($hospitals, function($h) { return $h['registration_status'] === 'Approved'; });
+$rejected_hospitals = array_filter($hospitals, function($h) { return $h['registration_status'] === 'Rejected'; });
+
+$pending_count = count($pending_hospitals);
+$approved_count = count($approved_hospitals);
+$rejected_count = count($rejected_hospitals);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management - Smart Claims NHIS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button { @apply px-4 py-2 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 cursor-pointer; }
+        .tab-button.active { @apply text-blue-600 border-blue-600; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-semibold text-gray-900">Hospital Management</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-500">Welcome, <?php echo htmlspecialchars($user['full_name']); ?></span>
+                    <a href="dashboard.php" class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Messages -->
+        <?php if ($message): ?>
+        <div class="mb-6">
+            <div class="bg-<?php echo $message_type === 'success' ? 'green' : 'red'; ?>-100 border border-<?php echo $message_type === 'success' ? 'green' : 'red'; ?>-400 text-<?php echo $message_type === 'success' ? 'green' : 'red'; ?>-700 px-4 py-3 rounded">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-hospital text-indigo-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Total Hospitals</dt>
+                                <dd class="text-lg font-medium text-gray-900"><?php echo $total_hospitals; ?></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-clock text-yellow-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Pending</dt>
+                                <dd class="text-lg font-medium text-gray-900"><?php echo $pending_count; ?></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Approved</dt>
+                                <dd class="text-lg font-medium text-gray-900"><?php echo $approved_count; ?></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-times-circle text-red-600 text-2xl"></i>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Rejected</dt>
+                                <dd class="text-lg font-medium text-gray-900"><?php echo $rejected_count; ?></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-white shadow rounded-lg">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8 px-6">
+                    <button class="tab-button active" onclick="showTab('pending')">
+                        <i class="fas fa-clock mr-1"></i>
+                        Pending Approval (<?php echo $pending_count; ?>)
+                    </button>
+                    <button class="tab-button" onclick="showTab('approved')">
+                        <i class="fas fa-check-circle mr-1"></i>
+                        Approved (<?php echo $approved_count; ?>)
+                    </button>
+                    <button class="tab-button" onclick="showTab('rejected')">
+                        <i class="fas fa-times-circle mr-1"></i>
+                        Rejected (<?php echo $rejected_count; ?>)
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Pending Hospitals Tab -->
+            <div id="pending" class="tab-content active p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Hospitals Pending Approval</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hospital</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registration Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <?php foreach ($pending_hospitals as $hospital): ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($hospital['hospital_name']); ?></div>
+                                        <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['hospital_code']); ?></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900"><?php echo htmlspecialchars($hospital['primary_contact_person']); ?></div>
+                                    <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['primary_contact_email']); ?></div>
+                                    <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['primary_contact_phone']); ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900"><?php echo htmlspecialchars($hospital['town_city']); ?></div>
+                                    <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['district'] . ', ' . $hospital['region']); ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900"><?php echo htmlspecialchars($hospital['hospital_type']); ?></div>
+                                    <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['hospital_category']); ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <?php echo date('M j, Y', strtotime($hospital['registration_date'])); ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button onclick="approveHospital(<?php echo $hospital['id']; ?>)" class="text-green-600 hover:text-green-900 mr-3">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button onclick="rejectHospital(<?php echo $hospital['id']; ?>)" class="text-red-600 hover:text-red-900">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Approved Hospitals Tab -->
+            <div id="approved" class="tab-content p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Approved Hospitals</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hospital</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Approval Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <?php foreach ($approved_hospitals as $hospital): ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($hospital['hospital_name']); ?></div>
+                                        <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['hospital_code']); ?></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900"><?php echo htmlspecialchars($hospital['primary_contact_person']); ?></div>
+                                    <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['primary_contact_email']); ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900"><?php echo htmlspecialchars($hospital['town_city']); ?></div>
+                                    <div class="text-sm text-gray-500"><?php echo htmlspecialchars($hospital['district'] . ', ' . $hospital['region']); ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <?php echo $hospital['approval_date'] ? date('M j, Y', strtotime($hospital['approval_date'])) : 'N/A'; ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button onclick="suspendHospital(<?php echo $hospital['id']; ?>)" class="text-red-600 hover:text-red-900">
+                                        <i class="fas fa-ban"></i> Suspend
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Rejected Hospitals Tab -->
+            <div id="rejected" class="tab-content p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Rejected Hospitals</h3>
+                <div class="text-center py-8 text-gray-500">
+                    <i class="fas fa-times-circle text-4xl mb-2"></i>
+                    <p>No rejected hospitals found</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden forms for actions -->
+    <form id="actionForm" method="POST" style="display: none;">
+        <input type="hidden" name="action" id="actionType">
+        <input type="hidden" name="hospital_id" id="hospitalId">
+        <input type="hidden" name="rejection_reason" id="rejectionReason">
+        <input type="hidden" name="suspension_reason" id="suspensionReason">
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+    </form>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function approveHospital(hospitalId) {
+            if (confirm('Are you sure you want to approve this hospital?')) {
+                document.getElementById('actionType').value = 'approve';
+                document.getElementById('hospitalId').value = hospitalId;
+                document.getElementById('actionForm').submit();
+            }
+        }
+
+        function rejectHospital(hospitalId) {
+            const reason = prompt('Please provide a reason for rejection:');
+            if (reason && reason.trim() !== '') {
+                document.getElementById('actionType').value = 'reject';
+                document.getElementById('hospitalId').value = hospitalId;
+                document.getElementById('rejectionReason').value = reason;
+                document.getElementById('actionForm').submit();
+            }
+        }
+
+        function suspendHospital(hospitalId) {
+            const reason = prompt('Please provide a reason for suspension:');
+            if (reason && reason.trim() !== '') {
+                document.getElementById('actionType').value = 'suspend';
+                document.getElementById('hospitalId').value = hospitalId;
+                document.getElementById('suspensionReason').value = reason;
+                document.getElementById('actionForm').submit();
+            }
+        }
+    </script>
+</body>
+</html>

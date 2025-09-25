@@ -1,0 +1,297 @@
+<?php
+/**
+ * Login Page
+ * 
+ * Web interface for user login
+ */
+
+// Include authentication
+require_once __DIR__ . '/auth.php';
+
+$auth = Auth::getInstance();
+
+// Check if user is already logged in
+if ($auth->isLoggedIn()) {
+    header('Location: dashboard.php');
+    exit();
+}
+
+$error = '';
+
+// Handle login form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    
+    if (empty($username) || empty($password)) {
+        $error = 'Please enter both username and password';
+    } else {
+        if ($auth->login($username, $password)) {
+            header('Location: dashboard.php');
+            exit();
+        } else {
+            $error = 'Invalid username or password';
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Claims</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Apple-inspired styles */
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #0071e3;
+            --secondary-color: #06c;
+            --success-color: #34c759;
+            --warning-color: #ff9500;
+            --danger-color: #ff3b30;
+            --light-bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --border-color: #d2d2d7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Animated background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+        }
+        
+        .bg-shape-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #0071e3, #34c759);
+            top: -200px;
+            left: -200px;
+            animation: float 25s infinite ease-in-out;
+        }
+        
+        .bg-shape-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #5ac8fa, #007aff);
+            bottom: -150px;
+            right: -150px;
+            animation: float 20s infinite ease-in-out reverse;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(50px, 50px) rotate(10deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+        }
+        
+        .login-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0f2b5b, #1e88e5);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            transform: rotate(10deg);
+            box-shadow: 0 4px 8px rgba(30, 136, 229, 0.3);
+            margin: 0 auto 1.5rem;
+        }
+        
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background-color: var(--card-bg);
+            transition: all 0.2s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0062c3;
+        }
+        
+        .error-message {
+            background-color: rgba(255, 59, 48, 0.1);
+            color: var(--danger-color);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .register-link {
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-shape bg-shape-1"></div>
+        <div class="bg-shape bg-shape-2"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <i class="fas fa-file-medical"></i>
+            </div>
+            <h1 class="login-title">Welcome to Smart Claims</h1>
+            <p class="login-subtitle">Please sign in to continue</p>
+            
+            <?php if ($error): ?>
+            <div class="error-message">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
+            <?php endif; ?>
+            
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-input" 
+                           placeholder="Enter your username" required 
+                           value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" 
+                           placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="register-link">
+                Don't have an account? <a href="../register.php">Register here</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
