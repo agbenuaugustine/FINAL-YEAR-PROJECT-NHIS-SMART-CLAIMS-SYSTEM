@@ -1,12 +1,8 @@
 <?php
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 /**
- * Register API Endpoint
+ * Validate Token API Endpoint
  * 
- * Handles user registration requests
+ * Validates JWT tokens
  */
 
 // Set response headers
@@ -35,21 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Create auth controller
 $auth = new AuthController();
 
-// Log the incoming request data
-$input = file_get_contents("php://input");
-error_log("Register API - Received data: " . $input);
-
-// Process registration
-$result = $auth->register();
-
-// Log the result
-error_log("Register API - Result: " . json_encode($result));
+// Validate token
+$result = $auth->validateToken();
 
 // Set response code
 if ($result['status'] === 'success') {
-    http_response_code(201);
+    http_response_code(200);
 } else {
-    http_response_code(400);
+    http_response_code(401);
 }
 
 // Return response
